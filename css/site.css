@@ -1,50 +1,75 @@
+/* Container for the Tiny Slider */
 .tns-outer{
     padding:0!important
 }
+
+/* Hide elements with [hidden] attribute inside the Tiny Slider container */
 .tns-outer [hidden]{
     display:none!important
 }
+
+/* Set cursor to pointer for specific elements in Tiny Slider container */
 .tns-outer [aria-controls],.tns-outer [data-action]{
     cursor:pointer
 }
+
+/* Transition settings for the Tiny Slider */
 .tns-slider{
     -webkit-transition:all 0s;
     -moz-transition:all 0s;
     transition:all 0s
 }
+
+/* Box-sizing settings for Tiny Slider items */
 .tns-slider>.tns-item{
     -webkit-box-sizing:border-box;
     -moz-box-sizing:border-box;
     box-sizing:border-box
 }
+
+/* Horizontal Tiny Slider with subpixel rendering */
 .tns-horizontal.tns-subpixel{
     white-space:nowrap
 }
+
+/* Item display settings for subpixel rendering */
 .tns-horizontal.tns-subpixel>.tns-item{
     display:inline-block;
     vertical-align:top;
     white-space:normal
 }
+
+/* Clear floats for non-subpixel horizontal Tiny Slider */
 .tns-horizontal.tns-no-subpixel:after{
     content:"";
     display:table;
     clear:both
 }
+
+/* Item float settings for non-subpixel horizontal Tiny Slider */
 .tns-horizontal.tns-no-subpixel>.tns-item{
     float:left
 }
+
+/* Carousel settings for non-subpixel horizontal Tiny Slider */
 .tns-horizontal.tns-carousel.tns-no-subpixel>.tns-item{
     margin-right:-100%
 }
+
+/* No calculations for Tiny Slider items */
 .tns-no-calc{
     position:relative;
     left:0
 }
+
+/* Gallery settings for Tiny Slider */
 .tns-gallery{
     position:relative;
     left:0;
     min-height:1px
 }
+
+/* Item position settings for Tiny Slider gallery */
 .tns-gallery>.tns-item{
     position:absolute;
     left:-100%;
@@ -52,51 +77,75 @@
     -moz-transition:transform 0s,opacity 0s;
     transition:transform 0s,opacity 0s
 }
+
+/* Active slide settings for Tiny Slider gallery */
 .tns-gallery>.tns-slide-active{
     position:relative;
     left:auto!important
 }
+
+/* Moving slide transition settings for Tiny Slider gallery */
 .tns-gallery>.tns-moving{
     -webkit-transition:all .25s;
     -moz-transition:all .25s;
     transition:all .25s
 }
+
+/* Autowidth settings for Tiny Slider */
 .tns-autowidth{
     display:inline-block
 }
+
+/* Lazy load image settings for Tiny Slider */
 .tns-lazy-img{
     -webkit-transition:opacity .6s;
     -moz-transition:opacity .6s;
     transition:opacity .6s;
     opacity:.6
 }
+
+/* Loaded lazy image settings */
 .tns-lazy-img.loaded{
     opacity:1
 }
+
+/* Height transition settings for Tiny Slider */
 .tns-ah{
     -webkit-transition:height 0s;
     -moz-transition:height 0s;
     transition:height 0s
 }
+
+/* Overflow hidden settings for Tiny Slider */
 .tns-ovh{
     overflow:hidden
 }
+
+/* Visually hidden settings */
 .tns-visually-hidden{
     position:absolute;
     left:-10000em
 }
+
+/* Transparency settings for elements */
 .tns-transparent{
     opacity:0;
     visibility:hidden
 }
+
+/* Fade in effect settings */
 .tns-fadeIn{
     opacity:1;
     z-index:0
 }
+
+/* Fade out and normal effect settings */
 .tns-fadeOut,.tns-normal{
     opacity:0;
     z-index:-1
 }
+
+/* Subpixel container settings for Tiny Slider */
 .tns-t-subp2{
     margin:0 auto;
     width:310px;
@@ -104,6 +153,8 @@
     height:10px;
     overflow:hidden
 }
+
+/* Subpixel content container settings for Tiny Slider */
 .tns-t-ct{
     width:2333.3333333333%;
     width:-webkit-calc(100% * 70 / 3);
@@ -112,11 +163,15 @@
     position:absolute;
     right:0
 }
+
+/* Clear floats for subpixel content container */
 .tns-t-ct:after{
     content:"";
     display:table;
     clear:both
 }
+
+/* Subpixel content item settings for Tiny Slider */
 .tns-t-ct>div{
     width:1.4285714286%;
     width:-webkit-calc(100% / 70);
@@ -125,87 +180,3 @@
     height:10px;
     float:left
 }
-@font-face{
-    font-family:Butler;
-    src:url(../Butler_Ultra_Light.otf) format("opentype");
-    font-weight:200;
-    font-style:normal;
-    font-display:swap
-}
-@font-face{
-    font-family:Butler;
-    src:url(../Butler_Medium.otf) format("opentype");
-    font-weight:500;
-    font-style:normal;
-    font-display:swap
-}
-@font-face{
-    font-family:Butler;
-    src:url(../Butler_Light.otf) format("opentype");
-    font-weight:300;
-    font-style:normal;
-    font-display:swap
-}
-@font-face{
-    font-family:Butler;
-    src:url(../Butler_Black.otf) format("opentype");
-    font-weight:900;
-    font-style:normal;
-    font-display:swap
-}
-@font-face{
-    font-family:Butler;
-    src:url(../Butler_Bold.otf) format("opentype");
-    font-weight:700;
-    font-style:normal;
-    font-display:swap
-}
-@font-face{
-    font-family:Butler;
-    src:url(../Butler_ExtraBold.otf) format("opentype");
-    font-weight:800;
-    font-style:normal;
-    font-display:swap
-}
-@font-face{
-    font-family:Butler;
-    src:url(../Butler_Regular.otf) format("opentype");
-    font-weight:400;
-    font-style:normal;
-    font-display:swap
-}
-*,:after,:before{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    cursor:none!important
-}
-::selection{
-    background:rgba(250,177,98,.7);
-    color:#eeecea
-}
-body,html{
-    position:relative;
-    width:100%;
-    height:100%
-}
-html{
-    font-family:Poppins,sans-serif;
-    font-size:16px;
-    font-weight:400;
-    letter-spacing:1px;
-    box-sizing:border-box
-}
-body{
-    font-size:16px;
-    color:#fff;
-    background-color:#272727
-}
-a{
-    color:#fab162;
-    transition:.1s linear;
-    text-decoration:none
-}
-a:hover{
-    text-decoration:none;
-    color:#f9a549}
