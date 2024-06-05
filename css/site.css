@@ -180,3 +180,266 @@
     height:10px;
     float:left
 }
+
+
+/* Font face definitions */
+@font-face{
+    font-family:Butler;
+    src:url(../Butler_Ultra_Light.otf) format("opentype");
+    font-weight:200;
+    font-style:normal;
+    font-display:swap
+}
+@font-face{
+    font-family:Butler;
+    src:url(../Butler_Medium.otf) format("opentype");
+    font-weight:500;
+    font-style:normal;
+    font-display:swap
+}
+@font-face{
+    font-family:Butler;
+    src:url(../Butler_Light.otf) format("opentype");
+    font-weight:300;
+    font-style:normal;
+    font-display:swap
+}
+@font-face{
+    font-family:Butler;
+    src:url(../Butler_Black.otf) format("opentype");
+    font-weight:900;
+    font-style:normal;
+    font-display:swap
+}
+@font-face{
+    font-family:Butler;
+    src:url(../Butler_Bold.otf) format("opentype");
+    font-weight:700;
+    font-style:normal;
+    font-display:swap
+}
+@font-face{
+    font-family:Butler;
+    src:url(../Butler_ExtraBold.otf) format("opentype");
+    font-weight:800;
+    font-style:normal;
+    font-display:swap
+}
+@font-face{
+    font-family:Butler;
+    src:url(../Butler_Regular.otf) format("opentype");
+    font-weight:400;
+    font-style:normal;
+    font-display:swap
+}
+
+/* Reset margin and padding for all elements */
+*,:after,:before{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    cursor:none!important
+}
+
+/* Selection highlight color settings */
+::selection{
+    background:rgba(250,177,98,.7);
+    color:#eeecea
+}
+
+/* HTML and body settings */
+body,html{
+    position:relative;
+    width:100%;
+    height:100%
+}
+
+/* Base HTML settings */
+html{
+    font-family:Poppins,sans-serif;
+    font-size:16px;
+    font-weight:400;
+    letter-spacing:1px;
+    box-sizing:border-box
+}
+
+/* Base body settings */
+body{
+    font-size:16px;
+    color:#fff;
+    background-color:#272727
+}
+
+/* Link settings */
+a{
+    color:#fab162;
+    transition:.1s linear;
+    text-decoration:none
+}
+
+/* Link hover settings */
+a:hover{
+    text-decoration:none;
+    color:#f9a549
+}
+
+/* Wrapper for Barba.js */
+#barba-wrapper{
+    overflow:hidden
+}
+
+/* Generic container settings */
+.container{
+    position:relative;
+    width:100%;
+    max-width:1170px;
+    margin:0 auto
+}
+
+/* Lazy background settings */
+.lazyBg{
+    position:relative
+}
+
+/* Placeholder for lazy background images */
+.lazyBg:before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background-color:#eeecea;
+    animation:pulse 2s infinite ease-in-out;
+    z-index:-1
+}
+
+/* Image placeholder settings */
+.imgPlaceholder{
+    position:absolute;
+    top:0;
+    right:0;
+    width:100%;
+    height:100%;
+    background-color:#fab162;
+    transition:width .6s ease
+}
+
+/* Reveal image settings */
+.reveal-image{
+    position:relative
+}
+
+/* Image reveal effect when in view */
+.in-view .reveal-image:after{
+    width:0
+}
+
+/* Reveal image cover settings */
+.reveal-image:after{
+    content:"";
+    position:absolute;
+    top:0;
+    right:0;
+    width:100%;
+    height:100%;
+    background-color:#fab162;
+    transition:width 1s ease
+}
+
+/* Reveal image content settings */
+.reveal-image img{
+    vertical-align:top;
+    max-width:100%
+}
+
+/* Reveal title settings */
+.reveal_title{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background-color:#eeecea;
+    transform:scaleX(0);
+    transform-origin:100% 50% 0
+}
+
+/* Parallax container settings */
+.parallax-container{
+    position:absolute;
+    z-index:-1
+}
+
+/* Centered parallax container */
+.parallax-container--center{
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%)
+}
+
+/* Top-left aligned parallax container */
+.parallax-container--top-left{
+    top:0;
+    left:0
+}
+
+/* Responsive adjustments for top-left parallax container */
+@media (max-width:767px){
+    .parallax-container--top-left{
+        left:50%;
+        transform:translateX(-50%)
+    }
+}
+
+/* Top-right aligned parallax container */
+.parallax-container--top-right{
+    top:0;
+    right:0
+}
+
+/* Responsive adjustments for top-right parallax container */
+@media (max-width:767px){
+    .parallax-container--top-right{
+        right:auto;
+        left:50%;
+        transform:translateX(-50%)
+    }
+}
+
+/* Center-top aligned parallax container */
+.parallax-container--center-top{
+    top:0;
+    left:50%;
+    transform:translateX(-50%)
+}
+
+/* Parallax title settings */
+.parallax-title{
+    position:relative;
+    font-family:Garamond;
+    font-size:180px;
+    font-weight:900;
+    line-height:1em;
+    color:rgba(238,236,234,.05);
+    white-space:nowrap;
+    margin:0
+}
+
+/* Responsive adjustments for parallax title */
+@media (max-width:1200px){
+    .parallax-title{
+        font-size:150px
+    }
+}
+@media (max-width:767px){
+    .parallax-title{
+        font-size:50px
+    }
+}
+
+/* Parallax element settings */
+.pelement{
+    transition:all 260ms ease-out!important;
+    will-change:transform
+}
