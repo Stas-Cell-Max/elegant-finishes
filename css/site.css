@@ -443,3 +443,275 @@ a:hover{
     transition:all 260ms ease-out!important;
     will-change:transform
 }
+
+
+/* Button settings */
+.button{
+    position:relative;
+    text-align:center;
+    color:#fab162;
+    padding:15px 35px;
+    transition:all .15s ease-in-out;
+    display:inline-block;
+    font-size:14px;
+    font-weight:400;
+    white-space:nowrap;
+    vertical-align:middle;
+    border:1px solid transparent
+}
+
+/* Responsive adjustments for buttons */
+@media (max-width:992px){
+    .button{
+        padding:15px 25px
+    }
+}
+
+/* Button hover effects */
+.button:hover{
+    color:#1a1818
+}
+
+/* Button hover transition effects */
+.button:hover:after{
+    transition:all .3s cubic-bezier(.67,.52,0,1.38);
+    height:100%
+}
+
+/* Button after pseudo-element settings */
+.button:after{
+    content:"";
+    position:absolute;
+    left:0;
+    width:100%;
+    bottom:0;
+    height:1px;
+    background-color:#fab162;
+    transition:all .15s cubic-bezier(.67,.52,0,0);
+    z-index:-1
+}
+
+/* Generic section settings */
+.section__generic{
+    position:relative;
+    overflow:hidden
+}
+
+/* In-view state for generic sections */
+.section__generic.in-view .imgPlaceholder{
+    width:0
+}
+.section__generic.in-view .image{
+    transform:scale(1)
+}
+
+/* Placeholder image transition settings for generic sections */
+.section__generic .imgPlaceholder{
+    transition:width 1s ease
+}
+
+/* Image container settings for generic sections */
+.section__generic__imgContainer{
+    width:40%;
+    height:65vh;
+    min-height:400px;
+    position:relative;
+    overflow:hidden;
+    opacity:.9
+}
+
+/* Responsive adjustments for image containers */
+@media (max-width:992px){
+    .section__generic__imgContainer{
+        height:45vh;
+        width:50%
+    }
+}
+@media (max-width:767px){
+    .section__generic__imgContainer{
+        width:calc(100% - 30px);
+        margin:0 15px;
+        min-height:300px
+    }
+}
+
+/* Image wrapper settings for generic sections */
+.section__generic__imgWrapper{
+    position:relative;
+    width:116%;
+    height:116%;
+    left:-8%;
+    top:-8%
+}
+
+/* Responsive adjustments for image wrappers */
+@media (max-width:992px){
+    .section__generic__imgWrapper{
+        width:120%;
+        height:120%;
+        left:-10%;
+        top:-10%
+    }
+}
+
+/* Caption settings for generic sections */
+.section__generic__caption{
+    position:absolute;
+    left:65vw;
+    width:60vh;
+    top:0;
+    font-size:12px;
+    text-transform:uppercase;
+    color:#eeecea;
+    transform-origin:top left;
+    text-align:right;
+    transform:rotate(90deg) translateY(-100%);
+    font-weight:400
+}
+
+/* Responsive adjustments for captions */
+@media screen and (min-width:1800px){
+    .section__generic__caption{
+        width:70vh
+    }
+}
+@media (max-width:992px){
+    .section__generic__caption{
+        left:75vw;
+        width:45vh
+    }
+}
+@media (max-width:767px){
+    .section__generic__caption{
+        position:relative;
+        left:0;
+        width:calc(100% - 30px);
+        margin:15px;
+        transform:rotate(0) translateY(0);
+        text-align:left
+    }
+}
+
+/* Image settings for generic sections */
+.section__generic .image{
+    position:absolute;
+    background-size:cover!important;
+    width:100%;
+    height:100%;
+    left:0;
+    top:0;
+    transform:scale(1.1);
+    transition:all 1.5s ease .6s;
+    background-position:center
+}
+
+/* Image position settings for left-aligned images */
+.section__generic .image--left{
+    background-position:left center
+}
+
+/* Content settings for generic sections */
+.section__generic--content{
+    position:absolute;
+    top:20%;
+    left:45%
+}
+
+/* Responsive adjustments for content in generic sections */
+@media (max-width:1200px){
+    .section__generic--content{
+        top:50%;
+        transform:translateY(-50%)
+    }
+}
+@media (max-width:992px){
+    .section__generic--content{
+        left:55%
+    }
+}
+@media (max-width:767px){
+    .section__generic--content{
+        position:static;
+        margin-top:25px;
+        transform:translateY(0);
+        padding:0 15px
+    }
+}
+
+/* Title settings for generic sections */
+.section__generic__title{
+    font-weight:700;
+    font-size:30px;
+    line-height:40px;
+    letter-spacing:0;
+    margin:0;
+    margin-bottom:12px;
+    opacity:0;
+    transform:translateY(15px);
+    transition:all .4s ease-in-out .6s;
+    width:100%;
+    margin-left:-30%;
+    margin-bottom:50px;
+    max-width:600px
+}
+
+/* Responsive adjustments for titles in generic sections */
+@media (max-width:992px){
+    .section__generic__title{
+        margin-bottom:35px
+    }
+}
+@media (max-width:767px){
+    .section__generic__title{
+        margin-left:0;
+        font-size:25px;
+        line-height:30px
+    }
+}
+
+/* In-view state for titles in generic sections */
+.in-view .section__generic__title{
+    opacity:1;
+    transform:translateY(0)
+}
+
+/* Text settings for generic sections */
+.section__generic__text{
+    font-size:13px;
+    line-height:24px;
+    opacity:0;
+    transform:translateY(15px);
+    transition:all .4s ease-in-out .8s;
+    max-width:450px
+}
+
+/* In-view state for text in generic sections */
+.in-view .section__generic__text{
+    opacity:1;
+    transform:translateY(0)
+}
+
+/* Full left image container settings for generic sections */
+.section__generic--fullLeft .section__generic__imgContainer{
+    width:65%;
+    height:60vh;
+    min-height:300px
+}
+
+/* Responsive adjustments for full left image containers */
+@media screen and (min-width:1800px){
+    .section__generic--fullLeft .section__generic__imgContainer{
+        height:70vh
+    }
+}
+@media (max-width:992px){
+    .section__generic--fullLeft .section__generic__imgContainer{
+        height:45vh
+    }
+}
+@media (max-width:767px){
+    .section__generic--fullLeft .section__generic__imgContainer{
+        width:calc(100% - 30px);
+        margin:0 15px
+    }
+}
