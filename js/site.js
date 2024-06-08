@@ -1524,3 +1524,332 @@ h = (s.Linear, s.Power1, s.Power2, s.Power3, s.Power4, s.TweenPlugin);
 a.events.EventDispatcher
 }).call(this, i(27)(t), i(28))
 
+(function(e, i) {
+    "use strict";
+    
+    // Check if module is defined for CommonJS
+    if (typeof t.exports === "object") {
+        // Export jQuery if document is available
+        t.exports = e.document ? i(e, true) : function(t) {
+            // Throw error if no document is found
+            if (!t.document) throw new Error("jQuery requires a window with a document");
+            // Return jQuery
+            return i(t);
+        };
+    } else {
+        // Call the jQuery factory function
+        i(e);
+    }
+}(
+    // Check if window is defined, else use this (global object)
+    typeof window !== "undefined" ? window : this, 
+
+    // jQuery factory function
+    function(i, r) {
+        "use strict";
+
+        // Define local variables
+        var o = [],
+            s = i.document,
+            a = Object.getPrototypeOf,
+            l = o.slice,
+            u = o.concat,
+            c = o.push,
+            h = o.indexOf,
+            f = {},
+            d = f.toString,
+            p = f.hasOwnProperty,
+            m = p.toString,
+            g = m.call(Object),
+            v = {},
+            
+            // Function to check if a given object is a function
+            _ = function(t) {
+                return typeof t === "function" && typeof t.nodeType !== "number";
+            },
+
+            // Function to check if a given object is a window
+            y = function(t) {
+                return t != null && t === t.window;
+            },
+
+            // Attributes to be copied to script elements
+            b = {
+                type: true,
+                src: true,
+                noModule: true
+            };
+
+        // Function to create and execute a script element
+        function x(t, e, i) {
+            var n, r = (e = e || s).createElement("script");
+            r.text = t;
+            if (i) {
+                for (n in b) {
+                    if (i[n]) r[n] = i[n];
+                }
+            }
+            e.head.appendChild(r).parentNode.removeChild(r);
+        }
+
+        // Function to get the type of an object
+        function w(t) {
+            return t == null ? t + "" : typeof t === "object" || typeof t === "function" ? f[d.call(t)] || "object" : typeof t;
+        }
+
+        // jQuery constructor function
+        var T = function(t, e) {
+            return new T.fn.init(t, e);
+        };
+
+        // RegExp to trim spaces
+        var C = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
+
+        // Function to check if an object is array-like
+        function k(t) {
+            var e = !!t && "length" in t && t.length,
+                i = w(t);
+            return !_(t) && !y(t) && (i === "array" || e === 0 || typeof e === "number" && e > 0 && e - 1 in t);
+        }
+
+        // Define jQuery prototype
+        T.fn = T.prototype = {
+            jquery: "3.3.1",
+            constructor: T,
+            length: 0,
+            
+            // Convert jQuery object to array
+            toArray: function() {
+                return l.call(this);
+            },
+
+            // Get element by index
+            get: function(t) {
+                return t == null ? l.call(this) : t < 0 ? this[t + this.length] : this[t];
+            },
+
+            // Push elements onto the stack
+            pushStack: function(t) {
+                var e = T.merge(this.constructor(), t);
+                e.prevObject = this;
+                return e;
+            },
+
+            // Iterate over a jQuery object
+            each: function(t) {
+                return T.each(this, t);
+            },
+
+            // Map elements to a new jQuery object
+            map: function(t) {
+                return this.pushStack(T.map(this, function(e, i) {
+                    return t.call(e, i, e);
+                }));
+            },
+
+            // Create a new jQuery object containing a subset of elements
+            slice: function() {
+                return this.pushStack(l.apply(this, arguments));
+            },
+
+            // Get the first element
+            first: function() {
+                return this.eq(0);
+            },
+
+            // Get the last element
+            last: function() {
+                return this.eq(-1);
+            },
+
+            // Get an element by index
+            eq: function(t) {
+                var e = this.length,
+                    i = +t + (t < 0 ? e : 0);
+                return this.pushStack(i >= 0 && i < e ? [this[i]] : []);
+            },
+
+            // Return to the previous jQuery object
+            end: function() {
+                return this.prevObject || this.constructor();
+            },
+
+            push: c,
+            sort: o.sort,
+            splice: o.splice
+        };
+
+        // Extend jQuery object
+        T.extend = T.fn.extend = function() {
+            var t, e, i, n, r, o, s = arguments[0] || {},
+                a = 1,
+                l = arguments.length,
+                u = false;
+            
+            // Check if the first argument is a boolean
+            if (typeof s === "boolean") {
+                u = s;
+                s = arguments[a] || {};
+                a++;
+            }
+
+            // Ensure the target is an object or function
+            if (typeof s !== "object" && !_(s)) {
+                s = {};
+            }
+
+            // Extend the jQuery object itself if only one argument is passed
+            if (a === l) {
+                s = this;
+                a--;
+            }
+
+            // Loop through each argument
+            for (; a < l; a++) {
+                if ((t = arguments[a]) != null) {
+                    for (e in t) {
+                        i = s[e];
+                        n = t[e];
+
+                        // Prevent never-ending loop
+                        if (s !== n) {
+                            if (u && n && (T.isPlainObject(n) || (r = Array.isArray(n)))) {
+                                if (r) {
+                                    r = false;
+                                    o = i && Array.isArray(i) ? i : [];
+                                } else {
+                                    o = i && T.isPlainObject(i) ? i : {};
+                                }
+                                s[e] = T.extend(u, o, n);
+                            } else if (n !== undefined) {
+                                s[e] = n;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return s;
+        };
+
+        // Add properties to jQuery object
+        T.extend({
+            expando: "jQuery" + ("3.3.1" + Math.random()).replace(/\D/g, ""),
+            isReady: true,
+
+            // Throw an error
+            error: function(t) {
+                throw new Error(t);
+            },
+
+            noop: function() {},
+
+            // Check if an object is a plain object
+            isPlainObject: function(t) {
+                var e, i;
+                return !(!t || d.call(t) !== "[object Object]") && (!(e = a(t)) || (i = p.call(e, "constructor") && e.constructor) && m.call(i) === g);
+            },
+
+            // Check if an object is empty
+            isEmptyObject: function(t) {
+                for (var e in t) return false;
+                return true;
+            },
+
+            // Execute a script
+            globalEval: function(t) {
+                x(t);
+            },
+
+            // Iterate over an object or array
+            each: function(t, e) {
+                var i, n = 0;
+                if (k(t)) {
+                    for (i = t.length; n < i && e.call(t[n], n, t[n]) !== false; n++);
+                } else {
+                    for (n in t) {
+                        if (e.call(t[n], n, t[n]) === false) break;
+                    }
+                }
+                return t;
+            },
+
+            // Trim whitespace
+            trim: function(t) {
+                return t == null ? "" : (t + "").replace(C, "");
+            },
+
+            // Convert an array-like object to an array
+            makeArray: function(t, e) {
+                var i = e || [];
+                if (t != null) {
+                    if (k(Object(t))) {
+                        T.merge(i, typeof t === "string" ? [t] : t);
+                    } else {
+                        c.call(i, t);
+                    }
+                }
+                return i;
+            },
+
+            // Check if an element is in an array
+            inArray: function(t, e, i) {
+                return e == null ? -1 : h.call(e, t, i);
+            },
+
+            // Merge two arrays
+            merge: function(t, e) {
+                for (var i = +e.length, n = 0, r = t.length; n < i; n++) {
+                    t[r++] = e[n];
+                }
+                t.length = r;
+                return t;
+            },
+
+            // Filter elements of an array
+            grep: function(t, e, i) {
+                for (var n = [], r = 0, o = t.length, s = !i; r < o; r++) {
+                    if (!e(t[r], r) !== s) {
+                        n.push(t[r]);
+                    }
+                }
+                return n;
+            },
+
+            // Map elements of an array to a new array
+            map: function(t, e, i) {
+                var n, r, o = 0,
+                    s = [];
+                if (k(t)) {
+                    for (n = t.length; o < n; o++) {
+                        r = e(t[o], o, i);
+                        if (r != null) {
+                            s.push(r);
+                        }
+                    }
+                } else {
+                    for (o in t) {
+                        r = e(t[o], o, i);
+                        if (r != null) {
+                            s.push(r);
+                        }
+                    }
+                }
+                return u.apply([], s);
+            },
+
+            guid: 1,
+            support: v
+        });
+
+        // Add iterator function for Symbol
+        if (typeof Symbol === "function") {
+            T.fn[Symbol.iterator] = o[Symbol.iterator];
+        }
+
+        // Populate the class2type map
+        T.each("Boolean Number String Function Array Date RegExp Object Error Symbol".split(" "), function(t, e) {
+            f["[object " + e + "]"] = e.toLowerCase();
+        });
+    }
+));
