@@ -2430,3 +2430,971 @@ var G = function(t) {
     return 1 === t.nodeType || 9 === t.nodeType || !+t.nodeType;
 };
 
+// Constructor function for a Data object that manages data for elements
+function Q() {
+    this.expando = T.expando + Q.uid++;
+}
+
+// Initialize a unique ID counter for the Data object
+Q.uid = 1;
+
+// Define the prototype methods for the Data object
+Q.prototype = {
+    // Get or create a cache object for the given element
+    cache: function(t) {
+        var e = t[this.expando];
+        if (!e) {
+            e = {};
+            if (G(t)) { // Check if the element is a valid node or object
+                if (t.nodeType) {
+                    t[this.expando] = e;
+                } else {
+                    Object.defineProperty(t, this.expando, {
+                        value: e,
+                        configurable: true
+                    });
+                }
+            }
+        }
+        return e;
+    },
+    // Set data in the cache for the given element
+    set: function(t, e, i) {
+        var n, r = this.cache(t);
+        if (typeof e === "string") {
+            r[K(e)] = i;
+        } else {
+            for (n in e) {
+                r[K(n)] = e[n];
+            }
+        }
+        return r;
+    },
+    // Get data from the cache for the given element
+    get: function(t, e) {
+        return e === undefined ? this.cache(t) : t[this.expando] && t[this.expando][K(e)];
+    },
+    // Access data in the cache for the given element, setting it if necessary
+    access: function(t, e, i) {
+        return e === undefined || (e && typeof e === "string" && i === undefined) ? this.get(t, e) : (this.set(t, e, i), i !== undefined ? i : e);
+    },
+    // Remove data from the cache for the given element
+    remove: function(t, e) {
+        var i, n = t[this.expando];
+        if (n !== undefined) {
+            if (e !== undefined) {
+                i = (Array.isArray(e) ? e.map(K) : (e = K(e)) in n ? [e] : e.match(F) || []).length;
+                while (i--) {
+                    delete n[e[i]];
+                }
+            }
+            if (e === undefined || T.isEmptyObject(n)) {
+                if (t.nodeType) {
+                    t[this.expando] = undefined;
+                } else {
+                    delete t[this.expando];
+                }
+            }
+        }
+    },
+    // Check if an element has any data in the cache
+    hasData: function(t) {
+        var e = t[this.expando];
+        return e !== undefined && !T.isEmptyObject(e);
+    }
+};
+
+// Create new Data objects for managing data in jQuery
+var Z = new Q,
+    J = new Q;
+
+// Regular expressions for validating data attributes and capital letters
+var tt = /^(?:\{[\w\W]*\}|\[[\w\W]*\])$/,
+    et = /[A-Z]/g;
+
+// Function to get or set data attributes
+function it(t, e, i) {
+    var n;
+    if (i === undefined && t.nodeType === 1) {
+        n = "data-" + e.replace(et, "-$&").toLowerCase();
+        if (typeof (i = t.getAttribute(n)) === "string") {
+            try {
+                i = (function(t) {
+                    if (t === "true") return true;
+                    if (t === "false") return false;
+                    if (t === "null") return null;
+                    if (t === +t + "") return +t;
+                    if (tt.test(t)) return JSON.parse(t);
+                    return t;
+                })(i);
+            } catch (t) {}
+            J.set(t, e, i);
+        } else {
+            i = undefined;
+        }
+    }
+    return i;
+}
+
+// Extend jQuery with methods to manage data
+T.extend({
+    hasData: function(t) {
+        return J.hasData(t) || Z.hasData(t);
+    },
+    data: function(t, e, i) {
+        return J.access(t, e, i);
+    },
+    removeData: function(t, e) {
+        J.remove(t, e);
+    },
+    _data: function(t, e, i) {
+        return Z.access(t, e, i);
+    },
+    _removeData: function(t, e) {
+        Z.remove(t, e);
+    }
+});
+
+// Extend jQuery prototype with methods to manage data attributes
+T.fn.extend({
+    data: function(t, e) {
+        var i, n, r, o = this[0],
+            s = o && o.attributes;
+        if (t === undefined) {
+            if (this.length) {
+                r = J.get(o);
+                if (o.nodeType === 1 && !Z.get(o, "hasDataAttrs")) {
+                    for (i = s.length; i--;) {
+                        n = s[i];
+                        if (n && n.name.indexOf("data-") === 0) {
+                            n = K(n.name.slice(5));
+                            it(o, n, r[n]);
+                        }
+                    }
+                    Z.set(o, "hasDataAttrs", true);
+                }
+            }
+            return r;
+        } else if (typeof t === "object") {
+            return this.each(function() {
+                J.set(this, t);
+            });
+        } else {
+            return X(this, function(e) {
+                var i;
+                if (o && e === undefined) {
+                    i = J.get(o, t);
+                    if (i !== undefined) return i;
+                    i = it(o, t);
+                    if (i !== undefined) return i;
+                } else {
+                    this.each(function() {
+                        J.set(this, t, e);
+                    });
+                }
+            }, null, e, arguments.length > 1, null, true);
+        }
+    },
+    removeData: function(t) {
+        return this.each(function() {
+            J.remove(this, t);
+        });
+    }
+});
+
+// Extend jQuery with queue methods for managing queues of functions
+T.extend({
+    queue: function(t, e, i) {
+        var n;
+        if (t) {
+            e = (e || "fx") + "queue";
+            n = Z.get(t, e);
+            if (i) {
+                if (!n || Array.isArray(i)) {
+                    n = Z.access(t, e, T.makeArray(i));
+                } else {
+                    n.push(i);
+                }
+            }
+            return n || [];
+        }
+    },
+    dequeue: function(t, e) {
+        e = e || "fx";
+        var i = T.queue(t, e),
+            n = i.length,
+            r = i.shift(),
+            o = T._queueHooks(t, e);
+        if (r === "inprogress") {
+            r = i.shift();
+            n--;
+        }
+        if (r) {
+            if (e === "fx") {
+                i.unshift("inprogress");
+            }
+            delete o.stop;
+            r.call(t, function() {
+                T.dequeue(t, e);
+            }, o);
+        }
+        if (!n && o) {
+            o.empty.fire();
+        }
+    },
+    _queueHooks: function(t, e) {
+        var i = e + "queueHooks";
+        return Z.get(t, i) || Z.access(t, i, {
+            empty: T.Callbacks("once memory").add(function() {
+                Z.remove(t, [e + "queue", i]);
+            })
+        });
+    }
+});
+
+// Extend jQuery prototype with queue methods
+T.fn.extend({
+    queue: function(t, e) {
+        var i = 2;
+        if (typeof t !== "string") {
+            e = t;
+            t = "fx";
+            i--;
+        }
+        if (arguments.length < i) {
+            return T.queue(this[0], t);
+        } else if (e === undefined) {
+            return this;
+        } else {
+            return this.each(function() {
+                var i = T.queue(this, t, e);
+                T._queueHooks(this, t);
+                if (t === "fx" && i[0] !== "inprogress") {
+                    T.dequeue(this, t);
+                }
+            });
+        }
+    },
+    dequeue: function(t) {
+        return this.each(function() {
+            T.dequeue(this, t);
+        });
+    },
+    clearQueue: function(t) {
+        return this.queue(t || "fx", []);
+    },
+    promise: function(t, e) {
+        var i, n = 1,
+            r = T.Deferred(),
+            o = this,
+            s = this.length,
+            a = function() {
+                if (!--n) {
+                    r.resolveWith(o, [o]);
+                }
+            };
+        if (typeof t !== "string") {
+            e = t;
+            t = undefined;
+        }
+        t = t || "fx";
+        while (s--) {
+            if ((i = Z.get(o[s], t + "queueHooks")) && i.empty) {
+                n++;
+                i.empty.add(a);
+            }
+        }
+        a();
+        return r.promise(e);
+    }
+});
+
+// Regular expressions for parsing numbers and CSS properties
+var nt = /[+-]?(?:\d*\.|)\d+(?:[eE][+-]?\d+|)/.source,
+    rt = new RegExp("^(?:([+-])=|)(" + nt + ")([a-z%]*)$", "i"),
+    ot = ["Top", "Right", "Bottom", "Left"],
+    st = function(t, e) {
+        return "none" === (t = e || t).style.display || "" === t.style.display && T.contains(t.ownerDocument, t) && "none" === T.css(t, "display");
+    },
+    at = function(t, e, i, n) {
+        var r, o, s = {};
+        for (o in e) {
+            s[o] = t.style[o];
+            t.style[o] = e[o];
+        }
+        r = i.apply(t, n || []);
+        for (o in e) {
+            t.style[o] = s[o];
+        }
+        return r;
+    };
+
+// Function for setting or getting CSS properties
+function lt(t, e, i, n) {
+    var r, o, s = 20,
+        a = n ? function() {
+            return n.cur();
+        } : function() {
+            return T.css(t, e, "");
+        },
+        l = a(),
+        u = i && i[3] || (T.cssNumber[e] ? "" : "px"),
+        c = (T.cssNumber[e] || u !== "px" && +l) && rt.exec(T.css(t, e));
+    if (c && c[3] !== u) {
+        u = u || c[3];
+        c = +l || 1;
+        do {
+            c /= 2;
+            T.style(t, e, c + u);
+        } while ((1 - o) * (1 - (o = a() / l || 0.5)) > 0 && --s);
+        c *= 2;
+        T.style(t, e, c + u);
+        i = i || [];
+    }
+    if (i) {
+        c = +c || +l || 0;
+        r = i[1] ? c + (i[1] + 1) * i[2] : +i[2];
+        if (n) {
+            n.unit = u;
+            n.start = c;
+            n.end = r;
+        }
+    }
+    return r;
+}
+
+// Object for caching display values of elements
+var ut = {};
+
+// Function to get the default display value of an element
+function ct(t) {
+    var e, i = t.ownerDocument,
+        n = t.nodeName,
+        r = ut[n];
+    if (!r) {
+        e = i.body.appendChild(i.createElement(n));
+        r = T.css(e, "display");
+        e.parentNode.removeChild(e);
+        if (r === "none") {
+            r = "block";
+        }
+        ut[n] = r;
+    }
+    return r;
+}
+
+// Function to show or hide elements based on their display property
+function ht(t, e) {
+    var i, n, r = [],
+        o = 0,
+        s = t.length;
+    for (; o < s; o++) {
+        n = t[o];
+        if (n.style) {
+            i = n.style.display;
+            if (e) {
+                if (i === "none") {
+                    r[o] = Z.get(n, "display") || null;
+                    if (!r[o]) {
+                        n.style.display = "";
+                    }
+                    if (n.style.display === "" && st(n)) {
+                        r[o] = ct(n);
+                    }
+                }
+            } else if (i !== "none") {
+                r[o] = "none";
+                Z.set(n, "display", i);
+            }
+        }
+    }
+    for (o = 0; o < s; o++) {
+        if (r[o] != null) {
+            t[o].style.display = r[o];
+        }
+    }
+    return t;
+}
+
+// Extend jQuery prototype with methods to show, hide, and toggle elements
+T.fn.extend({
+    show: function() {
+        return ht(this, true);
+    },
+    hide: function() {
+        return ht(this);
+    },
+    toggle: function(t) {
+        if (typeof t === "boolean") {
+            return t ? this.show() : this.hide();
+        }
+        return this.each(function() {
+            if (st(this)) {
+                T(this).show();
+            } else {
+                T(this).hide();
+            }
+        });
+    }
+});
+
+// Regular expressions for parsing HTML strings and identifying script types
+var ft = /^(?:checkbox|radio)$/i,
+    dt = /<([a-z][^\/\0>\x20\t\r\n\f]+)/i,
+    pt = /^$|^module$|\/(?:java|ecma)script/i,
+    mt = {
+        option: [1, "<select multiple='multiple'>", "</select>"],
+        thead: [1, "<table>", "</table>"],
+        col: [2, "<table><colgroup>", "</colgroup></table>"],
+        tr: [2, "<table><tbody>", "</tbody></table>"],
+        td: [3, "<table><tbody><tr>", "</tr></tbody></table>"],
+        _default: [0, "", ""]
+    };
+
+// Function to get all elements of a specified type within a context
+function gt(t, e) {
+    var i;
+    if (t.getElementsByTagName) {
+        i = t.getElementsByTagName(e || "*");
+    } else if (t.querySelectorAll) {
+        i = t.querySelectorAll(e || "*");
+    } else {
+        i = [];
+    }
+    if (e === undefined || e && A(t, e)) {
+        i = T.merge([t], i);
+    }
+    return i;
+}
+
+// Function to set global evaluation flag on scripts
+function vt(t, e) {
+    var i;
+    for (i = 0; i < t.length; i++) {
+        Z.set(t[i], "globalEval", !e || Z.get(e[i], "globalEval"));
+    }
+}
+
+// Set up default structure for wrapping HTML strings
+mt.optgroup = mt.option;
+mt.tbody = mt.tfoot = mt.colgroup = mt.caption = mt.thead;
+mt.th = mt.td;
+
+// Function to build a document fragment from HTML strings
+function xt(t, e, i, n, r) {
+    var o, s, a, l, u, c, h = e.createDocumentFragment(),
+        f = [],
+        d = 0,
+        p = t.length;
+    for (; d < p; d++) {
+        o = t[d];
+        if (o || o === 0) {
+            if (typeof o === "object") {
+                T.merge(f, o.nodeType ? [o] : o);
+            } else if (bt.test(o)) {
+                s = s || h.appendChild(e.createElement("div"));
+                a = (dt.exec(o) || ["", ""])[1].toLowerCase();
+                l = mt[a] || mt._default;
+                s.innerHTML = l[1] + T.htmlPrefilter(o) + l[2];
+                c = l[0];
+                while (c--) {
+                    s = s.lastChild;
+                }
+                T.merge(f, s.childNodes);
+                s = h.firstChild;
+                s.textContent = "";
+            } else {
+                f.push(e.createTextNode(o));
+            }
+        }
+    }
+    h.textContent = "";
+    for (d = 0; o = f[d++];) {
+        if (n && T.inArray(o, n) > -1) {
+            if (r) {
+                r.push(o);
+            }
+        } else {
+            u = T.contains(o.ownerDocument, o);
+            s = gt(h.appendChild(o), "script");
+            if (u) {
+                vt(s);
+            }
+            if (i) {
+                for (c = 0; o = s[c++];) {
+                    if (pt.test(o.type || "")) {
+                        i.push(o);
+                    }
+                }
+            }
+        }
+    }
+    return h;
+}
+
+// Test for cloning and check properties of elements
+_t = s.createDocumentFragment().appendChild(s.createElement("div"));
+(yt = s.createElement("input")).setAttribute("type", "radio");
+yt.setAttribute("checked", "checked");
+yt.setAttribute("name", "t");
+_t.appendChild(yt);
+v.checkClone = _t.cloneNode(true).cloneNode(true).lastChild.checked;
+_t.innerHTML = "<textarea>x</textarea>";
+v.noCloneChecked = !!_t.cloneNode(true).lastChild.defaultValue;
+
+// Define various regular expressions for handling events
+var wt = s.documentElement,
+    Tt = /^key/,
+    Ct = /^(?:mouse|pointer|contextmenu|drag|drop)|click/,
+    kt = /^([^.]*)(?:\.(.+)|)/;
+
+// Utility functions for event handling
+function Et() {
+    return true;
+}
+
+function Pt() {
+    return false;
+}
+
+function St() {
+    try {
+        return s.activeElement;
+    } catch (t) {}
+}
+
+// Function to add an event handler to elements
+function Ot(t, e, i, n, r, o) {
+    var s, a;
+    if (typeof e === "object") {
+        for (a in e) {
+            Ot(t, a, i, n, e[a], o);
+        }
+        return t;
+    }
+    if (n == null && r == null) {
+        r = i;
+        n = i = undefined;
+    } else if (r == null) {
+        if (typeof i === "string") {
+            r = n;
+            n = undefined;
+        } else {
+            r = n;
+            n = i;
+            i = undefined;
+        }
+    }
+    if (r === false) {
+        r = Pt;
+    } else if (!r) {
+        return t;
+    }
+    if (o === 1) {
+        s = r;
+        r = function(t) {
+            T().off(t);
+            return s.apply(this, arguments);
+        };
+        r.guid = s.guid || (s.guid = T.guid++);
+    }
+    return t.each(function() {
+        T.event.add(this, e, r, n, i);
+    });
+}
+
+// Define the main event handling object
+T.event = {
+    global: {},
+    // Add an event handler to an element
+    add: function(t, e, i, n, r) {
+        var o, s, a, l, u, c, h, f, d, p, m, g = Z.get(t);
+        if (g) {
+            if (i.handler) {
+                o = i;
+                i = o.handler;
+                r = o.selector;
+            }
+            if (r) {
+                T.find.matchesSelector(wt, r);
+            }
+            if (!i.guid) {
+                i.guid = T.guid++;
+            }
+            l = g.events;
+            if (!l) {
+                l = g.events = {};
+            }
+            s = g.handle;
+            if (!s) {
+                s = g.handle = function(e) {
+                    return typeof T !== "undefined" && T.event.triggered !== e.type ? T.event.dispatch.apply(t, arguments) : undefined;
+                };
+            }
+            u = (e = (e || "").match(F) || [""]).length;
+            while (u--) {
+                d = m = (a = kt.exec(e[u]) || [])[1];
+                p = (a[2] || "").split(".").sort();
+                if (d) {
+                    h = T.event.special[d] || {};
+                    d = (r ? h.delegateType : h.bindType) || d;
+                    h = T.event.special[d] || {};
+                    c = T.extend({
+                        type: d,
+                        origType: m,
+                        data: n,
+                        handler: i,
+                        guid: i.guid,
+                        selector: r,
+                        needsContext: r && T.expr.match.needsContext.test(r),
+                        namespace: p.join(".")
+                    }, o);
+                    if (!(f = l[d])) {
+                        f = l[d] = [];
+                        f.delegateCount = 0;
+                        if (!h.setup || h.setup.call(t, n, p, s) === false) {
+                            if (t.addEventListener) {
+                                t.addEventListener(d, s);
+                            }
+                        }
+                    }
+                    if (h.add) {
+                        h.add.call(t, c);
+                        if (!c.handler.guid) {
+                            c.handler.guid = i.guid;
+                        }
+                    }
+                    if (r) {
+                        f.splice(f.delegateCount++, 0, c);
+                    } else {
+                        f.push(c);
+                    }
+                    T.event.global[d] = true;
+                }
+            }
+        }
+    },
+    // Remove an event handler from an element
+    remove: function(t, e, i, n, r) {
+        var o, s, a, l, u, c, h, f, d, p, m, g = Z.hasData(t) && Z.get(t);
+        if (g && (l = g.events)) {
+            u = (e = (e || "").match(F) || [""]).length;
+            while (u--) {
+                d = m = (a = kt.exec(e[u]) || [])[1];
+                p = (a[2] || "").split(".").sort();
+                if (d) {
+                    h = T.event.special[d] || {};
+                    f = l[d = (n ? h.delegateType : h.bindType) || d] || [];
+                    a = a[2] && new RegExp("(^|\\.)" + p.join("\\.(?:.*\\.|)") + "(\\.|$)");
+                    o = s = f.length;
+                    while (s--) {
+                        c = f[s];
+                        if ((r || m === c.origType) && (!i || i.guid === c.guid) && (!a || a.test(c.namespace)) && (!n || n === c.selector || n === "**" && c.selector)) {
+                            f.splice(s, 1);
+                            if (c.selector) {
+                                f.delegateCount--;
+                            }
+                            if (h.remove) {
+                                h.remove.call(t, c);
+                            }
+                        }
+                    }
+                    if (o && !f.length) {
+                        if (!h.teardown || h.teardown.call(t, p, g.handle) === false) {
+                            T.removeEvent(t, d, g.handle);
+                        }
+                        delete l[d];
+                    }
+                } else {
+                    for (d in l) {
+                        T.event.remove(t, d + e[u], i, n, true);
+                    }
+                }
+            }
+            if (T.isEmptyObject(l)) {
+                Z.remove(t, "handle events");
+            }
+        }
+    },
+    // Dispatch an event to the appropriate handlers
+    dispatch: function(t) {
+        var e, i, n, r, o, s, a = T.event.fix(t),
+            l = new Array(arguments.length),
+            u = (Z.get(this, "events") || {})[a.type] || [],
+            c = T.event.special[a.type] || {};
+        l[0] = a;
+        for (e = 1; e < arguments.length; e++) {
+            l[e] = arguments[e];
+        }
+        a.delegateTarget = this;
+        if (!c.preDispatch || c.preDispatch.call(this, a) !== false) {
+            s = T.event.handlers.call(this, a, u);
+            e = 0;
+            while ((r = s[e++]) && !a.isPropagationStopped()) {
+                a.currentTarget = r.elem;
+                i = 0;
+                while ((o = r.handlers[i++]) && !a.isImmediatePropagationStopped()) {
+                    if (!a.rnamespace || a.rnamespace.test(o.namespace)) {
+                        a.handleObj = o;
+                        a.data = o.data;
+                        n = ((T.event.special[o.origType] || {}).handle || o.handler).apply(r.elem, l);
+                        if (n !== undefined && (a.result = n) === false) {
+                            a.preventDefault();
+                            a.stopPropagation();
+                        }
+                    }
+                }
+            }
+            if (c.postDispatch) {
+                c.postDispatch.call(this, a);
+            }
+            return a.result;
+        }
+    },
+    // Get the handlers for an event
+    handlers: function(t, e) {
+        var i, n, r, o, s, a = [],
+            l = e.delegateCount,
+            u = t.target;
+        if (l && u.nodeType && !(t.type === "click" && t.button >= 1)) {
+            for (; u !== this; u = u.parentNode || this) {
+                if (u.nodeType === 1 && (t.type !== "click" || u.disabled !== true)) {
+                    for (o = [], s = {}, i = 0; i < l; i++) {
+                        r = e[i];
+                        if (r.selector !== "**" && !s[r.selector + " "] && (s[r.selector + " "] = r.needsContext ? T(r.selector, this).index(u) > -1 : T.find(r.selector, this, null, [u]).length)) {
+                            o.push(r);
+                        }
+                    }
+                    if (o.length) {
+                        a.push({
+                            elem: u,
+                            handlers: o
+                        });
+                    }
+                }
+            }
+        }
+        u = this;
+        if (l < e.length) {
+            a.push({
+                elem: u,
+                handlers: e.slice(l)
+            });
+        }
+        return a;
+    },
+    // Add a property to the event object
+    addProp: function(t, e) {
+        Object.defineProperty(T.Event.prototype, t, {
+            enumerable: true,
+            configurable: true,
+            get: _(e) ? function() {
+                if (this.originalEvent) {
+                    return e(this.originalEvent);
+                }
+            } : function() {
+                if (this.originalEvent) {
+                    return this.originalEvent[t];
+                }
+            },
+            set: function(e) {
+                Object.defineProperty(this, t, {
+                    enumerable: true,
+                    configurable: true,
+                    writable: true,
+                    value: e
+                });
+            }
+        });
+    },
+    // Fix an event object to standardize properties
+    fix: function(t) {
+        return t[T.expando] ? t : new T.Event(t);
+    },
+    // Special event handlers for specific event types
+    special: {
+        load: {
+            noBubble: true
+        },
+        focus: {
+            trigger: function() {
+                if (this !== St() && this.focus) {
+                    this.focus();
+                    return false;
+                }
+            },
+            delegateType: "focusin"
+        },
+        blur: {
+            trigger: function() {
+                if (this === St() && this.blur) {
+                    this.blur();
+                    return false;
+                }
+            },
+            delegateType: "focusout"
+        },
+        click: {
+            trigger: function() {
+                if (this.type === "checkbox" && this.click && A(this, "input")) {
+                    this.click();
+                    return false;
+                }
+            },
+            _default: function(t) {
+                return A(t.target, "a");
+            }
+        },
+        beforeunload: {
+            postDispatch: function(t) {
+                if (t.result !== undefined && t.originalEvent) {
+                    t.originalEvent.returnValue = t.result;
+                }
+            }
+        }
+    }
+};
+
+// Remove an event handler from an element
+T.removeEvent = function(t, e, i) {
+    if (t.removeEventListener) {
+        t.removeEventListener(e, i);
+    }
+};
+
+// Constructor for a jQuery Event object
+T.Event = function(t, e) {
+    if (!(this instanceof T.Event)) {
+        return new T.Event(t, e);
+    }
+    if (t && t.type) {
+        this.originalEvent = t;
+        this.type = t.type;
+        this.isDefaultPrevented = t.defaultPrevented || t.returnValue === false ? Et : Pt;
+        this.target = t.target && t.target.nodeType === 3 ? t.target.parentNode : t.target;
+        this.currentTarget = t.currentTarget;
+        this.relatedTarget = t.relatedTarget;
+    } else {
+        this.type = t;
+    }
+    if (e) {
+        T.extend(this, e);
+    }
+    this.timeStamp = t && t.timeStamp || Date.now();
+    this[T.expando] = true;
+};
+
+// Define the prototype methods for the jQuery Event object
+T.Event.prototype = {
+    constructor: T.Event,
+    isDefaultPrevented: Pt,
+    isPropagationStopped: Pt,
+    isImmediatePropagationStopped: Pt,
+    isSimulated: false,
+    preventDefault: function() {
+        var t = this.originalEvent;
+        this.isDefaultPrevented = Et;
+        if (t && !this.isSimulated) {
+            t.preventDefault();
+        }
+    },
+    stopPropagation: function() {
+        var t = this.originalEvent;
+        this.isPropagationStopped = Et;
+        if (t && !this.isSimulated) {
+            t.stopPropagation();
+        }
+    },
+    stopImmediatePropagation: function() {
+        var t = this.originalEvent;
+        this.isImmediatePropagationStopped = Et;
+        if (t && !this.isSimulated) {
+            t.stopImmediatePropagation();
+        }
+        this.stopPropagation();
+    }
+};
+
+// Define properties to copy from the original event to the jQuery Event object
+T.each({
+    altKey: true,
+    bubbles: true,
+    cancelable: true,
+    changedTouches: true,
+    ctrlKey: true,
+    detail: true,
+    eventPhase: true,
+    metaKey: true,
+    pageX: true,
+    pageY: true,
+    shiftKey: true,
+    view: true,
+    char: true,
+    charCode: true,
+    key: true,
+    keyCode: true,
+    button: true,
+    buttons: true,
+    clientX: true,
+    clientY: true,
+    offsetX: true,
+    offsetY: true,
+    pointerId: true,
+    pointerType: true,
+    screenX: true,
+    screenY: true,
+    targetTouches: true,
+    toElement: true,
+    touches: true,
+    which: function(t) {
+        var e = t.button;
+        if (t.which == null) {
+            if (Tt.test(t.type)) {
+                if (t.charCode != null) {
+                    return t.charCode;
+                }
+                return t.keyCode;
+            }
+            if (Ct.test(t.type)) {
+                if (e !== undefined) {
+                    if (e & 1) {
+                        return 1;
+                    }
+                    if (e & 2) {
+                        return 3;
+                    }
+                    if (e & 4) {
+                        return 2;
+                    }
+                }
+                return 0;
+            }
+        }
+        return t.which;
+    }
+}, T.event.addProp);
+
+// Define special event handlers for mouse and pointer events
+T.each({
+    mouseenter: "mouseover",
+    mouseleave: "mouseout",
+    pointerenter: "pointerover",
+    pointerleave: "pointerout"
+}, function(t, e) {
+    T.event.special[t] = {
+        delegateType: e,
+        bindType: e,
+        handle: function(t) {
+            var i, n = this,
+                r = t.relatedTarget,
+                o = t.handleObj;
+            if (!r || (r !== n && !T.contains(n, r))) {
+                t.type = o.origType;
+                i = o.handler.apply(this, arguments);
+                t.type = e;
+            }
+            return i;
+        }
+    };
+});
+
