@@ -795,7 +795,7 @@
     c = s.Ease,
     h = (s.Linear, s.Power1, s.Power2, s.Power3, s.Power4, s.TweenPlugin);
 a.events.EventDispatcher
-},).call(this, i(27)(t), i(28));
+}).call(this, i(27)(t), i(28));
 
 
 
@@ -1748,3 +1748,329 @@ var E = function(t) {
         reset: !0
     }) n.pseudos[e] = ft(e);
     
+
+    function gt() {}
+
+// Concatenates the values of each element in the array
+function vt(t) {
+    for (var e = 0, i = t.length, n = ""; e < i; e++) n += t[e].value;
+    return n;
+}
+
+// Creates a function to traverse DOM based on direction and next sibling or parent
+function _t(t, e, i) {
+    var n = e.dir,
+        r = e.next,
+        o = r || n,
+        s = i && "parentNode" === o,
+        a = T++;
+    return e.first ? function(e, i, r) {
+        for (; e = e[n];) if (1 === e.nodeType || s) return t(e, i, r);
+        return !1;
+    } : function(e, i, l) {
+        var u, c, h, f = [w, a];
+        if (l) {
+            for (; e = e[n];) if ((1 === e.nodeType || s) && t(e, i, l)) return !0;
+        } else {
+            for (; e = e[n];) if (1 === e.nodeType || s) {
+                if (c = (h = e[b] || (e[b] = {}))[e.uniqueID] || (h[e.uniqueID] = {}), r && r === e.nodeName.toLowerCase()) e = e[n] || e;
+                else {
+                    if ((u = c[o]) && u[0] === w && u[1] === a) return f[2] = u[2];
+                    if (c[o] = f, f[2] = t(e, i, l)) return !0;
+                }
+            }
+        }
+        return !1;
+    };
+}
+
+// Combines multiple filtering functions into one that returns true if all functions return true
+function yt(t) {
+    return t.length > 1 ? function(e, i, n) {
+        for (var r = t.length; r--;) if (!t[r](e, i, n)) return !1;
+        return !0;
+    } : t[0];
+}
+
+// Filters an array and optionally includes indices of matched elements
+function bt(t, e, i, n, r) {
+    for (var o, s = [], a = 0, l = t.length, u = null != e; a < l; a++) (o = t[a]) && (i && !i(o, n, r) || (s.push(o), u && e.push(a)));
+    return s;
+}
+
+// Combines multiple filtering and matching functions into one for complex DOM traversal and manipulation
+function xt(t, e, i, n, r, o) {
+    return n && !n[b] && (n = xt(n)), r && !r[b] && (r = xt(r, o)), at(function(o, s, a, l) {
+        var u, c, h, f = [],
+            d = [],
+            p = s.length,
+            m = o || function(t, e, i) {
+                for (var n = 0, r = e.length; n < r; n++) ot(t, e[n], i);
+                return i;
+            }(e || "*", a.nodeType ? [a] : a, []),
+            g = !t || !o && e ? m : bt(m, f, t, a, l),
+            v = i ? r || (o ? t : p || n) ? [] : s : g;
+        if (i && i(g, v, a, l), n)
+            for (u = bt(v, d), n(u, [], a, l), c = u.length; c--;)(h = u[c]) && (v[d[c]] = !(g[d[c]] = h));
+        if (o) {
+            if (r || t) {
+                if (r) {
+                    for (u = [], c = v.length; c--;)(h = v[c]) && u.push(g[c] = h);
+                    r(null, v = [], u, l);
+                }
+                for (c = v.length; c--;)(h = v[c]) && (u = r ? L(o, h) : f[c]) > -1 && (o[u] = !(s[u] = h));
+            }
+        } else v = bt(v === s ? v.splice(p, v.length) : v), r ? r(null, s, v, l) : D.apply(s, v);
+    });
+}
+
+// Creates a function for matching elements against multiple filters
+function wt(t) {
+    for (var e, i, r, o = t.length, s = n.relative[t[0].type], a = s || n.relative[" "], l = s ? 1 : 0, c = _t(function(t) {
+            return t === e;
+        }, a, !0), h = _t(function(t) {
+            return L(e, t) > -1;
+        }, a, !0), f = [function(t, i, n) {
+            var r = !s && (n || i !== u) || ((e = i).nodeType ? c(t, i, n) : h(t, i, n));
+            return e = null, r;
+        }]; l < o; l++)
+        if (i = n.relative[t[l].type]) f = [_t(yt(f), i)];
+        else {
+            if ((i = n.filter[t[l].type].apply(null, t[l].matches))[b]) {
+                for (r = ++l; r < o && !n.relative[t[r].type]; r++);
+                return xt(l > 1 && yt(f), l > 1 && vt(t.slice(0, l - 1).concat({
+                    value: " " === t[l - 2].type ? "*" : ""
+                })).replace($, "$1"), i, l < r && wt(t.slice(l, r)), r < o && wt(t = t.slice(r)), r < o && vt(t));
+            }
+            f.push(i);
+        }
+    return yt(f);
+}
+
+// Placeholder for a constructor function for filters
+gt.prototype = n.filters = n.pseudos;
+n.setFilters = new gt();
+
+// Tokenizes a selector string into an array of filter objects
+s = ot.tokenize = function(t, e) {
+    var i, r, o, s, a, l, u, c = k[t + " "];
+    if (c) return e ? 0 : c.slice(0);
+    for (a = t, l = [], u = n.preFilter; a;) {
+        for (s in i && !(r = H.exec(a)) || (r && (a = a.slice(r[0].length) || a), l.push(o = [])), i = !1, (r = q.exec(a)) && (i = r.shift(), o.push({
+                value: i,
+                type: r[0].replace($, " ")
+            }), a = a.slice(i.length)), n.filter) !(r = U[s].exec(a)) || u[s] && !(r = u[s](r)) || (i = r.shift(), o.push({
+            value: i,
+            type: s,
+            matches: r
+        }), a = a.slice(i.length));
+        if (!i) break;
+    }
+    return e ? a.length : a ? ot.error(t) : k(t, l).slice(0);
+};
+
+// Compiles a selector string into a function that can be used to find matching elements
+a = ot.compile = function(t, e) {
+    var i, r = [],
+        o = [],
+        a = E[t + " "];
+    if (!a) {
+        for (e || (e = s(t)), i = e.length; i--;)(a = wt(e[i]))[b] ? r.push(a) : o.push(a);
+        (a = E(t, function(t, e) {
+            var i = e.length > 0,
+                r = t.length > 0,
+                o = function(o, s, a, l, c) {
+                    var h, p, g, v = 0,
+                        _ = "0",
+                        y = o && [],
+                        b = [],
+                        x = u,
+                        T = o || r && n.find.TAG("*", c),
+                        C = w += null == x ? 1 : Math.random() || .1,
+                        k = T.length;
+                    for (c && (u = s === d || s || c); _ !== k && null != (h = T[_]); _++) {
+                        if (r && h) {
+                            for (p = 0, s || h.ownerDocument === d || (f(h), a = !m); g = t[p++];)
+                                if (g(h, s || d, a)) {
+                                    l.push(h);
+                                    break;
+                                }
+                            c && (w = C);
+                        }
+                        i && ((h = !g && h) && v--, o && y.push(h));
+                    }
+                    if (v += _, i && _ !== v) {
+                        for (p = 0; g = e[p++];) g(y, b, s, a);
+                        if (o) {
+                            if (v > 0)
+                                for (; _--;) y[_] || b[_] || (b[_] = A.call(l));
+                            b = bt(b);
+                        }
+                        D.apply(l, b), c && !o && b.length > 0 && v + e.length > 1 && ot.uniqueSort(l);
+                    }
+                    return c && (w = C, u = x), y;
+                };
+            return i ? at(o) : o;
+        }(o, r))).selector = t;
+    }
+    return a;
+};
+
+// Selects elements matching a given selector from a context
+l = ot.select = function(t, e, i, r) {
+    var o, l, u, c, h, f = "function" == typeof t && t,
+        d = !r && s(t = f.selector || t);
+    if (i = i || [], 1 === d.length) {
+        if ((l = d[0] = d[0].slice(0)).length > 2 && "ID" === (u = l[0]).type && 9 === e.nodeType && m && n.relative[l[1].type]) {
+            if (!(e = (n.find.ID(u.matches[0].replace(J, tt), e) || [])[0])) return i;
+            f && (e = e.parentNode), t = t.slice(l.shift().value.length);
+        }
+        for (o = U.needsContext.test(t) ? 0 : l.length; o-- && (u = l[o], !n.relative[c = u.type]);)
+            if ((h = n.find[c]) && (r = h(u.matches[0].replace(J, tt), Z.test(l[0].type) && mt(e.parentNode) || e))) {
+                if (l.splice(o, 1), !(t = r.length && vt(l))) return D.apply(i, r), i;
+                break;
+            }
+    }
+    return (f || a(t, d))(r, e, !m, i, !e || Z.test(t) && mt(e.parentNode) || e), i;
+};
+
+// Ensures stable sorting by converting a string to array and back
+i.sortStable = b.split("").sort(P).join("") === b;
+
+// Detects duplicate elements
+i.detectDuplicates = !!h;
+
+// Placeholder function to initialize and configure document and elements
+f();
+
+// Checks if the elements are sorted in the document
+i.sortDetached = lt(function(t) {
+    return 1 & t.compareDocumentPosition(d.createElement("fieldset"));
+});
+
+// Checks for specific attributes in the elements
+lt(function(t) {
+    return t.innerHTML = "<a href='#'></a>", "#" === t.firstChild.getAttribute("href");
+}) || ut("type|href|height|width", function(t, e, i) {
+    if (!i) return t.getAttribute(e, "type" === e.toLowerCase() ? 1 : 2);
+});
+
+// Ensures attributes are correctly set and retrieved
+i.attributes && lt(function(t) {
+    return t.innerHTML = "<input/>", t.firstChild.setAttribute("value", ""), "" === t.firstChild.getAttribute("value");
+}) || ut("value", function(t, e, i) {
+    if (!i && "input" === t.nodeName.toLowerCase()) return t.defaultValue;
+});
+
+// Checks if the disabled attribute is correctly handled
+lt(function(t) {
+    return null == t.getAttribute("disabled");
+}) || ut(I, function(t, e, i) {
+    var n;
+    if (!i) return !0 === t[e] ? e.toLowerCase() : (n = t.getAttributeNode(e)) && n.specified ? n.value : null;
+});
+
+// Export the ot object
+ot;
+
+// jQuery specific functions for finding, filtering, and manipulating elements
+T.find = E, T.expr = E.selectors, T.expr[":"] = T.expr.pseudos, T.uniqueSort = T.unique = E.uniqueSort, T.text = E.getText, T.isXMLDoc = E.isXML, T.contains = E.contains, T.escapeSelector = E.escape;
+
+// Finds elements based on a selector and context
+var P = function(t, e, i) {
+    for (var n = [], r = void 0 !== i;
+        (t = t[e]) && 9 !== t.nodeType;)
+        if (1 === t.nodeType) {
+            if (r && T(t).is(i)) break;
+            n.push(t);
+        }
+    return n;
+};
+
+// Finds sibling elements excluding the specified element
+var S = function(t, e) {
+    for (var i = []; t; t = t.nextSibling) 1 === t.nodeType && t !== e && i.push(t);
+    return i;
+};
+
+// Checks if the nodeName matches the specified name
+function A(t, e) {
+    return t.nodeName && t.nodeName.toLowerCase() === e.toLowerCase();
+}
+
+// Regular expression to match HTML tags
+var M = /^<([a-z][^\/\0>:\x20\t\r\n\f]*)[\x20\t\r\n\f]*\/?>(?:<\/\1>|)$/i;
+
+// Filters elements based on a function, node, or string
+function D(t, e, i) {
+    return _(e) ? T.grep(t, function(t, n) {
+        return !!e.call(t, n, t) !== i;
+    }) : e.nodeType ? T.grep(t, function(t) {
+        return t === e !== i;
+    }) : "string" != typeof e ? T.grep(t, function(t) {
+        return h.call(e, t) > -1 !== i;
+    }) : T.filter(e, t, i);
+}
+
+// Extends jQuery prototype for finding, filtering, and manipulating elements
+T.filter = function(t, e, i) {
+    var n = e[0];
+    return i && (t = ":not(" + t + ")"), 1 === e.length && 1 === n.nodeType ? T.find.matchesSelector(n, t) ? [n] : [] : T.find.matches(t, T.grep(e, function(t) {
+        return 1 === t.nodeType;
+    }));
+};
+
+// jQuery prototype functions
+T.fn.extend({
+    // Finds elements based on a selector
+    find: function(t) {
+        var e, i, n = this.length,
+            r = this;
+        if ("string" != typeof t) return this.pushStack(T(t).filter(function() {
+            for (e = 0; e < n; e++)
+                if (T.contains(r[e], this)) return !0;
+        }));
+        for (i = this.pushStack([]), e = 0; e < n; e++) T.find(t, r[e], i);
+        return n > 1 ? T.uniqueSort(i) : i;
+    },
+    // Filters elements based on a selector
+    filter: function(t) {
+        return this.pushStack(D(this, t || [], !1));
+    },
+    // Excludes elements based on a selector
+    not: function(t) {
+        return this.pushStack(D(this, t || [], !0));
+    },
+    // Checks if elements match a selector
+    is: function(t) {
+        return !!D(this, "string" == typeof t && O.test(t) ? T(t) : t || [], !1).length;
+    }
+});
+
+// Regular expression to match HTML strings and IDs
+var R, L = /^(?:\s*(<[\w\W]+>)[^>]*|#([\w-]+))$/;
+
+// Initializes jQuery object
+(T.fn.init = function(t, e, i) {
+    var n, r;
+    if (!t) return this;
+    if (i = i || R, "string" == typeof t) {
+        if (!(n = "<" === t[0] && ">" === t[t.length - 1] && t.length >= 3 ? [null, t, null] : L.exec(t)) || !n[1] && e) return !e || e.jquery ? (e || i).find(t) : this.constructor(e).find(t);
+        if (n[1]) {
+            if (e = e instanceof T ? e[0] : e, T.merge(this, T.parseHTML(n[1], e && e.nodeType ? e.ownerDocument || e : s, !0)), M.test(n[1]) && T.isPlainObject(e))
+                for (n in e) _(this[n]) ? this[n](e[n]) : this.attr(n, e[n]);
+            return this;
+        }
+        return (r = s.getElementById(n[2])) && (this[0] = r, this.length = 1), this;
+    }
+    return t.nodeType ? (this[0] = t, this.length = 1, this) : _(t) ? void 0 !== i.ready ? i.ready(t) : t(T) : T.makeArray(t, this);
+}).prototype = T.fn, R = T(s);
+
+// Regular expressions and functions for handling DOM traversal and manipulation
+var I = /^(?:parents|prev(?:Until|All))/,
+    N = {
+        children: !0,
+        contents: !0,
+        next: !0,
+        prev: !0
+    };
