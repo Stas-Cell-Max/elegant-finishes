@@ -2074,3 +2074,359 @@ var I = /^(?:parents|prev(?:Until|All))/,
         next: !0,
         prev: !0
     };
+
+    // Traverses the DOM to find the next sibling element
+function j(t, e) {
+    for (;
+        (t = t[e]) && 1 !== t.nodeType;);
+    return t;
+}
+
+// Extends the jQuery prototype with additional methods
+T.fn.extend({
+    // Checks if the current set of matched elements contains the given element
+    has: function(t) {
+        var e = T(t, this),
+            i = e.length;
+        return this.filter(function() {
+            for (var t = 0; t < i; t++)
+                if (T.contains(this, e[t])) return !0;
+        });
+    },
+    // Finds the closest ancestor of the current set of matched elements
+    closest: function(t, e) {
+        var i, n = 0,
+            r = this.length,
+            o = [],
+            s = "string" != typeof t && T(t);
+        if (!O.test(t))
+            for (; n < r; n++)
+                for (i = this[n]; i && i !== e; i = i.parentNode)
+                    if (i.nodeType < 11 && (s ? s.index(i) > -1 : 1 === i.nodeType && T.find.matchesSelector(i, t))) {
+                        o.push(i);
+                        break;
+                    }
+        return this.pushStack(o.length > 1 ? T.uniqueSort(o) : o);
+    },
+    // Gets the index of the element in its parent
+    index: function(t) {
+        return t ? "string" == typeof t ? h.call(T(t), this[0]) : h.call(this, t.jquery ? t[0] : t) : this[0] && this[0].parentNode ? this.first().prevAll().length : -1;
+    },
+    // Adds elements to the set of matched elements
+    add: function(t, e) {
+        return this.pushStack(T.uniqueSort(T.merge(this.get(), T(t, e))));
+    },
+    // Adds previous set of elements to the current set
+    addBack: function(t) {
+        return this.add(null == t ? this.prevObject : this.prevObject.filter(t));
+    }
+});
+
+// Each function extends jQuery with various traversal methods
+T.each({
+    // Gets the parent of each element in the set of matched elements
+    parent: function(t) {
+        var e = t.parentNode;
+        return e && 11 !== e.nodeType ? e : null;
+    },
+    // Gets all ancestors of each element in the set of matched elements
+    parents: function(t) {
+        return P(t, "parentNode");
+    },
+    // Gets all ancestors up to but not including the element matched by the selector
+    parentsUntil: function(t, e, i) {
+        return P(t, "parentNode", i);
+    },
+    // Gets the immediately following sibling of each element in the set of matched elements
+    next: function(t) {
+        return j(t, "nextSibling");
+    },
+    // Gets the immediately preceding sibling of each element in the set of matched elements
+    prev: function(t) {
+        return j(t, "previousSibling");
+    },
+    // Gets all following siblings of each element in the set of matched elements
+    nextAll: function(t) {
+        return P(t, "nextSibling");
+    },
+    // Gets all preceding siblings of each element in the set of matched elements
+    prevAll: function(t) {
+        return P(t, "previousSibling");
+    },
+    // Gets all following siblings up to but not including the element matched by the selector
+    nextUntil: function(t, e, i) {
+        return P(t, "nextSibling", i);
+    },
+    // Gets all preceding siblings up to but not including the element matched by the selector
+    prevUntil: function(t, e, i) {
+        return P(t, "previousSibling", i);
+    },
+    // Gets all siblings of each element in the set of matched elements
+    siblings: function(t) {
+        return S((t.parentNode || {}).firstChild, t);
+    },
+    // Gets all children of each element in the set of matched elements
+    children: function(t) {
+        return S(t.firstChild);
+    },
+    // Gets the content of each element in the set of matched elements, including text and comments
+    contents: function(t) {
+        return A(t, "iframe") ? t.contentDocument : (A(t, "template") && (t = t.content || t), T.merge([], t.childNodes));
+    }
+}, function(t, e) {
+    T.fn[t] = function(i, n) {
+        var r = T.map(this, e, i);
+        return "Until" !== t.slice(-5) && (n = i), n && "string" == typeof n && (r = T.filter(n, r)), this.length > 1 && (N[t] || T.uniqueSort(r), I.test(t) && r.reverse()), this.pushStack(r);
+    };
+});
+
+// Utility function to split a string into an array of non-whitespace substrings
+var F = /[^\x20\t\r\n\f]+/g;
+
+// Utility functions for use in Deferreds
+function B(t) {
+    return t;
+}
+
+function z(t) {
+    throw t;
+}
+
+// Executes a callback function once a condition is met
+function $(t, e, i, n) {
+    var r;
+    try {
+        t && _(r = t.promise) ? r.call(t).done(e).fail(i) : t && _(r = t.then) ? r.call(t, e, i) : e.apply(void 0, [t].slice(n));
+    } catch (t) {
+        i.apply(void 0, [t]);
+    }
+}
+
+// jQuery Callbacks function, a multi-purpose callback list object
+T.Callbacks = function(t) {
+    t = "string" == typeof t ? function(t) {
+        var e = {};
+        return T.each(t.match(F) || [], function(t, i) {
+            e[i] = !0;
+        }), e;
+    }(t) : T.extend({}, t);
+    var e, i, n, r, o = [],
+        s = [],
+        a = -1,
+        l = function() {
+            for (r = r || t.once, n = e = !0; s.length; a = -1)
+                for (i = s.shift(); ++a < o.length;) !1 === o[a].apply(i[0], i[1]) && t.stopOnFalse && (a = o.length, i = !1);
+            t.memory || (i = !1), e = !1, r && (o = i ? [] : "");
+        },
+        u = {
+            add: function() {
+                return o && (i && !e && (a = o.length - 1, s.push(i)), function e(i) {
+                    T.each(i, function(i, n) {
+                        _(n) ? t.unique && u.has(n) || o.push(n) : n && n.length && "string" !== w(n) && e(n);
+                    });
+                }(arguments), i && !e && l()), this;
+            },
+            remove: function() {
+                return T.each(arguments, function(t, e) {
+                    for (var i;
+                        (i = T.inArray(e, o, i)) > -1;) o.splice(i, 1), i <= a && a--;
+                }), this;
+            },
+            has: function(t) {
+                return t ? T.inArray(t, o) > -1 : o.length > 0;
+            },
+            empty: function() {
+                return o && (o = []), this;
+            },
+            disable: function() {
+                return r = s = [], o = i = "", this;
+            },
+            disabled: function() {
+                return !o;
+            },
+            lock: function() {
+                return r = s = [], i || e || (o = i = ""), this;
+            },
+            locked: function() {
+                return !!r;
+            },
+            fireWith: function(t, i) {
+                return r || (i = [t, (i = i || []).slice ? i.slice() : i], s.push(i), e || l()), this;
+            },
+            fire: function() {
+                return u.fireWith(this, arguments), this;
+            },
+            fired: function() {
+                return !!n;
+            }
+        };
+    return u;
+};
+
+// Extends jQuery with Deferred and when methods for handling asynchronous operations
+T.extend({
+    // Creates a new Deferred object
+    Deferred: function(t) {
+        var e = [
+                ["notify", "progress", T.Callbacks("memory"), T.Callbacks("memory"), 2],
+                ["resolve", "done", T.Callbacks("once memory"), T.Callbacks("once memory"), 0, "resolved"],
+                ["reject", "fail", T.Callbacks("once memory"), T.Callbacks("once memory"), 1, "rejected"]
+            ],
+            n = "pending",
+            r = {
+                state: function() {
+                    return n;
+                },
+                always: function() {
+                    return o.done(arguments).fail(arguments), this;
+                },
+                catch: function(t) {
+                    return r.then(null, t);
+                },
+                pipe: function() {
+                    var t = arguments;
+                    return T.Deferred(function(i) {
+                        T.each(e, function(e, n) {
+                            var r = _(t[n[4]]) && t[n[4]];
+                            o[n[1]](function() {
+                                var t = r && r.apply(this, arguments);
+                                t && _(t.promise) ? t.promise().progress(i.notify).done(i.resolve).fail(i.reject) : i[n[0] + "With"](this, r ? [t] : arguments);
+                            });
+                        }), t = null;
+                    }).promise();
+                },
+                then: function(t, n, r) {
+                    var o = 0;
+
+                    function s(t, e, n, r) {
+                        return function() {
+                            var a = this,
+                                l = arguments,
+                                u = function() {
+                                    var i, u;
+                                    if (!(t < o)) {
+                                        if ((i = n.apply(a, l)) === e.promise()) throw new TypeError("Thenable self-resolution");
+                                        u = i && ("object" == typeof i || "function" == typeof i) && i.then, _(u) ? r ? u.call(i, s(o, e, B, r), s(o, e, z, r)) : (o++, u.call(i, s(o, e, B, r), s(o, e, z, r), s(o, e, B, e.notifyWith))) : (n !== B && (a = void 0, l = [i]), (r || e.resolveWith)(a, l));
+                                    }
+                                },
+                                c = r ? u : function() {
+                                    try {
+                                        u();
+                                    } catch (i) {
+                                        T.Deferred.exceptionHook && T.Deferred.exceptionHook(i, c.stackTrace), t + 1 >= o && (n !== z && (a = void 0, l = [i]), e.rejectWith(a, l));
+                                    }
+                                };
+                            t ? c() : (T.Deferred.getStackHook && (c.stackTrace = T.Deferred.getStackHook()), i.setTimeout(c));
+                        };
+                    }
+                    return T.Deferred(function(i) {
+                        e[0][3].add(s(0, i, _(r) ? r : B, i.notifyWith)), e[1][3].add(s(0, i, _(t) ? t : B)), e[2][3].add(s(0, i, _(n) ? n : z));
+                    }).promise();
+                },
+                promise: function(t) {
+                    return null != t ? T.extend(t, r) : r;
+                }
+            },
+            o = {};
+        return T.each(e, function(t, i) {
+            var s = i[2],
+                a = i[5];
+            r[i[1]] = s.add, a && s.add(function() {
+                n = a;
+            }, e[3 - t][2].disable, e[3 - t][3].disable, e[0][2].lock, e[0][3].lock), s.add(i[3].fire), o[i[0]] = function() {
+                return o[i[0] + "With"](this === o ? void 0 : this, arguments), this;
+            }, o[i[0] + "With"] = s.fireWith;
+        }), r.promise(o), t && t.call(o, o), o;
+    },
+    // Handles multiple Deferred objects and returns a single promise
+    when: function(t) {
+        var e = arguments.length,
+            i = e,
+            n = Array(i),
+            r = l.call(arguments),
+            o = T.Deferred(),
+            s = function(t) {
+                return function(i) {
+                    n[t] = this, r[t] = arguments.length > 1 ? l.call(arguments) : i, --e || o.resolveWith(n, r);
+                };
+            };
+        if (e <= 1 && ($(t, o.done(s(i)).resolve, o.reject, !e), "pending" === o.state() || _(r[i] && r[i].then))) return o.then();
+        for (; i--;) $(r[i], s(i), o.reject);
+        return o.promise();
+    }
+});
+
+// Exception handling for Deferred objects
+var H = /^(Eval|Internal|Range|Reference|Syntax|Type|URI)Error$/;
+T.Deferred.exceptionHook = function(t, e) {
+    i.console && i.console.warn && t && H.test(t.name) && i.console.warn("jQuery.Deferred exception: " + t.message, t.stack, e);
+};
+
+// Handles errors thrown during document ready execution
+T.readyException = function(t) {
+    i.setTimeout(function() {
+        throw t;
+    });
+};
+
+// Document ready Deferred object
+var q = T.Deferred();
+
+// Handles DOMContentLoaded and window load events
+function W() {
+    s.removeEventListener("DOMContentLoaded", W), i.removeEventListener("load", W), T.ready();
+}
+
+// Binds a handler to be executed when the DOM is fully loaded
+T.fn.ready = function(t) {
+    return q.then(t).catch(function(t) {
+        T.readyException(t);
+    }), this;
+};
+
+// Extends jQuery with methods for handling document ready state
+T.extend({
+    isReady: !1,
+    readyWait: 1,
+    ready: function(t) {
+        (!0 === t ? --T.readyWait : T.isReady) || (T.isReady = !0, !0 !== t && --T.readyWait > 0 || q.resolveWith(s, [T]));
+    }
+});
+
+// Document ready event handlers
+T.ready.then = q.then;
+"complete" === s.readyState || "loading" !== s.readyState && !s.documentElement.doScroll ? i.setTimeout(T.ready) : (s.addEventListener("DOMContentLoaded", W), i.addEventListener("load", W));
+
+// Handles setting or getting properties on elements
+var X = function(t, e, i, n, r, o, s) {
+        var a = 0,
+            l = t.length,
+            u = null == i;
+        if ("object" === w(i))
+            for (a in r = !0, i) X(t, e, a, i[a], !0, o, s);
+        else if (void 0 !== n && (r = !0, _(n) || (s = !0), u && (s ? (e.call(t, n), e = null) : (u = e, e = function(t, e, i) {
+                return u.call(T(t), i);
+            })), e))
+            for (; a < l; a++) e(t[a], i, s ? n : n.call(t[a], a, e(t[a], i)));
+        return r ? t : u ? e.call(t) : l ? e(t[0], i) : o;
+    },
+    // Regular expression to match vendor-prefixed properties
+    Y = /^-ms-/,
+    // Regular expression to match dashed properties
+    U = /-([a-z])/g;
+
+// Converts dashed property names to camelCase
+function V(t, e) {
+    return e.toUpperCase();
+}
+
+// Normalizes vendor-prefixed properties to camelCase
+function K(t) {
+    return t.replace(Y, "ms-").replace(U, V);
+}
+
+// Checks if the element is a DOM node
+var G = function(t) {
+    return 1 === t.nodeType || 9 === t.nodeType || !+t.nodeType;
+};
+
