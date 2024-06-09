@@ -3380,7 +3380,10 @@ T.each({
     mouseleave: "mouseout",
     pointerenter: "pointerover",
     pointerleave: "pointerout"
-}, function(t, e) {
+}, 
+
+
+// Define a function to create special event handlersfunction(t, e) {
     T.event.special[t] = {
         delegateType: e,
         bindType: e,
@@ -3395,6 +3398,415 @@ T.each({
             }
             return i;
         }
-    };
+    }
+}),
+
+
+
+// Extend jQuery's prototype with event handling methods
+T.fn.extend({
+    // Attach an event handler
+    on: function(t, e, i, n) {
+        return Ot(this, t, e, i, n)
+    },
+    // Attach an event handler that only executes once
+    one: function(t, e, i, n) {
+        return Ot(this, t, e, i, n, 1)
+    },
+    // Remove an event handler
+    off: function(t, e, i) {
+        var n, r;
+        if (t && t.preventDefault && t.handleObj) return n = t.handleObj, T(t.delegateTarget).off(n.namespace ? n.origType + "." + n.namespace : n.origType, n.selector, n.handler), this;
+        if ("object" == typeof t) {
+            for (r in t) this.off(r, e, t[r]);
+            return this
+        }
+        return !1 !== e && "function" != typeof e || (i = e, e = void 0), !1 === i && (i = Pt), this.each(function() {
+            T.event.remove(this, t, i, e)
+        })
+    }
 });
 
+// Regular expressions for parsing HTML
+var At = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([a-z][^\/\0>\x20\t\r\n\f]*)[^>]*)\/>/gi,
+    Mt = /<script|<style|<link/i,
+    Dt = /checked\s*(?:[^=]|=\s*.checked.)/i,
+    Rt = /^\s*<!(?:\[CDATA\[|--)|(?:\]\]|--)>\s*$/g;
+
+// Helper function to ensure a tbody exists in a table
+function Lt(t, e) {
+    return A(t, "table") && A(11 !== e.nodeType ? e : e.firstChild, "tr") && T(t).children("tbody")[0] || t
+}
+
+// Helper functions to temporarily modify script types
+function It(t) {
+    return t.type = (null !== t.getAttribute("type")) + "/" + t.type, t
+}
+
+function Nt(t) {
+    return "true/" === (t.type || "").slice(0, 5) ? t.type = t.type.slice(5) : t.removeAttribute("type"), t
+}
+
+// Function to clone events and data from one element to another
+function jt(t, e) {
+    var i, n, r, o, s, a, l, u;
+    if (1 === e.nodeType) {
+        if (Z.hasData(t) && (o = Z.access(t), s = Z.set(e, o), u = o.events))
+            for (r in delete s.handle, s.events = {}, u)
+                for (i = 0, n = u[r].length; i < n; i++) T.event.add(e, r, u[r][i]);
+        J.hasData(t) && (a = J.access(t), l = T.extend({}, a), J.set(e, l))
+    }
+}
+
+// Function to manipulate DOM elements
+function Ft(t, e, i, n) {
+    e = u.apply([], e);
+    var r, o, s, a, l, c, h = 0,
+        f = t.length,
+        d = f - 1,
+        p = e[0],
+        m = _(p);
+    if (m || f > 1 && "string" == typeof p && !v.checkClone && Dt.test(p)) return t.each(function(r) {
+        var o = t.eq(r);
+        m && (e[0] = p.call(this, r, o.html())), Ft(o, e, i, n)
+    });
+    if (f && (o = (r = xt(e, t[0].ownerDocument, !1, t, n)).firstChild, 1 === r.childNodes.length && (r = o), o || n)) {
+        for (a = (s = T.map(gt(r, "script"), It)).length; h < f; h++) l = r, h !== d && (l = T.clone(l, !0, !0), a && T.merge(s, gt(l, "script"))), i.call(t[h], l, h);
+        if (a)
+            for (c = s[s.length - 1].ownerDocument, T.map(s, Nt), h = 0; h < a; h++) l = s[h], pt.test(l.type || "") && !Z.access(l, "globalEval") && T.contains(c, l) && (l.src && "module" !== (l.type || "").toLowerCase() ? T._evalUrl && T._evalUrl(l.src) : x(l.textContent.replace(Rt, ""), c, l))
+    }
+    return t
+}
+
+// Function to remove elements from the DOM
+function Bt(t, e, i) {
+    for (var n, r = e ? T.filter(e, t) : t, o = 0; null != (n = r[o]); o++) i || 1 !== n.nodeType || T.cleanData(gt(n)), n.parentNode && (i && T.contains(n.ownerDocument, n) && vt(gt(n, "script")), n.parentNode.removeChild(n));
+    return t
+}
+
+// Extend jQuery with various DOM manipulation methods
+T.extend({
+    // Prefilter HTML content
+    htmlPrefilter: function(t) {
+        return t.replace(At, "<$1></$2>")
+    },
+    // Clone elements
+    clone: function(t, e, i) {
+        var n, r, o, s, a, l, u, c = t.cloneNode(!0),
+            h = T.contains(t.ownerDocument, t);
+        if (!(v.noCloneChecked || 1 !== t.nodeType && 11 !== t.nodeType || T.isXMLDoc(t)))
+            for (s = gt(c), n = 0, r = (o = gt(t)).length; n < r; n++) a = o[n], l = s[n], u = void 0, "input" === (u = l.nodeName.toLowerCase()) && ft.test(a.type) ? l.checked = a.checked : "input" !== u && "textarea" !== u || (l.defaultValue = a.defaultValue);
+        if (e)
+            if (i)
+                for (o = o || gt(t), s = s || gt(c), n = 0, r = o.length; n < r; n++) jt(o[n], s[n]);
+            else jt(t, c);
+        return (s = gt(c, "script")).length > 0 && vt(s, !h && gt(t, "script")), c
+    },
+    // Clean up data and events associated with elements
+    cleanData: function(t) {
+        for (var e, i, n, r = T.event.special, o = 0; void 0 !== (i = t[o]); o++)
+            if (G(i)) {
+                if (e = i[Z.expando]) {
+                    if (e.events)
+                        for (n in e.events) r[n] ? T.event.remove(i, n) : T.removeEvent(i, n, e.handle);
+                    i[Z.expando] = void 0
+                }
+                i[J.expando] && (i[J.expando] = void 0)
+            }
+    }
+})
+
+// Extend jQuery prototype with more DOM manipulation methods
+T.fn.extend({
+    // Detach elements from the DOM
+    detach: function(t) {
+        return Bt(this, t, !0)
+    },
+    // Remove elements from the DOM
+    remove: function(t) {
+        return Bt(this, t)
+    },
+    // Get or set the text content of elements
+    text: function(t) {
+        return X(this, function(t) {
+            return void 0 === t ? T.text(this) : this.empty().each(function() {
+                1 !== this.nodeType && 11 !== this.nodeType && 9 !== this.nodeType || (this.textContent = t)
+            })
+        }, null, t, arguments.length)
+    },
+    // Append elements to the end of each element in the set
+    append: function() {
+        return Ft(this, arguments, function(t) {
+            1 !== this.nodeType && 11 !== this.nodeType && 9 !== this.nodeType || Lt(this, t).appendChild(t)
+        })
+    },
+    // Prepend elements to the beginning of each element in the set
+    prepend: function() {
+        return Ft(this, arguments, function(t) {
+            if (1 === this.nodeType || 11 === this.nodeType || 9 === this.nodeType) {
+                var e = Lt(this, t);
+                e.insertBefore(t, e.firstChild)
+            }
+        })
+    },
+    // Insert elements before each element in the set
+    before: function() {
+        return Ft(this, arguments, function(t) {
+            this.parentNode && this.parentNode.insertBefore(t, this)
+        })
+    },
+    // Insert elements after each element in the set
+    after: function() {
+        return Ft(this, arguments, function(t) {
+            this.parentNode && this.parentNode.insertBefore(t, this.nextSibling)
+        })
+    },
+    // Remove all child nodes of the set of matched elements
+    empty: function() {
+        for (var t, e = 0; null != (t = this[e]); e++) 1 === t.nodeType && (T.cleanData(gt(t, !1)), t.textContent = "");
+        return this
+    },
+    // Create a deep copy of the set of matched elements
+    clone: function(t, e) {
+        return t = null != t && t, e = null == e ? t : e, this.map(function() {
+            return T.clone(this, t, e)
+        })
+    },
+    // Get or set the HTML contents of each element in the set
+    html: function(t) {
+        return X(this, function(t) {
+            var e = this[0] || {},
+                i = 0,
+                n = this.length;
+            if (void 0 === t && 1 === e.nodeType) return e.innerHTML;
+            if ("string" == typeof t && !Mt.test(t) && !mt[(dt.exec(t) || ["", ""])[1].toLowerCase()]) {
+                t = T.htmlPrefilter(t);
+                try {
+                    for (; i < n; i++) 1 === (e = this[i] || {}).nodeType && (T.cleanData(gt(e, !1)), e.innerHTML = t);
+                    e = 0
+                } catch (t) {}
+            }
+            e && this.empty().append(t)
+        }, null, t, arguments.length)
+    },
+    // Replace each element in the set with the provided new content
+    replaceWith: function() {
+        var t = [];
+        return Ft(this, arguments, function(e) {
+            var i = this.parentNode;
+            T.inArray(this, t) < 0 && (T.cleanData(gt(this)), i && i.replaceChild(e, this))
+        }, t)
+    }
+})
+
+// Extend jQuery with methods to insert elements into the DOM
+T.each({
+    appendTo: "append",
+    prependTo: "prepend",
+    insertBefore: "before",
+    insertAfter: "after",
+    replaceAll: "replaceWith"
+}, function(t, e) {
+    T.fn[t] = function(t) {
+        for (var i, n = [], r = T(t), o = r.length - 1, s = 0; s <= o; s++) i = s === o ? this : this.clone(!0), T(r[s])[e](i), c.apply(n, i.get());
+        return this.pushStack(n)
+    }
+})
+
+// Regular expressions for CSS properties
+var zt = new RegExp("^(" + nt + ")(?!px)[a-z%]+$", "i"),
+    $t = function(t) {
+        var e = t.ownerDocument.defaultView;
+        return e && e.opener || (e = i), e.getComputedStyle(t)
+    },
+    Ht = new RegExp(ot.join("|"), "i");
+
+// Function to get computed CSS values
+function qt(t, e, i) {
+    var n, r, o, s, a = t.style;
+    return (i = i || $t(t)) && ("" !== (s = i.getPropertyValue(e) || i[e]) || T.contains(t.ownerDocument, t) || (s = T.style(t, e)), !v.pixelBoxStyles() && zt.test(s) && Ht.test(e) && (n = a.width, r = a.minWidth, o = a.maxWidth, a.minWidth = a.maxWidth = a.width = s, s = i.width, a.width = n, a.minWidth = r, a.maxWidth = o)), void 0 !== s ? s + "" : s
+}
+
+// Function to cache and retrieve computed CSS values
+function Wt(t, e) {
+    return {
+        get: function() {
+            if (!t()) return (this.get = e).apply(this, arguments);
+            delete this.get
+        }
+    }
+}
+
+// Immediately invoked function to check for browser quirks
+! function() {
+    function t() {
+        if (c) {
+            u.style.cssText = "position:absolute;left:-11111px;width:60px;margin-top:1px;padding:0;border:0", c.style.cssText = "position:relative;display:block;box-sizing:border-box;overflow:scroll;margin:auto;border:1px;padding:1px;width:60%;top:1%", wt.appendChild(u).appendChild(c);
+            var t = i.getComputedStyle(c);
+            n = "1%" !== t.top, l = 12 === e(t.marginLeft), c.style.right = "60%", a = 36 === e(t.right), r = 36 === e(t.width), c.style.position = "absolute", o = 36 === c.offsetWidth || "absolute", wt.removeChild(u), c = null
+        }
+    }
+
+    function e(t) {
+        return Math.round(parseFloat(t))
+    }
+    var n, r, o, a, l, u = s.createElement("div"),
+        c = s.createElement("div");
+    c.style && (c.style.backgroundClip = "content-box", c.cloneNode(!0).style.backgroundClip = "", v.clearCloneStyle = "content-box" === c.style.backgroundClip, T.extend(v, {
+        boxSizingReliable: function() {
+            return t(), r
+        },
+        pixelBoxStyles: function() {
+            return t(), a
+        },
+        pixelPosition: function() {
+            return t(), n
+        },
+        reliableMarginLeft: function() {
+            return t(), l
+        },
+        scrollboxSize: function() {
+            return t(), o
+        }
+    }))
+}();
+
+// Regular expressions for display and custom properties
+var Xt = /^(none|table(?!-c[ea]).+)/,
+    Yt = /^--/,
+    Ut = {
+        position: "absolute",
+        visibility: "hidden",
+        display: "block"
+    },
+    Vt = {
+        letterSpacing: "0",
+        fontWeight: "400"
+    },
+    Kt = ["Webkit", "Moz", "ms"],
+    Gt = s.createElement("div").style;
+
+// Function to get the vendor-prefixed CSS property
+function Qt(t) {
+    var e = T.cssProps[t];
+    return e || (e = T.cssProps[t] = function(t) {
+        if (t in Gt) return t;
+        for (var e = t[0].toUpperCase() + t.slice(1), i = Kt.length; i--;)
+            if ((t = Kt[i] + e) in Gt) return t
+    }(t) || t), e
+}
+
+// Function to convert CSS property value to a numeric value
+function Zt(t, e, i) {
+    var n = rt.exec(e);
+    return n ? Math.max(0, n[2] - (i || 0)) + (n[3] || "px") : e
+}
+
+// Function to calculate the width or height of an element
+function Jt(t, e, i, n, r, o) {
+    var s = "width" === e ? 1 : 0,
+        a = 0,
+        l = 0;
+    if (i === (n ? "border" : "content")) return 0;
+    for (; s < 4; s += 2) "margin" === i && (l += T.css(t, i + ot[s], !0, r)), n ? ("content" === i && (l -= T.css(t, "padding" + ot[s], !0, r)), "margin" !== i && (l -= T.css(t, "border" + ot[s] + "Width", !0, r))) : (l += T.css(t, "padding" + ot[s], !0, r), "padding" !== i ? l += T.css(t, "border" + ot[s] + "Width", !0, r) : a += T.css(t, "border" + ot[s] + "Width", !0, r));
+    return !n && o >= 0 && (l += Math.max(0, Math.ceil(t["offset" + e[0].toUpperCase() + e.slice(1)] - o - l - a - .5))), l
+}
+
+// Function to get the computed width or height of an element
+function te(t, e, i) {
+    var n = $t(t),
+        r = qt(t, e, n),
+        o = "border-box" === T.css(t, "boxSizing", !1, n),
+        s = o;
+    if (zt.test(r)) {
+        if (!i) return r;
+        r = "auto"
+    }
+    return s = s && (v.boxSizingReliable() || r === t.style[e]), ("auto" === r || !parseFloat(r) && "inline" === T.css(t, "display", !1, n)) && (r = t["offset" + e[0].toUpperCase() + e.slice(1)], s = !0), (r = parseFloat(r) || 0) + Jt(t, e, i || (o ? "border" : "content"), s, n, r) + "px"
+}
+
+// Function to create an instance of a CSS animation
+function ee(t, e, i, n, r) {
+    return new ee.prototype.init(t, e, i, n, r)
+}
+
+// Extend jQuery with CSS-related methods
+T.extend({
+    // CSS hooks for special properties
+    cssHooks: {
+        opacity: {
+            get: function(t, e) {
+                if (e) {
+                    var i = qt(t, "opacity");
+                    return "" === i ? "1" : i
+                }
+            }
+        }
+    },
+    // Properties that are treated as numbers
+    cssNumber: {
+        animationIterationCount: !0,
+        columnCount: !0,
+        fillOpacity: !0,
+        flexGrow: !0,
+        flexShrink: !0,
+        fontWeight: !0,
+        lineHeight: !0,
+        opacity: !0,
+        order: !0,
+        orphans: !0,
+        widows: !0,
+        zIndex: !0,
+        zoom: !0
+    },
+    // Map of CSS properties with vendor prefixes
+    cssProps: {},
+    // Method to set CSS properties
+    style: function(t, e, i, n) {
+        if (t && 3 !== t.nodeType && 8 !== t.nodeType && t.style) {
+            var r, o, s, a = K(e),
+                l = Yt.test(e),
+                u = t.style;
+            if (l || (e = Qt(a)), s = T.cssHooks[e] || T.cssHooks[a], void 0 === i) return s && "get" in s && void 0 !== (r = s.get(t, !1, n)) ? r : u[e];
+            "string" === (o = typeof i) && (r = rt.exec(i)) && r[1] && (i = lt(t, e, r), o = "number"), null != i && i == i && ("number" === o && (i += r && r[3] || (T.cssNumber[a] ? "" : "px")), v.clearCloneStyle || "" !== i || 0 !== e.indexOf("background") || (u[e] = "inherit"), s && "set" in s && void 0 === (i = s.set(t, i, n)) || (l ? u.setProperty(e, i) : u[e] = i))
+        }
+    },
+    // Method to get CSS properties
+    css: function(t, e, i, n) {
+        var r, o, s, a = K(e);
+        return Yt.test(e) || (e = Qt(a)), (s = T.cssHooks[e] || T.cssHooks[a]) && "get" in s && (r = s.get(t, !0, i)), void 0 === r && (r = qt(t, e, n)), "normal" === r && e in Vt && (r = Vt[e]), "" === i || i ? (o = parseFloat(r), !0 === i || isFinite(o) ? o || 0 : r) : r
+    }
+})
+
+// Add hooks for height and width properties
+T.each(["height", "width"], function(t, e) {
+    T.cssHooks[e] = {
+        get: function(t, i, n) {
+            if (i) return !Xt.test(T.css(t, "display")) || t.getClientRects().length && t.getBoundingClientRect().width ? te(t, e, n) : at(t, Ut, function() {
+                return te(t, e, n)
+            })
+        },
+        set: function(t, i, n) {
+            var r, o = $t(t),
+                s = "border-box" === T.css(t, "boxSizing", !1, o),
+                a = n && Jt(t, e, n, s, o);
+            return s && v.scrollboxSize() === o.position && (a -= Math.ceil(t["offset" + e[0].toUpperCase() + e.slice(1)] - parseFloat(o[e]) - Jt(t, e, "border", !1, o) - .5)), a && (r = rt.exec(i)) && "px" !== (r[3] || "px") && (t.style[e] = i, i = T.css(t, e)), Zt(0, i, a)
+        }
+    }
+})
+
+// Add a margin-left hook for reliable margin calculations
+T.cssHooks.marginLeft = Wt(v.reliableMarginLeft, function(t, e) {
+    if (e) return (parseFloat(qt(t, "marginLeft")) || t.getBoundingClientRect().left - at(t, {
+        marginLeft: 0
+    }, function() {
+        return t.getBoundingClientRect().left
+    })) + "px"
+})
+
+// Add hooks for margin, padding, and border properties
+T.each({
+    margin: "",
+    padding: "",
+    border: "Width"
+},
