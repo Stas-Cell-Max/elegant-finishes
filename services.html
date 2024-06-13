@@ -109,180 +109,272 @@
 </head>
 <body>
 
+<!-- Message for users with JavaScript disabled -->
+<noscript><p style="position: relative; z-index: 999999; color: white;">Wait a minute... No Javascript?? It's like eating a pizza with pineapple. No way.</p></noscript>
 
-  
+<!-- Custom cursor elements -->
+<div class="cursor"></div>
+<div class="cursor-follower"></div>
 
-    <!-- NoScript Message -->
-    <noscript>
-        <p style="position: relative; z-index: 999999; color: white;">Wait a minute... No Javascript?? It's like eating a pizza with pineapple. No way.</p>
-    </noscript>
+<!-- Grid layout for the page -->
+<div class="grid">
+  <div class="grid__col">
+    <div class="grid__fill"></div>
+    <div class="grid__line"></div>
+  </div>
+  <div class="grid__col">
+    <div class="grid__fill"></div>
+    <div class="grid__line"></div>
+  </div>
+  <div class="grid__col">
+    <div class="grid__fill"></div>
+    <div class="grid__line"></div>
+  </div>
+  <div class="grid__col">
+    <div class="grid__fill"></div>
+    <div class="grid__line"></div>
+  </div>
+  <div class="grid__logo"></div>
+</div>
 
-    <!-- Custom Cursor Elements -->
-    <div class="cursor"></div>
-    <div class="cursor-follower"></div>
-
-    <!-- Grid Overlay -->
-    <div class="grid">
-        <!-- Grid columns and lines -->
-        <div class="grid__col">
-            <div class="grid__fill"></div>
-            <div class="grid__line"></div>
-        </div>
-        <!-- Repeat for other columns -->
-        <div class="grid__logo"></div>
+<!-- Header section with logo, contact info, and navigation menu -->
+<header class="header">
+  <a href="">
+    <div class="header__logo"></div>
+  </a>
+  <div class="header__burger">
+    <div class="header__address">720-7 Copeland St, East York, ON M4G 3E7</div>
+    <a class="header__tel ga-events" data-eventcategory="Phone track header" data-eventaction="Click to call" data-eventlabel="6477745321" href="tel:647-774-5321">+1 647 774 5321</a>
+    <div id="menu-toggle" class="circleCursor pelement">
+      <div class="hamburger">
+        <span></span>
+        <span></span>
+      </div>
+      <div class="cross">
+        <span></span>
+        <span></span>
+      </div>
     </div>
+  </div>
+  <div class="header__menu">
+    <div class="header__menu__wrap">
+      <div class="container">
+        <div class="header__menu__left">
+          <ul>
+            <li>
+              <a href="the-process.html">Process</a>
+            </li>
+            <li>
+              <a href="products.html">Products</a>
+            </li>
+            <li>
+              <a href="services.html">Services</a>
+            </li>
+            <li>
+              <a href="contacts.html">Contacts</a>
+            </li>
+          </ul>
+        </div>
+        <div class="header__menu__right">
+          <div class="header__menu__info">
+            <div class="header__menu__label">ADDRESS:</div>
+            <div class="header__menu__text">Maxidom<br>720-7 Copeland St,<br>East York, ON M4G 3E7<br>Ontario</div>
+          </div>
+          <div class="header__menu__info">
+            <div class="header__menu__label">Service Areas:</div>
+            <div class="header__menu__text">Toronto</div>
+            <div class="header__menu__text">Markham - Richmond Hill - Vaughan</div>
+            <div class="header__menu__text">King City - Aurora - Newmarket - Bradford</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="grid">
+    <div class="grid__col">
+      <div class="grid__line"></div>
+    </div>
+    <div class="grid__col">
+      <div class="grid__line"></div>
+    </div>
+    <div class="grid__col">
+      <div class="grid__line"></div>
+    </div>
+    <div class="grid__col">
+      <div class="grid__line"></div>
+    </div>
+  </div>
+</header>
 
-    <!-- Header Section -->
-    <header class="header">
-        <a href="">
-            <div class="header__logo"></div>
+<!-- Main content section with virtual scrolling -->
+<div class="vs-section">
+  <main id="barba-wrapper">
+    <div class="barba-container">
+
+      <!-- Page top section with parallax background -->
+      <section class="pageTop anim">
+        <div class="overflow-hidden">
+          <div class="pageTop__bg parallax" data-rellax-speed="-3" style="background-image:url('images/design2.jpeg')"></div>
+          <div class="pageTop__container">
+            <div class="container">
+              <h1 class="pageTop__title">
+                Services
+                <span class="reveal_title"></span>
+              </h1>
+              <div class="pageTop__subtitle">
+                From concept to delivery
+                <span class="reveal_title two"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <a class="scroll-hint goToPos" href="javascript:;" data-target=".scrollTo" data-offset="150">
+          <div class="scroll-hint__label">Scroll to explore</div>
         </a>
-        <div class="header__burger">
-            <div class="header__address">720-7 Copeland St, East York, ON M4G 3E7</div>
-            <a class="header__tel ga-events" data-eventcategory="Phone track header" data-eventaction="Click to call" data-eventlabel="0434540006" href="tel:+390434540006">+39 0434 540006</a>
-            <div id="menu-toggle" class="circleCursor pelement">
-                <div class="hamburger">
-                    <span></span>
-                    <span></span>
+      </section>
+
+      <!-- Main services content section -->
+      <div class="services scrollTo">
+        <div class="home__service">
+          <div class="container">
+            <!-- Design service section -->
+            <article class="home__service__row anim">
+              <div class="home__service__col">
+                <div class="home__service__imgWrapper">
+                  <div class="reveal-image lazyBg" data-src="'images/design.jpeg'"></div>
                 </div>
-                <div class="cross">
-                    <span></span>
-                    <span></span>
+              </div>
+              <div class="home__service__col home__service__col--offset">
+                <h3 class="home__service__title">Design</h3>
+                <div class="home__service__text">Through meticulous analysis of your requests and space, we evaluate dimensions, finishes, lines, and shapes to ensure solutions that perfectly match your personality and lifestyle. We transform your ideas and desires into personalized, tailor-made creations, expertly crafting each detail to reflect the unique character of your home.</div>
+              </div>
+            </article>
+            <!-- Materials Selection service section -->
+            <article class="home__service__row anim">
+              <div class="home__service__col">
+                <div class="home__service__imgWrapper">
+                  <div class="reveal-image lazyBg" data-src="images/materials.jpg"></div>
                 </div>
-            </div>
+              </div>
+              <div class="home__service__col home__service__col--offset">
+                <h3 class="home__service__title">Materials Selection</h3>
+                <div class="home__service__text">Placing orders and communicating with vendors can be a tedious and time consuming process. We take that burden off your shoulders. We’ve built relationships with vendors and are happy to order and expedite all items needed for your project</div>
+              </div>
+            </article>
+            <!-- Removal service section -->
+            <article class="home__service__row anim">
+              <div class="home__service__col">
+                <div class="home__service__imgWrapper">
+                  <div class="reveal-image lazyBg" data-src="images/removal.jpg"></div>
+                </div>
+              </div>
+              <div class="home__service__col home__service__col--offset">
+                <h3 class="home__service__title">Removal</h3>
+                <div class="home__service__text">We handle the removal and demolition of existing installations with precision and care. Our team ensures that this necessary first step is done safely and efficiently, preparing your space for its transformation. We manage all aspects of the teardown process, minimizing disruption and maintaining a clean work environment throughout.</div>
+              </div>
+            </article>
+            <!-- Installation service section -->
+            <article class="home__service__row anim">
+              <div class="home__service__col">
+                <div class="home__service__imgWrapper">
+                  <div class="reveal-image lazyBg" data-src="images/floorinst.jpg"></div>
+                </div>
+              </div>
+              <div class="home__service__col home__service__col--offset">
+                <h3 class="home__service__title">Installation</h3>
+                <div class="home__service__text">Our installation service is all about precision and attention to detail. We expertly install trim, flooring, cabinetry, and more, ensuring everything fits perfectly and functions seamlessly. Our skilled team works efficiently, keeping your project on schedule and ensuring a clean finish that enhances your space.</div>
+              </div>
+            </article>
+            <!-- Repairs service section -->
+            <article class="home__service__row anim">
+              <div class="home__service__col">
+                <div class="home__service__imgWrapper">
+                  <div class="reveal-image lazyBg" data-src="images/repair.jpg"></div>
+                </div>
+              </div>
+              <div class="home__service__col home__service__col--offset">
+                <h3 class="home__service__title">Repairs</h3>
+                <div class="home__service__text">Our repair services focus on restoring the functionality and appearance of your carpentry installations. Whether it's fixing wear and tear on cabinetry, mending damaged trim, or correcting flooring issues, we apply our expertise to bring your features back to their best condition. We ensure reliable and lasting repairs, with minimal disruption to your daily life.</div>
+              </div>
+            </article>
+          </div>
+          <!-- Parallax container for service overview -->
+          <div class="parallax-container parallax-container--center-top">
+            <div class="parallax parallax-title" data-rellax-speed="2" data-rellax-percentage="0.4">From A to Z</div>
+          </div>
         </div>
-        <div class="header__menu">
-            <div class="header__menu__wrap">
-                <div class="container">
-                    <div class="header__menu__left">
-                        <ul>
-                            <!-- Navigation Links -->
-                            <li>
-                                <a href="theProcess.html">Process</a>
-                            </li>
-                            <li>
-                                <a href="products.html">Products</a>
-                            </li>
-                            <li>
-                                <a href="services.html">Services</a>
-                            </li>
-                            <li>
-                                <a href="contacts.html">Contacts</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="header__menu__right">
-                        <div class="header__menu__info">
-                            <div class="header__menu__label">ADDRESS:</div>
-                            <div class="header__menu__text">Maxidom<br>720-7 Copeland St,<br>East York, ON M4G 3E7<br>Ontario</div>
-                        </div>
-                        <div class="header__menu__info">
-                            <div class="header__menu__label">Timetables:</div>
-                            <div class="header__menu__text">Mon. - Fri. 8.30am-12.00pm 2.30pm-7.00pm </div>
-                            <div class="header__menu__text">Sat. 8.30am-12.00pm </div>
-                            <div class="header__menu__text">Sun. Closed </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      </div>
+
+      <!-- Page bottom section with call-to-action -->
+      <section class="pageBottom anim linkTo">
+        <div class="pageBottom__bg parallax" data-rellax-speed="1" data-rellax-percentage="0.5">
+          <div class="pageBottom__bg__img lazyBg" data-src="images/thephone.png"></div>
         </div>
-    </header>
-
-    <!-- Main Content Section -->
-    <div class="vs-section">
-        <main id="barba-wrapper">
-            <div class="barba-container">
-
-                <!-- Page Top Section -->
-                <section class="pageTop anim">
-                    <div class="overflow-hidden">
-                        <div class="pageTop__bg parallax" data-rellax-speed="-3" style="background-image:url('images/services-inter.jpg')"></div>
-                        <div class="pageTop__container">
-                            <div class="container">
-                                <h1 class="pageTop__title">
-                                    Services
-                                    <span class="reveal_title"></span>
-                                </h1>
-                                <div class="pageTop__subtitle">
-                                    From concept to delivery
-                                    <span class="reveal_title two"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <a class="scroll-hint goToPos" href="javascript:;" data-target=".scrollTo" data-offset="150">
-                        <div class="scroll-hint__label">Scroll to explore</div>
-                    </a>
-                </section>
-
-                <!-- Services Section -->
-                <div class="services scrollTo">
-                    <div class="home__service">
-                        <div class="container">
-                            <!-- Service Item -->
-                            <article class="home__service__row anim">
-                                <div class="home__service__col">
-                                    <div class="home__service__imgWrapper">
-                                        <div class="reveal-image lazyBg" data-src="./uploads/su_misura-8077bba436bde6879f18f0a2acce3427.jpg"></div>
-                                    </div>
-                                </div>
-                                <div class="home__service__col home__service__col--offset">
-                                    <h3 class="home__service__title">Design</h3>
-                                    <div class="home__service__text">Through meticulous analysis of your requests and space, we evaluate dimensions, finishes, lines, and shapes to ensure solutions that perfectly match your personality and lifestyle. We transform your ideas and desires into personalized, tailor-made creations, expertly crafting each detail to reflect the unique character of your home.</div>
-                                </div>
-                            </article>
-                            <!-- Repeat for other service items -->
-                        </div>
-                        <div class="parallax-container parallax-container--center-top">
-                            <div class="parallax parallax-title" data-rellax-speed="2" data-rellax-percentage="0.4">From A to Z</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Page Bottom Section -->
-                <section class="pageBottom anim linkTo">
-                    <div class="pageBottom__container">
-                        <div class="container">
-                            <h2 class="pageBottom__title">The next step:</h2>
-                            <a class="btn btn--default btn--bordered goToPos" href="javascript:;" data-target=".contacts">Contact us</a>
-                        </div>
-                    </div>
-                </section>
+        <div class="pageBottom__container">
+          <div class="container">
+            <h2 class="pageBottom__title">
+              Contacts
+              <span class="reveal_title"></span>
+            </h2>
+            <div class="pageBottom__subtitle">
+              Tell us your needs by giving us a call or email
+              <span class="reveal_title two"></span>
             </div>
-        </main>
+            <div class="pageBottom__buttonWrap">
+              <a href="contacts.html" class="button pelement linkFrom">Find out more</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer section with contact info -->
+      <footer class="footer">
+        <a href="">
+          <div class="footer__logo"></div>
+        </a>
+        <div class="footer__text">
+          Maxidom by Stas Morozan | 647-774-5321
+          <br>
+          720-7 Copeland St, East York, ON M4G 3E7
+          <br>
+          <a class="ga-events" data-eventcategory="Phone track footer" data-eventaction="Click to call" data-eventlabel="6477745321" href="tel:+164777453231">+1 6477 745 3231</a> -
+          <a class="ga-events" data-eventcategory="Mail from footer" data-eventaction="Click to action" data-eventlabel="stasma.sm17@gmail.com" href="mailto:stasma.sm17@gmail.com">stasma.sm17@gmail.com</a>
+          <br>
+          <br>
+          <a href="privacy.html" target="_blank">Privacy policy</a> - 
+          <a class="ga-events" data-eventcategory="Credits link" data-eventaction="Click to action" data-eventlabel="https://www.linkedin.com/in/maxidom/" href="https://www.linkedin.com/in/maxidom/" target="_blank" rel="noopener">Credits</a>
+          <div class="fb-link">
+            <a class="circleCursor ga-events" data-eventcategory="Facebook link" data-eventaction="Click to action" data-eventlabel="https://www.facebook.com/maxidom" href="https://www.facebook.com/maxidom" target="_blank"></a>
+          </div>
+        </div>
+      </footer>
+
     </div>
+  </main>
+</div>
 
-    <!-- Footer Section -->
-    <footer class="footer anim">
-        <div class="container">
-            <div class="footer__social">
-                <!-- Social Media Links -->
-                <a href="https://www.facebook.com" target="_blank" class="footer__social__link" aria-label="facebook">
-                    <svg class="icon" role="presentation">
-                        <use xlink:href="fonts/icons.svg#icon-facebook"></use>
-                    </svg>
-                </a>
-                <a href="https://www.linkedin.com" target="_blank" class="footer__social__link" aria-label="linkedin">
-                    <svg class="icon" role="presentation">
-                        <use xlink:href="fonts/icons.svg#icon-linkedin"></use>
-                    </svg>
-                </a>
-                <a href="https://www.instagram.com" target="_blank" class="footer__social__link" aria-label="instagram">
-                    <svg class="icon" role="presentation">
-                        <use xlink:href="fonts/icons.svg#icon-instagram"></use>
-                    </svg>
-                </a>
-            </div>
-            <a href="" class="footer__logo">
-                <div class="footer__logo__img"></div>
-            </a>
-        </div>
-    </footer>
+<!-- JSON-LD structured data for SEO -->
+<script type="application/ld+json">
+{
+"@context": "http://schema.org",
+"@type": "Organization",
+"address": {
+"@type": "PostalAddress",
+"addressLocality": "East York, ON",
+"postalCode": "M4G 3E7",
+"streetAddress": "720-7 Copeland St"
+},
+"email": "stasma.sm17@gmail.com",
+"telephone": "+1 647 774 5321",
+"name": "Maxidom",
+"url": "https://www.maxidom.ca/",
+"BN": "01750420935",
+"logo": "https://www.maxidom.ca/img/share/logo.png"
+}
+</script>
 
-    <!-- JavaScript -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="js/rellax.min.js"></script>
-    <script src="js/lazyload.min.js"></script>
-    <script src="js/main.js"></script>
+<!-- Link to the main JavaScript file -->
+<script src="js/site.js"></script>
+
 </body>
 </html>
