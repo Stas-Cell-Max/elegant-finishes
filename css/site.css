@@ -181,7 +181,6 @@
     float:left
 }
 
-
 /* Font face definitions */
 @font-face{
     font-family:Butler;
@@ -443,6 +442,10 @@ a:hover{
     transition:all 260ms ease-out!important;
     will-change:transform
 }
+
+
+
+
 
 
 /* Button settings */
@@ -715,3 +718,3041 @@ a:hover{
         margin:0 15px
     }
 }
+
+
+
+
+
+
+/* Content settings for full left sections */
+.section__generic--fullLeft .section__generic--content{
+    top:40%;
+    left:70%
+}
+
+/* Responsive adjustments for content in full left sections */
+@media (max-width:1366px){
+    .section__generic--fullLeft .section__generic--content{
+        top:50%;
+        transform:translateY(-50%)
+    }
+}
+@media (max-width:767px){
+    .section__generic--fullLeft .section__generic--content{
+        position:static;
+        margin-top:25px;
+        transform:translateY(0);
+        padding:0 15px
+    }
+}
+
+/* Title settings for full left sections */
+.section__generic--fullLeft .section__generic__title{
+    max-width:none
+}
+
+/* Text settings for full left sections */
+.section__generic--fullLeft .section__generic__text{
+    max-width:260px
+}
+
+/* Responsive adjustments for text in full left sections */
+@media (max-width:767px){
+    .section__generic--fullLeft .section__generic__text{
+        max-width:none
+    }
+}
+
+/* Full right image container settings for generic sections */
+.section__generic--fullRight .section__generic__imgContainer{
+    margin-left:35%;
+    width:65%;
+    height:60vh;
+    min-height:300px
+}
+
+/* Responsive adjustments for full right image containers */
+@media screen and (min-width:1800px){
+    .section__generic--fullRight .section__generic__imgContainer{
+        height:70vh
+    }
+}
+@media (max-width:992px){
+    .section__generic--fullRight .section__generic__imgContainer{
+        height:45vh
+    }
+}
+@media (max-width:767px){
+    .section__generic--fullRight .section__generic__imgContainer{
+        width:calc(100% - 30px);
+        margin:0 15px
+    }
+}
+
+/* Content settings for full right sections */
+.section__generic--fullRight .section__generic--content{
+    top:40%;
+    right:70%;
+    left:auto;
+    text-align:right
+}
+
+/* Responsive adjustments for content in full right sections */
+@media (max-width:1366px){
+    .section__generic--fullRight .section__generic--content{
+        top:50%;
+        transform:translateY(-50%)
+    }
+}
+@media (max-width:767px){
+    .section__generic--fullRight .section__generic--content{
+        position:static;
+        margin-top:25px;
+        transform:translateY(0);
+        padding:0 15px;
+        text-align:left
+    }
+}
+
+/* Title settings for full right sections */
+.section__generic--fullRight .section__generic__title{
+    max-width:none;
+    margin-left:30%;
+    display:inline-block
+}
+
+/* Responsive adjustments for titles in full right sections */
+@media (max-width:767px){
+    .section__generic--fullRight .section__generic__title{
+        margin-left:0
+    }
+}
+
+/* Text settings for full right sections */
+.section__generic--fullRight .section__generic__text{
+    max-width:260px;
+    display:inline-block
+}
+
+/* Responsive adjustments for text in full right sections */
+@media (max-width:767px){
+    .section__generic--fullRight .section__generic__text{
+        max-width:none
+    }
+}
+
+/* Scroll hint settings */
+.scroll-hint{
+    position:absolute;
+    bottom:0;
+    left:calc(50% - 1px);
+    height:70px;
+    color:#eeecea;
+    border-left:1px solid rgba(238,236,234,.2);
+    white-space:nowrap;
+    text-transform:uppercase;
+    line-height:70px;
+    color:#eeecea;
+    z-index:5;
+    transform:translateY(50%);
+    transition:all .4s
+}
+
+/* Responsive adjustments for scroll hints */
+@media (max-width:767px){
+    .scroll-hint{
+        display:none
+    }
+}
+
+/* Hidden state for scroll hints */
+.scroll-hint.hidden{
+    opacity:0;
+    transform:translateY(0);
+    pointer-events:none
+}
+
+/* Scroll hint animation */
+.scroll-hint:before{
+    content:"";
+    position:absolute;
+    left:-1px;
+    top:0;
+    display:block;
+    width:1px;
+    height:100%;
+    background-color:#eeecea;
+    transform:scale(1,0) translate3d(0,0,0);
+    animation:scroller 3s infinite
+}
+
+/* Scroll hint label settings */
+.scroll-hint__label{
+    font-size:12px;
+    padding-left:20px
+}
+
+/* Cookie consent settings */
+.cookie{
+    background:rgba(26,24,24,.95);
+    color:#eeecea;
+    position:fixed;
+    bottom:0;
+    left:0;
+    z-index:9999;
+    width:100%;
+    text-align:center
+}
+
+/* Cookie inner container settings */
+.cookie__inner{
+    margin:0;
+    padding:5px;
+    padding-right:160px
+}
+
+/* Responsive adjustments for cookie inner container */
+@media (max-width:992px){
+    .cookie__inner{
+        padding:5px
+    }
+}
+@media (max-width:767px){
+    .cookie__inner{
+        line-height:1.1em
+    }
+}
+
+/* Cookie message settings */
+.cookie__msg{
+    font-size:10px
+}
+
+/* Responsive adjustments for cookie messages */
+@media (max-width:992px){
+    .cookie__msg br{
+        display:none
+    }
+}
+
+/* Cookie info link settings */
+a.cookie__info{
+    color:#fab162
+}
+
+/* Cookie OK button settings */
+.cookie__ok{
+    background-color:transparent;
+    padding:12px 30px;
+    position:absolute;
+    top:9px;
+    right:25px;
+    white-space:nowrap
+}
+
+/* Responsive adjustments for cookie OK button */
+@media (max-width:992px){
+    .cookie__ok{
+        position:relative;
+        display:block;
+        top:0;
+        right:0;
+        margin:0 auto
+    }
+}
+
+/* Reveal title animation keyframes */
+@keyframes revealtitle{
+    0%{
+        transform:scaleX(0);
+        transform-origin:0 50% 0
+    }
+    25%{
+        transform:scaleX(1);
+        transform-origin:0 50% 0
+    }
+    50%{
+        transform:scaleX(1);
+        transform-origin:100% 50% 0
+    }
+    100%{
+        transform:scaleX(0);
+        transform-origin:100% 50% 0
+    }
+}
+
+/* Pulse animation keyframes */
+@keyframes pulse{
+    0%{
+        opacity:.1
+    }
+    50%{
+        opacity:.3
+    }
+    100%{
+        opacity:.1
+    }
+}
+
+/* Scroller animation keyframes */
+@keyframes scroller{
+    0%{
+        transform-origin:top left;
+        transform:scale(1,0);
+        animation-timing-function:cubic-bezier(.48,.02,0,.99)
+    }
+    30%{
+        transform-origin:top left;
+        transform:scale(1,1)
+    }
+    41%{
+        transform-origin:bottom left;
+        transform:scale(1,1);
+        animation-timing-function:cubic-bezier(.48,.02,0,.99)
+    }
+    100%{
+        transform-origin:bottom left;
+        transform:scale(1,0)
+    }
+}
+
+/* Virtual scroll section settings */
+.vs-section{
+    position:fixed;
+    top:0;
+    right:0;
+    left:0;
+    width:100%;
+    height:auto;
+    margin:auto;
+    will-change:transform
+}
+
+/* Touch device adjustments for virtual scroll sections */
+.touch .vs-section{
+    position:static
+}
+
+/* Overflow settings for virtual scroll state */
+.is-virtual-scroll{
+    overflow:hidden
+}
+
+/* Overflow settings for native scroll state */
+.is-native-scroll.y-scroll{
+    overflow-y:scroll;
+    overflow-x:hidden
+}
+.is-native-scroll.x-scroll{
+    overflow-y:hidden;
+    overflow-x:scroll
+}
+
+/* Virtual scroll scrollbar settings */
+.vs-scrollbar{
+    display:block;
+    position:absolute;
+    transition:transform .6s
+}
+
+/* Vertical scrollbar settings */
+.vs-scrollbar.vs-vertical{
+    top:0;
+    right:-5px;
+    bottom:0;
+    width:15px;
+    height:100%;
+    transform:translate3d(5px,0,0)
+}
+
+/* Horizontal scrollbar settings */
+.vs-scrollbar.vs-horizontal{
+    bottom:-5px;
+    left:0;
+    right:0;
+    width:100%;
+    height:15px;
+    transform:translate3d(0,5px,0)
+}
+
+/* Active scrollbar state settings */
+.is-dragging .vs-scrollbar.vs-horizontal,.is-dragging .vs-scrollbar.vs-vertical,.vs-scrollbar.vs-horizontal:hover,.vs-scrollbar.vs-vertical:hover{
+    transform:none
+}
+
+/* Scroll drag settings */
+.vs-scrollbar .vs-scrolldrag{
+    width:100%;
+    height:auto;
+    background:#ccc;
+    cursor:pointer
+}
+
+/* Scroll view settings */
+.vs-scroll-view{
+    position:relative;
+    width:1px
+}
+
+/* Custom cursor settings */
+.cursor {
+    cursor: url("uploads/custom-cursor-png-2.png"), auto; /* Set the custom cursor */
+    position: fixed;
+    background-color: #fab162;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    z-index: 10000;
+    user-select: none;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    transition: width .3s, height .3s, opacity .3s, background-color .3s;
+}
+
+/* Active state for custom cursor */
+.cursor.active{
+    transform:scale(0)
+}
+
+/* Touch device adjustments for custom cursor */
+.touch .cursor{
+    display:none
+}
+
+/* Cursor follower settings */
+.cursor-follower{
+    position:fixed;
+    background-color:rgba(255,255,255,.3);
+    width:20px;
+    height:20px;
+    border-radius:100%;
+    z-index:1;
+    transition:.3s cubic-bezier(.25,.1,.25,1) .1s transform,.2s cubic-bezier(.75,-.27,.3,1.33) opacity,.3s cubic-bezier(.75,-.27,.3,1.33) width,.3s cubic-bezier(.75,-.27,.3,1.33) height,.3s cubic-bezier(.75,-.27,.3,1.33) margin;
+    user-select:none;
+    pointer-events:none;
+    z-index:10000;
+    margin-top:-10px;
+    margin-left:-10px
+}
+
+/* Active state for cursor follower */
+.cursor-follower.active{
+    opacity:.7;
+    transform:scale(3)
+}
+
+/* Loading state for cursor follower */
+.cursor-follower.loading{
+    opacity:1;
+    width:60px;
+    height:60px;
+    margin-top:-30px;
+    margin-left:-30px;
+    background-color:transparent;
+    border:3px solid rgba(255,255,255,.1);
+    border-top-color:#fab162;
+    animation:spin 1s cubic-bezier(.25,.1,.25,1) infinite;
+    display:block!important
+}
+
+/* Touch device adjustments for cursor follower */
+.touch .cursor-follower{
+    top:50%;
+    left:50%;
+    opacity:1;
+    width:60px;
+    height:60px;
+    margin-top:-30px;
+    margin-left:-30px;
+    background-color:transparent;
+    border:3px solid rgba(255,255,255,.1);
+    border-top-color:#fab162;
+    animation:spin 1s cubic-bezier(.25,.1,.25,1) infinite;
+    display:none
+}
+
+/* Spin animation keyframes */
+@keyframes spin{
+    to{
+        transform:rotate(360deg)
+    }
+}
+
+/* Grid overlay settings */
+.grid{
+    position:fixed;
+    z-index:1000;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    display:flex;
+    pointer-events:none
+}
+
+/* Grid ready state settings */
+.grid.off--ready .grid__line{
+    transform:scaleY(1)
+}
+.grid.off--ready .grid__logo{
+    opacity:1;
+    transform:translate(-50%,-50%)
+}
+
+/* Grid off state settings */
+.grid.off .grid__fill{
+    transform:scaleX(0)
+}
+.grid.off .grid__logo{
+    opacity:0;
+    transform:translate(-50%,-70%);
+    transition-delay:.1s
+}
+
+/* Grid logo settings */
+.grid__logo{
+    position:absolute;
+    top:50%;
+    left:50%;
+    width:250px;
+    height:250px;
+    transform:translate(-50%,-40%);
+    opacity:0;
+    z-index:50;
+    transition:all .4s;
+    background-size:contain;
+    background-position:center center;
+    background-repeat:no-repeat;
+    background-image:url(../fonts/logo.svg)
+}
+
+/* Grid column settings */
+.grid__col{
+    position:relative;
+    width:25%;
+    flex-basis:25%;
+    height:100%
+}
+
+/* Transition delay settings for grid columns */
+.grid__col:nth-child(2) .grid__fill{
+    transition-delay:.1s
+}
+.grid__col:nth-child(2) .grid__line{
+    transition-delay:.1s
+}
+.grid__col:nth-child(3) .grid__fill{
+    transition-delay:.2s
+}
+.grid__col:nth-child(3) .grid__line{
+    transition-delay:.2s
+}
+.grid__col:nth-child(4) .grid__fill{
+    transition-delay:.3s
+}
+.grid__col:nth-child(4) .grid__line{
+    transition-delay:.3s
+}
+.grid__col:nth-child(5) .grid__fill{
+    transition-delay:.4s
+}
+.grid__col:nth-child(5) .grid__line{
+    transition-delay:.4s
+}
+
+/* Grid fill settings */
+.grid__fill{
+    position:absolute;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    background-color:#1a1818;
+    transform-origin:center right;
+    transition:all .4s cubic-bezier(.42,0,1,1)
+}
+
+/* Grid line settings */
+.grid__line{
+    position:absolute;
+    right:0;
+    width:1px;
+    height:100%;
+    background-color:rgba(74,74,74,.1);
+    transform:scaleY(0);
+    transform-origin:center top;
+    transition:all .5s cubic-bezier(.42,0,1,1)
+}
+
+/* Header settings */
+.header{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    padding:10px 35px;
+    display:flex;
+    justify-content:space-between;
+    z-index:100;
+    transition:all .4s
+}
+
+/* Responsive adjustments for headers */
+@media (max-width:767px){
+    .header{
+        padding:10px 15px
+    }
+}
+
+/* Loaded state for headers */
+.loaded .header{
+    z-index:1100
+}
+
+/* Sticky header settings */
+.header.sticky{
+    background-color:rgba(26,24,24,.95)
+}
+
+/* Header link settings */
+.header>a{
+    display:inherit
+}
+
+/* Header logo settings */
+.header__logo{
+    position:relative;
+    display:inline-block;
+    width:300px;
+    height:80px;
+    background-size:contain;
+    background-position:left center;
+    background-repeat:no-repeat;
+    background-image:url(../fonts/cust_logo.png);
+    transform:translateY(-30px);
+    opacity:0;
+    transition:all .6s .4s;
+    z-index:10
+}
+
+/* Responsive adjustments for header logos */
+@media (max-width:767px){
+    .header__logo{
+        height:70px
+    }
+}
+
+/* Off state for header logos */
+.off .header__logo{
+    opacity:1;
+    transform:translateY(0)
+}
+
+/* Header burger menu settings */
+.header__burger{
+    position:relative;
+    text-align:right;
+    flex-basis:50%;
+    z-index:10
+}
+
+/* Responsive adjustments for header burger menus */
+@media (max-width:992px){
+    .header__burger{
+        flex-basis:65%
+    }
+}
+
+/* Header address and telephone settings */
+.header__address,.header__tel{
+    margin-top:8px;
+    font-size:13px;
+    letter-spacing:0;
+    color:#eeecea;
+    display:inline-block;
+    vertical-align:middle;
+    margin-right:35px
+}
+
+/* Responsive adjustments for header address and telephone */
+@media (max-width:767px){
+    .header__address,.header__tel{
+        display:none
+    }
+}
+
+/* Header telephone hover effects */
+.header__tel{
+    transition:all .4s
+}
+.header__tel:hover{
+    color:#fab162
+}
+
+/* Header menu settings */
+.header__menu{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100vh;
+    display:flex;
+    justify-content:space-between;
+    z-index:5;
+    background-color:#1a1818;
+    display:none
+}
+
+/* Container settings for header menus */
+.header__menu .container{
+    display:flex;
+    flex-wrap:wrap;
+    position:relative;
+    top:50%;
+    transform:translateY(-50%)
+}
+
+/* Responsive adjustments for header menu containers */
+@media (max-width:767px){
+    .header__menu .container{
+        top:0;
+        transform:translateY(0)
+    }
+}
+
+/* Inner wrapper settings for header menus */
+.header__menu__wrap{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100vh;
+    overflow-y:auto
+}
+
+/* Responsive adjustments for inner wrappers in header menus */
+@media (max-width:767px){
+    .header__menu__wrap{
+        top:60px;
+        height:calc(100vh - 60px)
+    }
+}
+
+/* Left and right column settings for header menus */
+.header__menu__left,.header__menu__right{
+    position:relative;
+    width:50%;
+    flex-basis:50%;
+    padding:0 50px;
+    color:#474343
+}
+
+/* Responsive adjustments for left and right columns in header menus */
+@media (max-width:767px){
+    .header__menu__left,.header__menu__right{
+        width:100%;
+        flex-basis:100%;
+        padding:0 30px
+    }
+}
+@media (max-width:767px){
+    .header__menu__left{
+        margin-top:10px;
+        margin-bottom:30px
+    }
+}
+
+/* List settings for left column in header menus */
+.header__menu__left ul{
+    list-style:none;
+    padding:0
+}
+
+/* List item settings for left column in header menus */
+.header__menu__left li{
+    padding:30px 8px;
+    transform:translateX(50px);
+    opacity:0;
+    transition:transform .4s,opacity .8s
+}
+
+/* Responsive adjustments for list items in left column of header menus */
+@media (max-width:767px){
+    .header__menu__left li{
+        padding:10px 0 0 0
+    }
+}
+
+/* Open menu state for list items in left column of header menus */
+.openMenu .header__menu__left li{
+    transform:translateX(0);
+    opacity:1
+}
+
+/* Transition delay settings for list items in left column of header menus */
+.header__menu__left li:nth-child(1){
+    transition-delay:.1s
+}
+.header__menu__left li:nth-child(2){
+    transition-delay:.2s
+}
+.header__menu__left li:nth-child(3){
+    transition-delay:.3s
+}
+.header__menu__left li:nth-child(4){
+    transition-delay:.4s
+}
+
+/* Link settings for left column in header menus */
+.header__menu__left a{
+    font-family:Butler;
+    font-size:95px;
+    line-height:1em;
+    font-weight:600;
+    letter-spacing:-1px;
+    transition:all .4s;
+    color:#474343
+}
+
+/* Link hover effects for left column in header menus */
+.header__menu__left a:hover{
+    color:#eeecea
+}
+
+/* Active link settings for left column in header menus */
+.header__menu__left a.active{
+    color:#eeecea
+}
+
+/* Responsive adjustments for links in left column of header menus */
+@media (max-width:1200px){
+    .header__menu__left a{
+        font-size:75px
+    }
+}
+@media (max-width:992px){
+    .header__menu__left a{
+        font-size:60px
+    }
+}
+@media (max-width:767px){
+    .header__menu__left a{
+        font-size:35px
+    }
+}
+
+/* Right column settings for header menus */
+.header__menu__right{
+    align-self:flex-end;
+    text-align:right;
+    margin-bottom:40px;
+    color:rgba(255,255,255,.4)
+}
+
+/* Responsive adjustments for right column in header menus */
+@media (max-width:767px){
+    .header__menu__right{
+        align-self:flex-start;
+        text-align:left
+    }
+}
+
+/* Menu info settings in header menus */
+.header__menu__info{
+    transform:translateX(50px);
+    opacity:0;
+    transition:transform .4s,opacity .8s
+}
+
+/* Open menu state for menu info in header menus */
+.openMenu .header__menu__info{
+    transform:translateX(0);
+    opacity:1
+}
+
+/* Transition delay settings for menu info in header menus */
+.header__menu__info:nth-child(1){
+    transition-delay:.5s
+}
+.header__menu__info:nth-child(2){
+    transition-delay:.6s
+}
+
+/* Label settings for header menus */
+.header__menu__label{
+    font-family:Butler;
+    font-size:24px;
+    font-weight:900;
+    margin-bottom:10px;
+    margin-top:60px;
+    color:#fab162;
+    text-transform:uppercase
+}
+
+/* Responsive adjustments for labels in header menus */
+@media (max-width:767px){
+    .header__menu__label{
+        margin-top:20px;
+        font-size:16px
+    }
+}
+
+/* Text settings for header menus */
+.header__menu__text{
+    font-family:Butler;
+    font-size:25px;
+    font-weight:400;
+    letter-spacing:-1px
+}
+
+/* Responsive adjustments for text in header menus */
+@media (max-width:767px){
+    .header__menu__text{
+        font-size:20px
+    }
+}
+
+/* Menu toggle button settings */
+.header #menu-toggle{
+    margin-top:8px;
+    width:34px;
+    height:34px;
+    position:relative;
+    display:inline-block;
+    vertical-align:middle
+}
+
+/* Responsive adjustments for menu toggle buttons */
+@media (max-width:767px){
+    .header #menu-toggle{
+        margin-top:3px
+    }
+}
+
+/* Menu toggle button hover effects */
+.header #menu-toggle:hover .cross span,.header #menu-toggle:hover .hamburger span{
+    background:#fab162
+}
+
+/* Hamburger menu settings */
+.header #menu-toggle .hamburger{
+    position:absolute;
+    height:100%;
+    width:100%
+}
+
+/* Hamburger menu span settings */
+.header #menu-toggle .hamburger span{
+    transition:all .25s;
+    display:block;
+    width:25px;
+    height:2px;
+    position:relative;
+    margin:10px auto;
+    background:#fff
+}
+
+/* Transition delay settings for hamburger menu spans */
+.header #menu-toggle .hamburger span:nth-child(1){
+    transition-delay:.5s
+}
+.header #menu-toggle .hamburger span:nth-child(2){
+    transition-delay:625ms
+}
+
+/* Cross menu settings */
+.header #menu-toggle .cross{
+    position:absolute;
+    height:100%;
+    width:100%;
+    transform:rotate(45deg)
+}
+
+/* Cross menu span settings */
+.header #menu-toggle .cross span{
+    transition:all .25s;
+    background:#fff;
+    transform-origin:center left;
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%)
+}
+
+/* Transition delay settings for cross menu spans */
+.header #menu-toggle .cross span:nth-child(1){
+    height:0;
+    width:2px;
+    transition-delay:0s
+}
+.header #menu-toggle .cross span:nth-child(2){
+    width:0;
+    height:2px;
+    transition-delay:.25s
+}
+
+/* Open state for hamburger menu spans */
+.header #menu-toggle.open .hamburger span{
+    width:0%
+}
+
+/* Transition delay settings for open state of hamburger menu spans */
+.header #menu-toggle.open .hamburger span:nth-child(1){
+    transition-delay:0s
+}
+.header #menu-toggle.open .hamburger span:nth-child(2){
+    transition-delay:125ms
+}
+.header #menu-toggle.open .hamburger span:nth-child(3){
+    transition-delay:.25s
+}
+
+/* Open state for cross menu spans */
+.header #menu-toggle.open .cross span:nth-child(1){
+    height:80%;
+    transition-delay:625ms
+}
+.header #menu-toggle.open .cross span:nth-child(2){
+    width:80%;
+    transition-delay:375ms
+}
+
+/* Slider settings */
+.slider{
+    position:relative;
+    width:100%;
+    height:100vh;
+    margin-bottom:150px
+}
+
+/* Responsive adjustments for sliders */
+@media (max-width:992px){
+    .slider{
+        height:60vh;
+        margin-bottom:100px
+    }
+}
+@media (max-width:767px){
+    .slider{
+        height:80vh
+    }
+}
+
+/* Animating state for sliders */
+.slider.animating{
+    transition:transform 1s;
+    will-change:transform
+}
+
+/* Background transition settings for animating sliders */
+.slider.animating .slide__bg{
+    transition:transform 1s;
+    will-change:transform
+}
+
+/* Slider container settings */
+.slider__container{
+    position:relative
+}
+
+/* Scroll hint settings for slider container */
+.slider__container .scroll-hint{
+    transform:translateY(0)
+}
+
+/* Slider control settings */
+.slider__control{
+    position:absolute;
+    top:50%;
+    left:15px;
+    width:48px;
+    height:48px;
+    transition:all .4s;
+    transform:translateY(-50%);
+    z-index:10
+}
+
+/* Responsive adjustments for slider controls */
+@media (max-width:767px){
+    .slider__control{
+        display:none
+    }
+}
+
+/* Right slider control settings */
+.slider__control--right{
+    right:15px;
+    left:auto
+}
+
+/* Background image settings for right slider control */
+.slider__control--right .slider__control__inner{
+    background-image:url(../fonts/arrow--right.svg)
+}
+
+/* Inactive state for slider controls */
+.slider__control.inactive{
+    pointer-events:none;
+    opacity:.2
+}
+
+/* Inner settings for slider controls */
+.slider__control__inner{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    border-radius:50%;
+    border:1px solid #fff;
+    background-image:url(../fonts/arrow.svg);
+    background-position:center;
+    background-repeat:no-repeat;
+    background-size:15px 15px
+}
+
+/* Hover effects for inner slider controls */
+.slider__control__inner:hover{
+    background-color:#fab162;
+    border:1px solid #fab162
+}
+
+/* Slide settings */
+.slide{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    overflow:hidden
+}
+
+/* Active state for slides */
+.slide.active .slide__line{
+    transform:scaleX(1)
+}
+.slide.active .imgPlaceholder{
+    width:0
+}
+.slide.active .slide__subtitle,.slide.active .slide__title{
+    opacity:1;
+    transform:translate(0)
+}
+.slide.active .slide__bigtitle{
+    left:50%;
+    opacity:1
+}
+.slide.active .reveal_title{
+    animation:revealtitle .8s;
+    animation-fill-mode:forwards;
+    animation-timing-function:ease-in-out;
+    animation-delay:.2s
+}
+.slide.active .reveal_title.two{
+    animation-delay:.4s
+}
+.slide.active .slide__link,.slide.active .slide__smalltext{
+    opacity:1;
+    left:0
+}
+
+/* Background settings for slides */
+.slide__bg{
+    position:relative;
+    height:100%;
+    background-size:cover;
+    background-repeat:no-repeat;
+    background-position:center;
+    filter:gray;
+    -webkit-filter:grayscale(1);
+    filter:grayscale(1);
+    will-change:transform
+}
+
+/* Background overlay settings for slides */
+.slide__bg:after{
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background-color:rgba(0,0,0,.9)
+}
+
+/* Container settings for slides */
+.slide__container{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:flex-end;
+    z-index:5
+}
+
+/* Responsive adjustments for slide containers */
+@media (max-width:1200px){
+    .slide__container{
+        width:80%;
+        margin:0 auto
+    }
+}
+@media (max-width:767px){
+    .slide__container{
+        height:100%;
+        width:90%
+    }
+}
+
+/* Image settings for slides */
+.slide__container img{
+    max-width:100%;
+    vertical-align:top
+}
+
+/* Left column settings for slides */
+.slide__left{
+    position:absolute;
+    top:0;
+    left:0;
+    width:30%;
+    flex-basis:30%;
+    z-index:2;
+    pointer-events:none
+}
+
+/* Responsive adjustments for left column in slides */
+@media (max-width:992px){
+    .slide__left{
+        width:40%;
+        flex-basis:40%
+    }
+}
+@media (max-width:767px){
+    .slide__left{
+        width:100%;
+        flex-basis:100%;
+        order:2;
+        position:relative;
+        text-align:center;
+        display:flex;
+        flex-direction:column;
+        align-items:center
+    }
+}
+
+/* Right column settings for slides */
+.slide__right{
+    position:relative;
+    width:75%;
+    flex-basis:75%
+}
+
+/* Responsive adjustments for right column in slides */
+@media (max-width:767px){
+    .slide__right{
+        width:100%;
+        flex-basis:100%;
+        order:1;
+        margin-top:70px
+    }
+}
+
+/* Tilt effect settings for slides */
+.slide .tilt{
+    transform-style:preserve-3d
+}
+
+/* Line settings for slides */
+.slide__line{
+    width:70px;
+    height:1px;
+    background-color:#fab162;
+    margin:50px 0 35px 0;
+    transform:scaleX(0);
+    transition:all .4s .2s;
+    transform-origin:left center
+}
+
+/* Responsive adjustments for lines in slides */
+@media (max-width:1200px){
+    .slide__line{
+        margin:35px 0
+    }
+}
+@media (max-width:992px){
+    .slide__line{
+        margin:15px 0
+    }
+}
+@media (max-width:767px){
+    .slide__line{
+        display:none
+    }
+}
+
+/* Title settings for slides */
+.slide__title{
+    position:relative;
+    font-family:Butler;
+    font-size:94px;
+    font-weight:900;
+    color:#fab162;
+    margin:0;
+    letter-spacing:-1px;
+    display:inline-block;
+    transform:translate(-20px);
+    transition:all .4s .4s;
+    opacity:0;
+    white-space:nowrap
+}
+
+/* Responsive adjustments for titles in slides */
+@media (max-width:1200px){
+    .slide__title{
+        font-size:75px
+    }
+}
+@media (max-width:992px){
+    .slide__title{
+        font-size:60px
+    }
+}
+@media (max-width:767px){
+    .slide__title{
+        font-size:50px
+    }
+}
+
+/* Subtitle settings for slides */
+.slide__subtitle{
+    position:relative;
+    font-size:16px;
+    line-height:1em;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    display:inline-block;
+    color:#eeecea;
+    transform:translate(-20px);
+    transition:all .4s .6s;
+    opacity:0;
+    margin-top:15px
+}
+
+/* Small text settings for slides */
+.slide__smalltext{
+    font-size:14px;
+    letter-spacing:0;
+    color:#eeecea;
+    margin:80px 0;
+    width:60%;
+    position:relative;
+    opacity:0;
+    left:-20px;
+    transition:all .4s ease-in .8s
+}
+
+/* Responsive adjustments for small text in slides */
+@media (max-width:1200px){
+    .slide__smalltext{
+        margin:40px 0;
+        width:80%
+    }
+}
+@media (max-width:992px){
+    .slide__smalltext{
+        margin:30px 0;
+        width:90%
+    }
+}
+@media (max-width:767px){
+    .slide__smalltext{
+        width:100%;
+        margin:15px 0
+    }
+}
+
+/* Link settings for slides */
+.slide__link{
+    position:relative;
+    text-decoration:none;
+    opacity:0;
+    left:-20px;
+    transition:left .4s ease-in 1s,opacity .4s ease-in 1s,background-color .4s 0s;
+    pointer-events:auto
+}
+
+/* Big title settings for slides */
+.slide__bigtitle{
+    position:absolute;
+    top:75%;
+    left:45%;
+    font-family:Butler;
+    font-weight:900;
+    font-size:300px;
+    line-height:1em;
+    color:#fab162;
+    opacity:0;
+    transition:all .4s .2s;
+    transform-origin:center right;
+    z-index:-1;
+    white-space:nowrap
+}
+
+/* Button wrapper settings for home about section */
+.home__about__buttonWrap{
+    margin-top:15px;
+    opacity:0;
+    transform:translateY(15px);
+    transition:all .4s ease-in-out 1s
+}
+
+/* Responsive adjustments for button wrappers in home about section */
+@media (max-width:992px){
+    .home__about__buttonWrap{
+        display:inline-block;
+        margin:30px auto 0 auto
+    }
+}
+
+/* In-view state for button wrappers in home about section */
+.in-view .home__about__buttonWrap{
+    opacity:1;
+    transform:translateY(0)
+}
+
+/* Carousel settings for home section */
+.home__carousel{
+    position:relative;
+    padding:100px 0;
+    margin-bottom:100px
+}
+
+/* Responsive adjustments for carousels in home section */
+@media (max-width:767px){
+    .home__carousel{
+        padding:30px 0 30px 0;
+        margin:50px 0 100px 0
+    }
+}
+
+/* Carousel item settings */
+.home__carousel .carousel__item{
+    position:relative
+}
+
+/* Focus settings for carousel items */
+.home__carousel .carousel__item:focus{
+    outline:0
+}
+
+/* Hover effects for carousel image containers */
+.home__carousel .carousel__item:hover .carousel__imgContainer:after{
+    background-color:rgba(0,0,0,.1)
+}
+
+/* Carousel image container settings */
+.home__carousel .carousel__imgContainer{
+    position:relative;
+    height:0;
+    padding-top:65%;
+    transition:all .6s .3s;
+    overflow:hidden
+}
+
+/* Responsive adjustments for carousel image containers */
+@media (max-width:767px){
+    .home__carousel .carousel__imgContainer{
+        padding-top:85%
+    }
+}
+
+/* Carousel image container overlay settings */
+.home__carousel .carousel__imgContainer:after{
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    transition:all .4s;
+    background-color:rgba(0,0,0,.3)
+}
+
+/* Carousel image settings */
+.home__carousel .carousel__img{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transform:scale(1.1);
+    transition:all 1.5s ease .6s
+}
+
+/* Carousel content settings */
+.home__carousel .carousel__content{
+    position:absolute;
+    top:50%;
+    left:-70px;
+    transform:translateY(-50%)
+}
+
+/* Responsive adjustments for carousel content */
+@media (max-width:767px){
+    .home__carousel .carousel__content{
+        left:-20px
+    }
+}
+
+/* Carousel title settings */
+.home__carousel .carousel__title{
+    margin:0;
+    position:relative
+}
+
+/* Link settings for carousel titles */
+.home__carousel .carousel__title a{
+    font-family:Butler;
+    font-size:80px;
+    font-weight:900;
+    color:#fab162;
+    letter-spacing:-1px;
+    display:inline-block;
+    transform:translate(-20px);
+    transition:all .4s 1.2s;
+    opacity:0
+}
+
+/* Responsive adjustments for carousel titles */
+@media (max-width:992px){
+    .home__carousel .carousel__title a{
+        font-size:55px
+    }
+}
+@media (max-width:767px){
+    .home__carousel .carousel__title a{
+        font-size:40px
+    }
+}
+
+/* Subtitle settings for carousel */
+.home__carousel .carousel__subtitle{
+    position:relative;
+    font-size:14px;
+    line-height:1em;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    display:inline-block;
+    color:#eeecea;
+    transform:translate(-20px);
+    transition:all .4s 1s;
+    opacity:0
+}
+
+/* Active state for carousel items */
+.home__carousel .carousel .tns-slide-active .carousel__img{
+    transform:scale(1)
+}
+.home__carousel .carousel .tns-slide-active .carousel__subtitle,.home__carousel .carousel .tns-slide-active .carousel__title a{
+    opacity:1;
+    transform:translate(0)
+}
+.home__carousel .carousel .tns-slide-active .reveal_title{
+    animation:revealtitle .8s;
+    animation-fill-mode:forwards;
+    animation-timing-function:ease-in-out;
+    animation-delay:.8s
+}
+.home__carousel .carousel .tns-slide-active .reveal_title.two{
+    animation-delay:1s
+}
+
+/* Navigation settings for carousel */
+.home__carousel .tns-nav{
+    position:absolute;
+    bottom:0;
+    left:0;
+    width:100%;
+    text-align:center
+}
+
+/* Responsive adjustments for navigation in carousel */
+@media (max-width:767px){
+    .home__carousel .tns-nav{
+        bottom:-25px
+    }
+}
+
+/* Navigation button settings for carousel */
+.home__carousel .tns-nav button{
+    position:relative;
+    width:16px;
+    height:16px;
+    display:inline-block;
+    margin:10px 12px;
+    border-radius:50%;
+    border:1px solid #eeecea;
+    background:0 0;
+    outline:0
+}
+
+/* Focus settings for navigation buttons in carousel */
+.home__carousel .tns-nav button:focus{
+    outline:0
+}
+
+/* Navigation button pseudo-element settings for carousel */
+.home__carousel .tns-nav button:before{
+    content:"";
+    position:absolute;
+    top:50%;
+    left:50%;
+    width:8px;
+    height:8px;
+    transition:all .6s;
+    background-color:#eeecea;
+    border-radius:50%;
+    transform:translate(-50%,-50%) scale(0)
+}
+
+/* Active state for navigation buttons in carousel */
+.home__carousel .tns-nav button.tns-nav-active:before{
+    transform:translate(-50%,-50%) scale(1)
+}
+
+/* Service section settings for home section */
+.home__service{
+    position:relative;
+    padding:150px 0 50px 0;
+    margin-bottom:100px
+}
+
+/* Responsive adjustments for service section in home section */
+@media (max-width:1200px){
+    .home__service{
+        padding:150px 15px 100px 15px
+    }
+}
+@media (max-width:767px){
+    .home__service{
+        padding:30px 0 30px 0;
+        margin:150px 0 100px 0
+    }
+}
+
+/* Service row settings for home section */
+.home__service__row{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    align-items:center;
+    margin-bottom:100px;
+    display:flex
+}
+
+/* Responsive adjustments for service rows in home section */
+@media (max-width:767px){
+    .home__service__row{
+        margin-bottom:60px
+    }
+}
+@media (max-width:767px){
+    .home__service__row:nth-child(even) .home__service__col{
+        order:2
+    }
+    .home__service__row:nth-child(even) .home__service__col--offset{
+        order:1
+    }
+}
+
+/* Text alignment for odd service rows in home section */
+.home__service__row:nth-child(odd) .home__service__text,.home__service__row:nth-child(odd) .home__service__title{
+    text-align:right
+}
+
+/* Responsive adjustments for text alignment in odd service rows */
+@media (max-width:767px){
+    .home__service__row:nth-child(odd) .home__service__text,.home__service__row:nth-child(odd) .home__service__title{
+        text-align:left
+    }
+}
+
+/* Text margin settings for odd service rows */
+.home__service__row:nth-child(odd) .home__service__text{
+    margin-left:0;
+    margin-right:35%
+}
+
+/* Responsive adjustments for text margins in odd service rows */
+@media (max-width:992px){
+    .home__service__row:nth-child(odd) .home__service__text{
+        margin-right:25%
+    }
+}
+@media (max-width:767px){
+    .home__service__row:nth-child(odd) .home__service__text{
+        margin-right:0
+    }
+}
+
+/* Column settings for odd service rows */
+.home__service__row:nth-child(odd) .home__service__col{
+    order:2;
+    width:50%;
+    flex-basis:50%;
+    margin-left:auto;
+    margin-right:0
+}
+
+/* Responsive adjustments for columns in odd service rows */
+@media (max-width:992px){
+    .home__service__row:nth-child(odd) .home__service__col{
+        width:60%;
+        flex-basis:60%
+    }
+}
+@media (max-width:767px){
+    .home__service__row:nth-child(odd) .home__service__col{
+        width:100%;
+        flex-basis:100%
+    }
+}
+
+/* Offset column settings for odd service rows */
+.home__service__row:nth-child(odd) .home__service__col--offset{
+    order:1;
+    width:41.6667%;
+    flex-basis:41.6667%;
+    margin-right:0;
+    margin-left:0;
+    transform:translateX(45%)
+}
+
+/* Responsive adjustments for offset columns in odd service rows */
+@media (max-width:992px){
+    .home__service__row:nth-child(odd) .home__service__col--offset{
+        width:40%;
+        flex-basis:40%;
+        transform:translateX(20%)
+    }
+}
+@media (max-width:767px){
+    .home__service__row:nth-child(odd) .home__service__col--offset{
+        width:100%;
+        flex-basis:100%
+    }
+}
+@media (max-width:767px){
+    .home__service__row:nth-child(odd) .home__service__col--offset{
+        transform:translateX(0)
+    }
+}
+
+/* Last child settings for service rows */
+.home__service__row:last-child(){
+    margin-bottom:0
+}
+
+/* In-view state for service rows */
+.home__service__row.in-view .reveal-image{
+    transform:scale(1)
+    
+}
+
+/* Image wrapper settings for service rows */
+.home__service__imgWrapper{
+    position:relative;
+    width:100%;
+    min-height:350px;
+    overflow:hidden
+}
+
+/* Responsive adjustments for image wrappers in service rows */
+@media (max-width:767px){
+    .home__service__imgWrapper{
+        min-height:280px;
+        margin-top:25px
+    }
+}
+
+/* Image reveal settings for service sections */
+.home__service .reveal-image{
+    position:absolute;
+    top:0;
+    left:0;
+    height:100%;
+    width:100%;
+    background-size:cover;
+    background-position:center;
+    transition:all 1.5s ease .4s;
+    transform:scale(1.15)
+    
+}
+
+/* Image overlay settings for service sections */
+.home__service .reveal-image:before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background-color:rgba(0,0,0,.2)
+}
+
+/* Column settings for service sections */
+.home__service__col{
+    width:50%;
+    flex-basis:50%;
+    padding:0 15px;
+    color:#eeecea;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:space-between;
+    align-items:center
+}
+
+/* Responsive adjustments for columns in service sections */
+@media (max-width:992px){
+    .home__service__col{
+        width:60%;
+        flex-basis:60%
+    }
+}
+@media (max-width:767px){
+    .home__service__col{
+        width:100%;
+        flex-basis:100%
+    }
+}
+
+/* Offset column settings for service sections */
+.home__service__col--offset{
+    width:41.6667%;
+    flex-basis:41.6667%;
+    margin-left:auto;
+    transform:translateX(-45%)
+}
+
+/* Responsive adjustments for offset columns in service sections */
+@media (max-width:992px){
+    .home__service__col--offset{
+        width:40%;
+        flex-basis:40%;
+        transform:translateX(-20%)
+    }
+}
+@media (max-width:767px){
+    .home__service__col--offset{
+        width:100%;
+        flex-basis:100%;
+        transform:translateX(0)
+    }
+}
+
+/* Title settings for service sections */
+.home__service__title{
+    font-weight:700;
+    font-size:44px;
+    line-height:1em;
+    letter-spacing:0;
+    margin:0;
+    margin-bottom:55px;
+    opacity:0;
+    transform:translateY(15px);
+    transition:all .4s ease-in-out .5s;
+    width:65%
+}
+
+/* Responsive adjustments for titles in service sections */
+@media (max-width:992px){
+    .home__service__title{
+        font-size:30px;
+        margin-bottom:35px
+    }
+}
+@media (max-width:767px){
+    .home__service__title{
+        font-size:40px
+    }
+}
+
+/* In-view state for titles in service sections */
+.in-view .home__service__title{
+    opacity:1;
+    transform:translateY(0)
+}
+
+/* Text settings for service sections */
+.home__service__text{
+    font-size:13px;
+    line-height:24px;
+    opacity:0;
+    transform:translateY(15px);
+    transition:all .4s ease-in-out .7s;
+    margin-left:35%
+}
+
+/* Responsive adjustments for text in service sections */
+@media (max-width:992px){
+    .home__service__text{
+        margin-left:25%
+    }
+}
+@media (max-width:767px){
+    .home__service__text{
+        margin-left:0
+    }
+}
+
+/* In-view state for text in service sections */
+.in-view .home__service__text{
+    opacity:1;
+    transform:translateY(0)
+}
+
+/* Button wrapper settings for service sections */
+.home__service__buttonWrap{
+    transition:all .4s ease-in-out .9s;
+    text-align:center
+}
+
+/* Content section settings for home */
+.home__content{
+    padding:100px 0;
+    margin-bottom:100px;
+    position:relative
+}
+
+/* Responsive adjustments for content section in home */
+@media (max-width:767px){
+    .home__content{
+        padding:30px 0 30px 0;
+        margin:150px 0 100px 0
+    }
+}
+
+/* Partners section settings */
+.partners{
+    padding:50px 0 100px 0;
+    position:relative
+}
+
+/* Responsive adjustments for partners section */
+@media (max-width:767px){
+    .partners{
+        padding:0 0 30px 0;
+        margin:0
+    }
+}
+
+/* Overflow settings for partners section */
+.partners .tns-ovh{
+    padding:25px 0
+}
+
+/* Responsive adjustments for overflow in partners section */
+@media (max-width:767px){
+    .partners .tns-ovh{
+        padding-top:0
+    }
+}
+
+/* Image settings for partners section */
+.partners__img{
+    width:270px;
+    height:150px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    opacity:.4;
+    transition:all .4s ease;
+    margin:0 auto
+}
+
+/* Hover effects for images in partners section */
+.partners__img:hover{
+    opacity:.85
+}
+
+/* Image settings for partners */
+.partners__img img{
+    width:auto;
+    height:75%;
+    transition:all .4s ease
+}
+
+/* Custom partner link settings */
+.partners a[href="https://www.kadeco.it/it/"] .partners__img:after{
+    content:"Unico rivenditore!";
+    position:absolute;
+    top:15px;
+    width:100%;
+    text-align:center;
+    text-transform:uppercase;
+    font-size:13px;
+    font-weight:500;
+    color:#eeecea;
+    opacity:0;
+    transition:all .4s ease
+}
+
+/* Hover effects for custom partner links */
+.partners a[href="https://www.kadeco.it/it/"]:hover .partners__img:after{
+    opacity:1;
+    top:-25px
+}
+
+/* Position settings for custom partner links */
+.partners a[href="https://www.kadeco.it/it/"] .partners__img{
+    position:relative
+}
+
+/* Border settings for custom partner links */
+.partners a[href="https://www.kadeco.it/it/"] .partners__img:before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    border:3px solid rgba(238,236,234,.8);
+    transition:all .4s ease;
+    transform:scale(.95)
+}
+
+/* Hover effects for borders in custom partner links */
+.partners a[href="https://www.kadeco.it/it/"] .partners__img:hover:before{
+    border:6px solid #fab162
+}
+
+/* Footer settings */
+.footer{
+    position:relative;
+    padding:20px 5px;
+    background-color:#1a1818;
+    text-align:center
+}
+
+/* Logo settings for footer */
+.footer__logo{
+    position:relative;
+    display:inline-block;
+    width:300px;
+    height:150px;
+    background-size:contain;
+    background-position:left center;
+    background-repeat:no-repeat;
+    background-image:url(../fonts/cust_logo.png);
+    margin-bottom:10px
+}
+
+/* Text settings for footer */
+.footer__text{
+    font-size:13px;
+    line-height:24px;
+    color:#eeecea
+}
+
+/* Link settings for text in footer */
+.footer__text a{
+    display:inline-block;
+    margin:0 5px;
+    vertical-align:middle
+}
+
+/* Facebook link settings for footer */
+.footer .fb-link{
+    display:block;
+    width:30px;
+    height:30px;
+    margin:20px auto 0 auto;
+    background-size:contain;
+    background-position:center;
+    background-repeat:no-repeat;
+    background-image:url(../fonts/fb.svg);
+    text-align:center
+}
+
+/* Link settings for Facebook links in footer */
+.footer .fb-link a{
+    display:block;
+    height:100%
+}
+
+/* Page top section settings */
+.pageTop{
+    position:relative;
+    width:100%;
+    height:75vh;
+    text-align:right;
+    margin-bottom:50px;
+    background-color:#000
+}
+
+/* Responsive adjustments for page top section */
+@media (max-width:992px){
+    .pageTop{
+        height:45vh
+    }
+}
+@media (max-width:767px){
+    .pageTop{
+        text-align:center
+    }
+}
+
+/* In-view state for page top section */
+.pageTop.in-view .pageTop__subtitle,.pageTop.in-view .pageTop__title{
+    opacity:1;
+    transform:translate(0)
+}
+.pageTop.in-view .reveal_title{
+    animation:revealtitle .8s;
+    animation-fill-mode:forwards;
+    animation-timing-function:ease-in-out;
+    animation-delay:.2s
+}
+.pageTop.in-view .reveal_title.two{
+    animation-delay:.4s
+}
+
+/* Background settings for page top section */
+.pageTop__bg{
+    position:relative;
+    top:-5%;
+    left:-5%;
+    width:110%;
+    height:110%;
+    background-size:cover;
+    background-repeat:no-repeat;
+    background-position:center;
+    filter:gray;
+    -webkit-filter:grayscale(1);
+    filter:grayscale(1);
+    will-change:transform
+}
+
+/* Background overlay settings for page top section */
+.pageTop__bg:after{
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background-color:rgba(0,0,0,.8)
+}
+
+/* Container settings for page top section */
+.pageTop__container{
+    position:absolute;
+    top:50%;
+    left:50%;
+    width:100%;
+    transform:translate(-50%,-50%);
+    z-index:5
+}
+
+/* Container settings for page top section */
+.pageTop .container{
+    display:flex;
+    flex-wrap:wrap;
+    flex-direction:column;
+    align-items:flex-end
+}
+
+/* Responsive adjustments for container in page top section */
+@media (max-width:1200px){
+    .pageTop .container{
+        padding:0 15px
+    }
+}
+@media (max-width:767px){
+    .pageTop .container{
+        align-items:center
+    }
+}
+
+/* Title settings for page top section */
+.pageTop__title{
+    position:relative;
+    font-family:Butler;
+    font-size:94px;
+    font-weight:900;
+    color:#fab162;
+    margin:0;
+    letter-spacing:-1px;
+    display:inline-block;
+    transform:translate(-20px);
+    transition:all .4s .4s;
+    opacity:0
+}
+
+/* Responsive adjustments for titles in page top section */
+@media (max-width:767px){
+    .pageTop__title{
+        font-size:40px;
+        line-height:1em
+    }
+}
+
+/* Subtitle settings for page top section */
+.pageTop__subtitle{
+    position:relative;
+    font-size:16px;
+    line-height:20px;
+    letter-spacing:1px;
+    text-align:right;
+    text-transform:uppercase;
+    display:inline-block;
+    color:#eeecea;
+    transform:translate(-20px);
+    transition:all .4s .6s;
+    opacity:0;
+    margin-top:15px
+}
+
+/* Responsive adjustments for subtitles in page top section */
+@media (max-width:767px){
+    .pageTop__subtitle{
+        font-size:14px;
+        text-align:center;
+        line-height:1.2em
+    }
+}
+
+/* Overflow hidden settings for page top section */
+.pageTop .overflow-hidden{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    overflow:hidden
+}
+
+/* Page bottom section settings */
+.pageBottom{
+    position:relative;
+    padding:100px 0;
+    overflow:hidden
+}
+
+/* Responsive adjustments for page bottom section */
+@media (max-width:767px){
+    .pageBottom{
+        padding:50px 0
+    }
+}
+
+/* Hover effects for page bottom section */
+.pageBottom:hover .pageBottom__bg__img{
+    filter:none
+}
+.pageBottom:hover .pageBottom__bg__img:after{
+    background-color:rgba(0,0,0,.5)
+}
+
+/* In-view state for page bottom section */
+.pageBottom.in-view .pageBottom__buttonWrap,.pageBottom.in-view .pageBottom__label,.pageBottom.in-view .pageBottom__subtitle,.pageBottom.in-view .pageBottom__title{
+    opacity:1;
+    transform:translate(0)
+}
+.pageBottom.in-view .reveal_title{
+    animation:revealtitle .8s;
+    animation-fill-mode:forwards;
+    animation-timing-function:ease-in-out;
+    animation-delay:.2s
+}
+.pageBottom.in-view .reveal_title.two{
+    animation-delay:.4s
+}
+
+/* Background settings for page bottom section */
+.pageBottom__bg{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%
+}
+
+/* Background image settings for page bottom section */
+.pageBottom__bg__img{
+    position:absolute;
+    top:-5%;
+    left:-5%;
+    width:110%;
+    height:110%;
+    background-size:cover;
+    background-repeat:no-repeat;
+    background-position:center;
+    filter:gray;
+    -webkit-filter:grayscale(1);
+    filter:grayscale(1);
+    will-change:transform
+}
+
+/* Background image overlay settings for page bottom section */
+.pageBottom__bg__img:after{
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background-color:rgba(0,0,0,.8);
+    transition:all .4s
+}
+
+/* Container settings for page bottom section */
+.pageBottom__container{
+    position:relative;
+    z-index:5
+}
+
+/* Container settings for page bottom section */
+.pageBottom .container{
+    display:flex;
+    flex-wrap:wrap;
+    flex-direction:column;
+    align-items:center
+}
+
+/* Label settings for page bottom section */
+.pageBottom__label{
+    position:relative;
+    font-family:Butler;
+    font-size:24px;
+    font-weight:600;
+    margin-bottom:15px;
+    letter-spacing:-.5px;
+    transition:all .4s .3s;
+    opacity:0;
+    transform:translate(-20px)
+}
+
+/* Responsive adjustments for labels in page bottom section */
+@media (max-width:767px){
+    .pageBottom__label{
+        font-size:20px
+    }
+}
+
+/* Title settings for page bottom section */
+.pageBottom__title{
+    position:relative;
+    font-family:Butler;
+    font-size:94px;
+    font-weight:900;
+    color:#fab162;
+    margin:0;
+    letter-spacing:-1px;
+    display:inline-block;
+    transform:translate(-20px);
+    transition:all .4s .4s;
+    opacity:0
+}
+
+/* Responsive adjustments for titles in page bottom section */
+@media (max-width:767px){
+    .pageBottom__title{
+        font-size:40px;
+        text-align:center
+    }
+}
+
+/* Subtitle settings for page bottom section */
+.pageBottom__subtitle{
+    position:relative;
+    font-size:16px;
+    line-height:20px;
+    letter-spacing:1px;
+    text-align:center;
+    text-transform:uppercase;
+    display:inline-block;
+    color:#eeecea;
+    transform:translate(-20px);
+    transition:all .4s .6s;
+    opacity:0;
+    padding:0 15px;
+    margin-top:5px
+}
+
+/* Button wrapper settings for page bottom section */
+.pageBottom__buttonWrap{
+    margin-top:35px;
+    transform:translateX(-20px);
+    transition:all .4s .8s;
+    opacity:0
+}
+
+/* Responsive adjustments for button wrappers in page bottom section */
+@media (max-width:767px){
+    .pageBottom__buttonWrap{
+        margin-top:20px
+    }
+}
+
+/* Personal section settings for about section */
+.about__personal{
+    position:relative;
+    padding:150px 0 100px 0;
+    margin-bottom:100px
+}
+
+/* Responsive adjustments for personal section in about section */
+@media (max-width:767px){
+    .about__personal{
+        padding:50px 0;
+        margin-bottom:80px
+    }
+}
+
+/* First child settings for personal section in about section */
+.about__personal:first-child{
+    margin-top:100px
+}
+
+/* Last child settings for personal section in about section */
+.about__personal:last-child{
+    padding-bottom:100px
+}
+
+/* Responsive adjustments for last child in personal section */
+@media (max-width:767px){
+    .about__personal:last-child{
+        padding-bottom:0
+    }
+}
+
+/* Product section settings */
+.product{
+    position:relative;
+    padding:150px 15px;
+    margin:100px 0 50px 0
+}
+
+/* Responsive adjustments for product section */
+@media (max-width:767px){
+    .product{
+        padding:80px 0 80px 0;
+        margin-bottom:50px
+    }
+}
+@media (max-width:767px){
+    .product .container{
+        padding:0 15px
+    }
+}
+
+/* Product row settings */
+.product__row{
+    position:relative;
+    width:80%;
+    margin-left:10%;
+    margin-bottom:150px;
+    display:flex
+}
+
+/* Responsive adjustments for product rows */
+@media (max-width:992px){
+    .product__row{
+        width:90%;
+        margin-left:5%
+    }
+}
+@media (max-width:767px){
+    .product__row{
+        width:100%;
+        margin-left:0;
+        display:block;
+        margin-bottom:100px
+    }
+}
+
+/* Last child settings for product rows */
+.product__row:last-child{
+    margin-bottom:0
+}
+
+/* In-view state for product rows */
+.product__row.in-view .imgPlaceholder{
+    width:0
+}
+.product__row.in-view .product__img{
+    transform:scale(1)
+}
+.product__row.in-view .product__subtitle,.product__row.in-view .product__title a{
+    opacity:1;
+    transform:translate(0)
+}
+.product__row.in-view .reveal_title{
+    animation:revealtitle .6s;
+    animation-fill-mode:forwards;
+    animation-timing-function:ease-in-out;
+    animation-delay:.6s
+}
+.product__row.in-view .reveal_title.two{
+    animation-delay:.8s
+}
+
+/* Even row settings for product rows */
+.product__row:nth-child(even) .product__row__left{
+    left:55%
+}
+
+/* Responsive adjustments for even rows in product rows */
+@media (max-width:992px){
+    .product__row:nth-child(even) .product__row__left{
+        left:50%
+    }
+}
+@media (max-width:767px){
+    .product__row:nth-child(even) .product__row__left{
+        left:0
+    }
+}
+
+/* Right column settings for even rows in product rows */
+.product__row:nth-child(even) .product__row__right{
+    top:0;
+    left:0;
+    transform:translate(0)
+}
+
+/* Left column settings for product rows */
+.product__row__left{
+    position:absolute;
+    top:50%;
+    left:0;
+    width:45%;
+    flex-basis:45%;
+    z-index:2;
+    transform:translateY(-50%)
+}
+
+/* Responsive adjustments for left column in product rows */
+@media (max-width:1200px){
+    .product__row__left{
+        width:50%;
+        flex-basis:50%
+    }
+}
+@media (max-width:992px){
+    .product__row__left{
+        width:55%;
+        flex-basis:55%
+    }
+}
+@media (max-width:767px){
+    .product__row__left{
+        position:relative;
+        width:100%;
+        flex-basis:100%;
+        top:0;
+        transform:translate(0);
+        margin-bottom:25px
+    }
+}
+
+/* Right column settings for product rows */
+.product__row__right{
+    position:relative;
+    top:0;
+    left:30%;
+    width:70%;
+    flex-basis:70%;
+    height:400px
+}
+
+/* Responsive adjustments for right column in product rows */
+@media (max-width:767px){
+    .product__row__right{
+        width:100%;
+        flex-basis:100%;
+        left:0;
+        height:250px
+    }
+}
+
+/* Image container settings for product rows */
+.product__imgContainer{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    overflow:hidden
+}
+
+/* Image settings for product rows */
+.product__img{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background-size:cover;
+    background-position:center;
+    transform:scale(1.1);
+    transition:all 1s ease .4s
+}
+
+/* Image overlay settings for product rows */
+.product__img:after{
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background-color:rgba(0,0,0,.1)
+}
+
+/* Title settings for product rows */
+.product__title{
+    margin:0;
+    position:relative;
+    display:table
+}
+
+/* Link settings for titles in product rows */
+.product__title a{
+    font-family:Butler;
+    font-size:80px;
+    font-weight:900;
+    color:#fab162;
+    letter-spacing:-1px;
+    line-height:1em;
+    display:inline-block;
+    transform:translate(-20px);
+    transition:all .4s .8s;
+    opacity:0
+}
+
+/* Responsive adjustments for titles in product rows */
+@media (max-width:767px){
+    .product__title a{
+        font-size:40px;
+        line-height:.9em
+    }
+}
+
+/* Subtitle settings for product rows */
+.product__subtitle{
+    position:relative;
+    font-size:14px;
+    line-height:1em;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    display:inline-block;
+    color:#eeecea;
+    margin-top:15px;
+    transform:translate(-20px);
+    transition:all .4s 1s;
+    opacity:0
+}
+
+/* Responsive adjustments for subtitles in product rows */
+@media (max-width:767px){
+    .product__subtitle{
+        margin-top:10px;
+        line-height:1.3em
+    }
+}
+
+/* Content settings for product rows */
+.product__content{
+    position:relative
+}
+
+/* Main image settings for product section */
+.product__mainImg{
+    position:relative;
+    margin-top:100px
+}
+
+/* First main image settings for product section */
+.product__mainImg--first{
+    padding-top:150px;
+    padding-bottom:100px
+}
+
+/* Responsive adjustments for first main image in product section */
+@media (max-width:767px){
+    .product__mainImg--first{
+        padding-top:50px;
+        padding-bottom:0;
+        margin-top:100px
+    }
+}
+
+/* Hover effects for main images in product section */
+.product__mainImg .section__generic__imgContainer:hover:after{
+    background-color:transparent
+}
+
+/* Image container overlay settings for main images in product section */
+.product__mainImg .section__generic__imgContainer:after{
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background-color:rgba(0,0,0,.2);
+    transition:all .4s
+}
+
+/* Responsive adjustments for image container overlay in main images */
+@media (max-width:767px){
+    .product__mainImg .section__generic__imgContainer:after{
+        display:none
+    }
+}
+
+/* Image gallery settings for product section */
+.product__imgGallery{
+    position:relative;
+    padding:100px 0;
+    margin:100px 0
+}
+
+/* Responsive adjustments for image gallery in product section */
+@media (max-width:767px){
+    .product__imgGallery{
+        margin-top:150px;
+        padding-top:50px;
+        margin-bottom:0
+    }
+}
+
+/* First child settings for image gallery in product section */
+.product__imgGallery .product__mainImg:first-child{
+    margin-top:0
+}
+
+/* Responsive adjustments for full left image container in image gallery */
+@media (max-width:992px){
+    .product__imgGallery .section__generic--fullLeft .section__generic__imgContainer{
+        width:75%
+    }
+}
+@media (max-width:767px){
+    .product__imgGallery .section__generic--fullLeft .section__generic__imgContainer{
+        width:calc(100% - 30px)
+    }
+}
+
+/* Back to product link settings */
+.backToProduct{
+    position:absolute;
+    bottom:35px;
+    left:35px;
+    z-index:1;
+    color:#fab162;
+    padding-left:60px;
+    transition:all .4s;
+    font-size:13px
+}
+
+/* Responsive adjustments for back to product link */
+@media (max-width:767px){
+    .backToProduct{
+        left:50%;
+        transform:translateX(-50%);
+        white-space:nowrap
+    }
+}
+
+/* Hover effects for back to product link */
+.backToProduct:hover{
+    color:#f9a549
+}
+.backToProduct:hover:before{
+    background-color:#f9a549
+}
+
+/* Scroll animation settings for back to product link */
+.backToProduct:before{
+    content:"";
+    position:absolute;
+    top:50%;
+    left:0;
+    width:50px;
+    height:1px;
+    background-color:#fab162;
+    transform:scale(0,1) translate3d(0,0,0);
+    animation:scrollerH 3s infinite
+}
+
+/* Scroll animation overlay settings for back to product link */
+.backToProduct:after{
+    content:"";
+    position:absolute;
+    top:50%;
+    left:0;
+    width:50px;
+    height:1px;
+    background-color:rgba(250,177,98,.2)
+}
+
+/* Horizontal scroll animation keyframes */
+@keyframes scrollerH{
+    0%{
+        transform-origin:top left;
+        transform:scale(0,1);
+        animation-timing-function:cubic-bezier(.48,.02,0,.99)
+    }
+    30%{
+        transform-origin:top left;
+        transform:scale(1,1)
+    }
+    41%{
+        transform-origin:top right;
+        transform:scale(1,1);
+        animation-timing-function:cubic-bezier(.48,.02,0,.99)
+    }
+    100%{
+        transform-origin:top right;
+        transform:scale(0,1)
+    }
+}
+
+/* Services section settings */
+.services{
+    position:relative
+}
+
+/* Responsive adjustments for services section */
+@media (max-width:767px){
+    .services .home__service{
+        padding:50px 0;
+        margin:100px 0 80px 0
+    }
+}
+
+/* First child settings for services section */
+.services .home__service__row:first-child{
+    margin-top:100px
+}
+
+/* Responsive adjustments for first child in services section */
+@media (max-width:767px){
+    .services .home__service__row:first-child{
+        margin-top:0
+    }
+}
+
+/* Last child settings for services section */
+.services .home__service__row:last-child{
+    margin-bottom:0
+}
+
+/* Contacts wrap settings */
+.contacts__wrap{
+    position:relative;
+    padding:150px 0 100px 0;
+    margin-bottom:100px
+}
+
+/* Responsive adjustments for contacts wrap */
+@media (max-width:767px){
+    .contacts__wrap{
+        padding-top:50px;
+        padding-bottom:0;
+        margin-top:50px
+    }
+}
+
+/* First child settings for contacts wrap */
+.contacts__wrap:first-child{
+    margin-top:100px
+}
+
+/* Last child settings for contacts wrap */
+.contacts__wrap:last-child{
+    padding-bottom:100px
+}
+
+/* Responsive adjustments for last child in contacts wrap */
+@media (max-width:767px){
+    .contacts__wrap:last-child{
+        padding-bottom:0
+    }
+}
+
+/* Map settings for contacts section */
+.contacts #map{
+    position:relative;
+    width:100%;
+    height:100%
+}
+
+/* Strong tag settings for generic text in contacts section */
+.contacts .section__generic__text strong{
+    display:block;
+    margin-top:25px
+}
+
+/* Text shadow settings for titles in generic content of contacts section */
+.contacts .section__generic--content .section__generic__title{
+    text-shadow:0 0 2px rgba(39,39,39,.5)
+}
+
+/* Text alignment settings for full right content in contacts section */
+.contacts .section__generic--fullRight .section__generic--content{
+    text-align:right
+}
+
+/* Responsive adjustments for text alignment in full right content */
+@media (max-width:767px){
+    .contacts .section__generic--fullRight .section__generic--content{
+        text-align:left
+    }
+}
+
+/* Text shadow removal for full right titles in contacts section */
+.contacts .section__generic--fullRight .section__generic__title{
+    text-shadow:none
+}
+
+/* Text margin settings for full right text in contacts section */
+.contacts .section__generic--fullRight .section__generic__text{
+    max-width:350px;
+    margin-left:30%
+}
+
+/* Responsive adjustments for text margins in full right text */
+@media (max-width:767px){
+    .contacts .section__generic--fullRight .section__generic__text{
+        margin-left:0
+    }
+}
+
+/* Button wrapper settings for contacts section */
+.contacts__buttonWrap{
+    margin-top:30px;
+    opacity:0;
+    transform:translateY(15px);
+    transition:all .4s ease-in-out 1s
+}
+
+/* Responsive adjustments for button wrappers in contacts section */
+@media (max-width:992px){
+    .contacts__buttonWrap{
+        display:inline-block;
+        margin:30px auto 0 auto
+    }
+}
+
+/* In-view state for button wrappers in contacts section */
+.in-view .contacts__buttonWrap{
+    opacity:1;
+    transform:translateY(0)
+}
+
+/* Error section settings */
+.error{
+    position:relative
+}
+
+/* Error wrap settings */
+.error__wrap{
+    height:100vh;
+    background-color:#272727
+}
+
+/* Title settings for error section */
+.error__title{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    color:rgba(238,236,234,.05);
+    font-family:Butler;
+    font-size:400px;
+    font-weight:900
+}
+
+/* Responsive adjustments for titles in error section */
+@media (max-width:767px){
+    .error__title{
+        font-size:170px
+    }
+}
+
+/* Container settings for error section */
+.error .container{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    text-align:center
+}
+
+/* Subtitle settings for error section */
+.error__subtitle{
+    font-size:35px;
+    font-weight:700;
+    color:#fff;
+    line-height:1.2em
+}
+
+/* Button settings for error section */
+.error .button{
+    margin-top:30px
+}
+
+/* Responsive adjustments for buttons in error section */
+@media (max-width:767px){
+    .error .button{
+        margin-top:15px
+    }
+}
+
+/* Privacy wrap settings */
+.privacy__wrap{
+    margin-top:100px
+}
+
+/* Title settings for privacy section */
+.privacy__title{
+    font-weight:700;
+    font-size:44px;
+    line-height:1em;
+    letter-spacing:0;
+    margin:0;
+    margin-bottom:12px
+}
+
+/* Text settings for privacy section */
+.privacy__text{
+    padding-top:25px;
+    padding-bottom:50px;
+    font-size:13px;
+    line-height:22px
+}
+
+/* Strong tag settings for text in privacy section */
+.privacy__text strong{
+    font-size:14px;
+    text-transform:uppercase
+}
+
+/* Paragraph settings for privacy section */
+.privacy__text p{
+    margin-bottom:1em
+}
+
+/* Unordered list settings for privacy section */
+.privacy__text ul{
+    padding-left:20px
+}
+
