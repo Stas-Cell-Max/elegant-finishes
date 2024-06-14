@@ -2742,8 +2742,8 @@ a.cookie__info{
 .footer__logo{
     position:relative;
     display:inline-block;
-    width:300px;
-    height:150px;
+    width:200px;
+    height:100px;
     background-size:contain;
     background-position:left center;
     background-repeat:no-repeat;
@@ -2765,24 +2765,8 @@ a.cookie__info{
     vertical-align:middle
 }
 
-/* Facebook link settings for footer */
-.footer .fb-link{
-    display:block;
-    width:30px;
-    height:30px;
-    margin:20px auto 0 auto;
-    background-size:contain;
-    background-position:center;
-    background-repeat:no-repeat;
-    background-image:url(../fonts/fb.svg);
-    text-align:center
-}
 
-/* Link settings for Facebook links in footer */
-.footer .fb-link a{
-    display:block;
-    height:100%
-}
+
 
 /* Page top section settings */
 .pageTop{
@@ -3756,3 +3740,20 @@ a.cookie__info{
     padding-left:20px
 }
 
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Space between icons */
+    margin-top: 10px; /* Add some space above */
+  }
+  
+  .social-links a {
+    color: #fab162; /* Icon color */
+    font-size: 24px; /* Increase icon size */
+    transition: transform 0.3s, color 0.3s; /* Add transition for color */
+  }
+  
+  .social-links a:hover {
+    transform: scale(1.2); /* Enlarge icon on hover */
+    color: #ffffff; /* Change icon color to white on hover */
+  }
