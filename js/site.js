@@ -8661,7 +8661,7 @@ function(t, e) {
         },
         manageCookie: () => {
             if (!oe.a.get("cookie")) {
-                const t = '\n        <div class="cookie">\n          <div class="cookie__inner">\n            <span class="cookie__msg">\n              Il nostro sito utilizza i Cookies: alcuni sono essenziali per far funzionare il sito, altri ci aiutano a migliorare l\'esperienza dell\'utente.<br/>Utilizzando il sito, acconsenti all\'utilizzo di questi Cookies. Puoi avere maggiori dettagli e bloccare l\'uso di tutti o solo di alcuni cookies, visionando l\'informativa estesa.\n              <a href="/privacy.html" target="_blank" class="cookie__info">(Clicca qui)</a>\n              <button type="button" class="cookie__ok button circleCursor">Accetto</button>\n            </span>\n          </div>\n        </div>\n      ';
+                const t = '\n        <div class="cookie">\n          <div class="cookie__inner">\n            <span class="cookie__msg">\n              Our site uses Cookies: some are essential to make the site work, others help us improve the user experience.<br/>By using the site, you consent to the use of these Cookies. You can get more details and block the use of all or just some cookies by viewing the extended information.\n <a href="/privacy.html" target="_blank" class="cookie__info">(Click here)</a>\n <button type="button" class="cookie__ok button circleCursor">I accept</button>\n           </span>\n          </div>\n        </div>\n      ';
                 $("body").prepend(t), $(".cookie__ok").on("click", () => {
                     $("body>.cookie").remove(), oe.a.set("cookie", "accepted", {
                         expires: 99999,
