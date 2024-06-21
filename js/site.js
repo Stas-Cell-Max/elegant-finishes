@@ -1,27 +1,40 @@
+
+// Immediately Invoked Function Expression to avoid polluting the global scope
+//JS Module Loader
 ! function(t) {
+
+    //Module Cache
     var e = {};
 
-    function i(n) {
+    // Main module loader function
+    function i(n) { 
         if (e[n]) return e[n].exports;
+
+        // Create a new module and cache it
         var r = e[n] = {
             i: n,
             l: !1,
             exports: {}
         };
-        return t[n].call(r.exports, r, r.exports, i), r.l = !0, r.exports
+        return t[n].call(r.exports, r, r.exports, i), r.l = !0, r.exports // Execute the module function
     }
-    i.m = t, i.c = e, i.d = function(t, e, n) {
+    i.m = t,   // Store the module definitions
+     i.c = e, 
+     i.d = function(t, e, n) {// Define getter for module exports
         i.o(t, e) || Object.defineProperty(t, e, {
             enumerable: !0,
             get: n
         })
-    }, i.r = function(t) {
+    },
+     i.r = function(t) {
         "undefined" != typeof Symbol && Symbol.toStringTag && Object.defineProperty(t, Symbol.toStringTag, {
             value: "Module"
         }), Object.defineProperty(t, "__esModule", {
             value: !0
         })
-    }, i.t = function(t, e) {
+    },
+    // Handle various module types
+     i.t = function(t, e) {
         if (1 & e && (t = i(t)), 8 & e) return t;
         if (4 & e && "object" == typeof t && t && t.__esModule) return t;
         var n = Object.create(null);
@@ -33,7 +46,9 @@
                 return t[e]
             }.bind(null, r));
         return n
-    }, i.n = function(t) {
+    }, 
+    // Define getter for default export
+    i.n = function(t) {
         var e = t && t.__esModule ? function() {
             return t.default
         } : function() {
@@ -43,7 +58,10 @@
     }, i.o = function(t, e) {
         return Object.prototype.hasOwnProperty.call(t, e)
     }, i.p = "", i(i.s = 14)
-}([function(t, e, i) {
+}([
+    
+    // Module definitions (example for module 0)
+    function(t, e, i) {
     "use strict";
     (function(t, n) {
         i.d(e, "e", function() {
@@ -62,37 +80,17 @@
             return h
         });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
         
-        /*!
-         * VERSION: 2.0.2
-         * DATE: 2018-08-27
-         * UPDATES AND DOCS AT: http://greensock.com
-         *
-         * @license Copyright (c) 2008-2018, GreenSock. All rights reserved.
-         * This work is subject to the terms at http://greensock.com/standard-license or for
-         * Club GreenSock members, the software agreement that was issued with your membership.
-         *
-         * @author: Jack Doyle, jack@greensock.com
-         */
+       // Global variables
         var r = "undefined" != typeof window ? window : t.exports && void 0 !== n ? n : {},
             o = function(t, e) {
                 var i = {},
                     n = t.document,
                     r = t.GreenSockGlobals = t.GreenSockGlobals || t;
                 if (r.TweenLite) return r.TweenLite;
+
+
+                  // Helper function to create nested objects
                 var o, s, a, l, u, c, h, f = function(t) {
                         var e, i = t.split("."),
                             n = r;
@@ -100,6 +98,8 @@
                         return n
                     },
                     d = f("com.greensock"),
+
+                    // Helper function to convert array-like objects to arrays
                     p = function(t) {
                         var e, i = [],
                             n = t.length;
@@ -107,6 +107,8 @@
                         return i
                     },
                     m = function() {},
+
+                    // Helper function to check if a value is an array
                     g = (c = Object.prototype.toString, h = c.call([]), function(t) {
                         return null != t && (t instanceof Array || "object" == typeof t && !!t.push && c.call(t) === h)
                     }),
@@ -120,24 +122,34 @@
                                 for (c = (u = ("com.greensock." + t).split(".")).pop(), h = f(u.join("."))[c] = this.gsClass = n.apply(n, s), o && (r[c] = i[c] = h), d = 0; d < this.sc.length; d++) this.sc[d].check()
                         }, this.check(!0)
                     },
+
+                    // Function to define GreenSock classes
                     y = t._gsDefine = function(t, e, i, n) {
                         return new _(t, e, i, n)
                     },
+
+                    // Function to create GreenSock classes
                     b = d._class = function(t, e, i) {
                         return e = e || function() {}, y(t, [], function() {
                             return e
                         }, i), e
                     };
                 y.globals = r;
+
+                 // Ease class definition
                 var x = [0, 0, 1, 1],
                     w = b("easing.Ease", function(t, e, i, n) {
                         this._func = t, this._type = i || 0, this._power = n || 0, this._params = e ? x.concat(e) : x
                     }, !0),
                     T = w.map = {},
+
+                     // Function to register easings
                     C = w.register = function(t, e, i, n) {
                         for (var r, o, s, a, l = e.split(","), u = l.length, c = (i || "easeIn,easeOut,easeInOut").split(","); --u > -1;)
                             for (o = l[u], r = n ? b("easing." + o, null, !0) : d.easing[o] || {}, s = c.length; --s > -1;) a = c[s], T[o + "." + a] = T[a + o] = r[a] = t.getRatio ? t : t[a] || new t
                     };
+
+                    // Linear, Quad, Cubic, etc. easing definitions
                 for ((a = w.prototype)._calcEnd = !1, a.getRatio = function(t) {
                         if (this._func) return this._params[0] = t, this._func.apply(null, this._params);
                         var e = this._type,
@@ -145,8 +157,14 @@
                             n = 1 === e ? 1 - t : 2 === e ? t : t < .5 ? 2 * t : 2 * (1 - t);
                         return 1 === i ? n *= n : 2 === i ? n *= n * n : 3 === i ? n *= n * n * n : 4 === i && (n *= n * n * n * n), 1 === e ? 1 - n : 2 === e ? n : t < .5 ? n / 2 : 1 - n / 2
                     }, s = (o = ["Linear", "Quad", "Cubic", "Quart", "Quint,Strong"]).length; --s > -1;) a = o[s] + ",Power" + s, C(new w(null, null, 1, s), a, "easeOut", !0), C(new w(null, null, 2, s), a, "easeIn" + (0 === s ? ",easeNone" : "")), C(new w(null, null, 3, s), a, "easeInOut");
-                T.linear = d.easing.Linear.easeIn, T.swing = d.easing.Quad.easeInOut;
-                var k = b("events.EventDispatcher", function(t) {
+               
+               
+               // Alias for linear easing
+                    T.linear = d.easing.Linear.easeIn,
+                    T.swing = d.easing.Quad.easeInOut;
+                
+                // Event dispatcher class
+                    var k = b("events.EventDispatcher", function(t) {
                     this._listeners = {}, this._eventTarget = t || this
                 });
                 (a = k.prototype).addEventListener = function(t, e, i, n, r) {
@@ -173,6 +191,8 @@
                             target: i
                         }) : n.c.call(n.s || i))
                 };
+
+                 // RequestAnimationFrame and CancelAnimationFrame polyfill
                 var E = t.requestAnimationFrame,
                     P = t.cancelAnimationFrame,
                     S = Date.now || function() {
@@ -180,6 +200,8 @@
                     },
                     O = S();
                 for (s = (o = ["ms", "moz", "webkit", "o"]).length; --s > -1 && !E;) E = t[o[s] + "RequestAnimationFrame"], P = t[o[s] + "CancelAnimationFrame"] || t[o[s] + "CancelRequestAnimationFrame"];
+                
+                // Ticker class for managing the animation loop
                 b("Ticker", function(t, e) {
                     var i, r, o, s, a, c = this,
                         h = S(),
