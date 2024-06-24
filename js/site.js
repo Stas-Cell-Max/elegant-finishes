@@ -233,6 +233,8 @@
                         "auto" === f && c.frame < 5 && "hidden" !== (n || {}).visibilityState && c.useRAF(!1)
                     }, 1500)
                 }), (a = d.Ticker.prototype = new d.events.EventDispatcher).constructor = d.Ticker;
+                
+                // Core Animation class definition
                 var A = b("core.Animation", function(t, e) {
                     if (this.vars = e = e || {}, this._duration = this._totalDuration = t || 0, this._delay = Number(e.delay) || 0, this._timeScale = 1, this._active = !0 === e.immediateRender, this.data = e.data, this._reversed = !0 === e.reversed, K) {
                         u || l.wake();
@@ -242,6 +244,8 @@
 
 
                 });
+
+                // More properties and methods for the Animation class...
                 l = A.ticker = new d.Ticker, (a = A.prototype)._dirty = a._gc = a._initted = a._paused = !1, a._totalTime = a._time = 0, a._rawPrevTime = -1, a._next = a._last = a._onUpdate = a._timeline = a.timeline = null, a._paused = !1;
                 var M = function() {
                     u && S() - O > 2e3 && ("hidden" !== (n || {}).visibilityState || !l.lagSmoothing()) && l.wake();
@@ -343,6 +347,8 @@
                     var e, i, n = this._timeline;
                     return t != this._paused && n && (u || t || l.wake(), i = (e = n.rawTime()) - this._pauseTime, !t && n.smoothChildTiming && (this._startTime += i, this._uncache(!1)), this._pauseTime = t ? e : null, this._paused = t, this._active = this.isActive(), !t && 0 !== i && this._initted && this.duration() && (e = n.smoothChildTiming ? this._totalTime : (e - this._startTime) / this._timeScale, this.render(e, e === this._totalTime, !0))), this._gc && !t && this._enabled(!0, !1), this
                 };
+
+                 // SimpleTimeline class definition
                 var D = b("core.SimpleTimeline", function(t) {
                     A.call(this, 0, t), this.autoRemoveChildren = this.smoothChildTiming = !0
                 });
@@ -359,6 +365,8 @@
                 }, a.rawTime = function() {
                     return u || l.wake(), this._totalTime
                 };
+
+                   // TweenLite class definition
                 var R = b("TweenLite", function(e, i, n) {
                         if (A.call(this, i, n), this.render = R.prototype.render, null == e) throw "Cannot tween a null target.";
                         this.target = e = "string" != typeof e ? e : R.selector(e) || e;
@@ -378,6 +386,8 @@
                     var i = t.$ || t.jQuery;
                     return i ? (R.selector = i, i(e)) : (n || (n = t.document), n ? n.querySelectorAll ? n.querySelectorAll(e) : n.getElementById("#" === e.charAt(0) ? e.substr(1) : e) : e)
                 };
+
+                  // Additional internal properties and methods
                 var I = [],
                     N = {},
                     j = /(?:(-|-=|\+=)?\d*\.?\d*(?:e[\-+]?\d+)?)[0-9]/gi,
@@ -385,6 +395,8 @@
                     B = function(t) {
                         for (var e, i = this._firstPT; i;) e = i.blob ? 1 === t && null != this.end ? this.end : t ? this.join("") : this.start : i.c * t + i.s, i.m ? e = i.m.call(this._tween, e, this._target || i.t, this._tween) : e < 1e-6 && e > -1e-6 && !i.blob && (e = 0), i.f ? i.fp ? i.t[i.p](i.fp, e) : i.t[i.p](e) : i.t[i.p] = e, i = i._next
                     },
+
+                    // Function to calculate blob differences
                     z = function(t, e, i, n) {
                         var r, o, s, a, l, u, c, h = [],
                             f = 0,
@@ -401,6 +413,8 @@
                         }), f += c.length;
                         return (d += e.substr(f)) && h.push(d), h.setRatio = B, F.test(e) && (h.end = null), h
                     },
+
+                    // Function to add tween properties
                     $ = function(t, e, i, n, r, o, s, a, l) {
                         "function" == typeof n && (n = n(l || 0, t));
                         var u = typeof t[e],
@@ -430,12 +444,17 @@
                                 m: 0
                             }) : (d.s = parseFloat(h), f || (d.c = parseFloat(n) - d.s || 0))), d.c) return (d._next = this._firstPT) && (d._next._prev = d), this._firstPT = d, d
                     },
+
+                    // Internals object
                     H = R._internals = {
                         isArray: g,
                         isSelector: L,
                         lazyTweens: I,
                         blobDif: z
                     },
+
+               
+                    // Plugins object
                     q = R._plugins = {},
                     W = H.tweenLookup = {},
                     X = 0,
@@ -477,6 +496,8 @@
                         id: 1,
                         yoyoEase: 1
                     },
+
+                    // Overwrite modes
                     U = {
                         none: 0,
                         all: 1,
@@ -487,6 +508,8 @@
                         true: 1,
                         false: 0
                     },
+
+                    // Root timelines
                     V = A._rootFramesTimeline = new D,
                     K = A._rootTimeline = new D,
                     G = 30,
@@ -495,6 +518,8 @@
                         for (N = {}; --e > -1;)(t = I[e]) && !1 !== t._lazy && (t.render(t._lazy[0], t._lazy[1], !0), t._lazy = !1);
                         I.length = 0
                     };
+
+                    // Root timeline initializations
                 K._startTime = l.time, V._startTime = l.frame, K._active = V._active = !0, setTimeout(Q, 1), A._updateRoot = R.render = function() {
                     var t, e, i;
                     if (I.length && Q(), K.render((l.time - K._startTime) * K._timeScale, !1, !1), V.render((l.frame - V._startTime) * V._timeScale, !1, !1), I.length && Q(), l.frame >= G) {
@@ -508,6 +533,8 @@
                         }
                     }
                 }, l.addEventListener("tick", A._updateRoot);
+
+                // Function to get tweens of a target
                 var Z = function(t, e, i) {
                         var n, r, o = t._gsTweenID;
                         if (W[o || (t._gsTweenID = o = "t" + X++)] || (W[o] = {
@@ -517,10 +544,14 @@
                             for (; --r > -1;) n[r] === e && n.splice(r, 1);
                         return W[o].tweens
                     },
+
+                    // Function to handle overwrites
                     J = function(t, e, i, n) {
                         var r, o, s = t.vars.onOverwrite;
                         return s && (r = s(t, e, i, n)), (s = R.onOverwrite) && (o = s(t, e, i, n)), !1 !== r && !1 !== o
                     },
+
+                     // Function to handle overwrites with different modes
                     tt = function(t, e, i, n, r) {
                         var o, s, a, l;
                         if (1 === n || n >= 4) {
@@ -540,6 +571,8 @@
                                 a._enabled(!1, !1) && (s = !0)
                             } return s
                     },
+
+                    // Function to get the elapsed time in a timeline
                     et = function(t, e, i) {
                         for (var n = t._timeline, r = n._timeScale, o = t._startTime; n._timeline;) {
                             if (o += n._startTime, r *= n._timeScale, n._paused) return -100;
@@ -547,6 +580,8 @@
                         }
                         return (o /= r) > e ? o - e : i && o === e || !t._initted && o - e < 2e-10 ? 1e-10 : (o += t.totalDuration() / t._timeScale / r) > e + 1e-10 ? 0 : o - e - 1e-10
                     };
+
+                    // Initialization of the TweenLite class
                 a._init = function() {
                     var t, e, i, n, r, o, s = this.vars,
                         a = this._overwrittenProps,
@@ -571,7 +606,10 @@
                     if (e && R._onPluginEvent("_onInitAllProps", this), a && (this._firstPT || "function" != typeof this.target && this._enabled(!1, !1)), s.runBackwards)
                         for (i = this._firstPT; i;) i.s += i.c, i.c = -i.c, i = i._next;
                     this._onUpdate = s.onUpdate, this._initted = !0
-                }, a._initProps = function(e, i, n, r, o) {
+                }, 
+                
+                 // Function to initialize tween properties
+                a._initProps = function(e, i, n, r, o) {
                     var s, a, l, u, c, h;
                     if (null == e) return !1;
                     for (s in N[e._gsTweenID] && Q(), this.vars.css || e.style && e !== t && e.nodeType && q.css && !1 !== this.vars.autoCSS && function(t, e) {
@@ -596,7 +634,10 @@
                         (u._priority || u._onInitAllProps) && (l = !0), (u._onDisable || u._onEnable) && (this._notifyPluginsOfEnabled = !0), c._next && (c._next._prev = c)
                     } else i[s] = $.call(this, e, s, "get", h, s, 0, null, this.vars.stringFilter, o);
                     return r && this._kill(r, e) ? this._initProps(e, i, n, r, o) : this._overwrite > 1 && this._firstPT && n.length > 1 && tt(e, this, i, this._overwrite, n) ? (this._kill(i, e), this._initProps(e, i, n, r, o)) : (this._firstPT && (!1 !== this.vars.lazy && this._duration || this.vars.lazy && !this._duration) && (N[e._gsTweenID] = !0), l)
-                }, a.render = function(t, e, i) {
+                }, 
+                
+                 // Function to render the animation frame
+                a.render = function(t, e, i) {
                     var n, r, o, s, a = this._time,
                         l = this._duration,
                         u = this._rawPrevTime;
@@ -617,7 +658,10 @@
                         for (!1 !== this._lazy && (this._lazy = !1), this._active || !this._paused && this._time !== a && t >= 0 && (this._active = !0), 0 === a && (this._startAt && (t >= 0 ? this._startAt.render(t, !0, i) : r || (r = "_dummyGS")), this.vars.onStart && (0 === this._time && 0 !== l || e || this._callback("onStart"))), o = this._firstPT; o;) o.f ? o.t[o.p](o.c * this.ratio + o.s) : o.t[o.p] = o.c * this.ratio + o.s, o = o._next;
                         this._onUpdate && (t < 0 && this._startAt && -1e-4 !== t && this._startAt.render(t, !0, i), e || (this._time !== a || n || i) && this._callback("onUpdate")), r && (this._gc && !i || (t < 0 && this._startAt && !this._onUpdate && -1e-4 !== t && this._startAt.render(t, !0, i), n && (this._timeline.autoRemoveChildren && this._enabled(!1, !1), this._active = !1), !e && this.vars[r] && this._callback(r), 0 === l && 1e-10 === this._rawPrevTime && 1e-10 !== s && (this._rawPrevTime = 0)))
                     }
-                }, a._kill = function(t, e, i) {
+                },
+
+                // Function to kill tweens
+                a._kill = function(t, e, i) {
                     if ("all" === t && (t = null), null == t && (null == e || e === this.target)) return this._lazy = !1, this._enabled(!1, !1);
                     e = "string" != typeof e ? e || this._targets || this.target : R.selector(e) || e;
                     var n, r, o, s, a, l, u, c, h, f = i && this._time && i._startTime === this._startTime && this._timeline === i._timeline,
@@ -645,9 +689,14 @@
                         }
                     }
                     return l
-                }, a.invalidate = function() {
+                }, 
+                
+                // Function to invalidate the animation
+                a.invalidate = function() {
                     return this._notifyPluginsOfEnabled && R._onPluginEvent("_onDisable", this), this._firstPT = this._overwrittenProps = this._startAt = this._onUpdate = null, this._notifyPluginsOfEnabled = this._active = this._lazy = !1, this._propLookup = this._targets ? {} : [], A.prototype.invalidate.call(this), this.vars.immediateRender && (this._time = -1e-10, this.render(Math.min(0, -this._delay))), this
-                }, a._enabled = function(t, e) {
+                },
+                // Function to enable or disable the animation
+                a._enabled = function(t, e) {
                     if (u || l.wake(), t && this._gc) {
                         var i, n = this._targets;
                         if (n)
@@ -655,13 +704,18 @@
                         else this._siblings = Z(this.target, this, !0)
                     }
                     return A.prototype._enabled.call(this, t, e), !(!this._notifyPluginsOfEnabled || !this._firstPT) && R._onPluginEvent(t ? "_onEnable" : "_onDisable", this)
-                }, R.to = function(t, e, i) {
+                },
+                // Static methods to create tweens
+                R.to = function(t, e, i) {
                     return new R(t, e, i)
-                }, R.from = function(t, e, i) {
+                }, 
+                R.from = function(t, e, i) {
                     return i.runBackwards = !0, i.immediateRender = 0 != i.immediateRender, new R(t, e, i)
-                }, R.fromTo = function(t, e, i, n) {
+                }, 
+                R.fromTo = function(t, e, i, n) {
                     return n.startAt = i, n.immediateRender = 0 != n.immediateRender && 0 != i.immediateRender, new R(t, e, n)
-                }, R.delayedCall = function(t, e, i, n, r) {
+                }, 
+                R.delayedCall = function(t, e, i, n, r) {
                     return new R(e, 0, {
                         delay: t,
                         onComplete: e,
@@ -676,7 +730,9 @@
                     })
                 }, R.set = function(t, e) {
                     return new R(t, 0, e)
-                }, R.getTweensOf = function(t, e) {
+                },
+                // Function to get tweens of a target
+                R.getTweensOf = function(t, e) {
                     if (null == t) return [];
                     var i, n, r, o;
                     if (t = "string" != typeof t ? t : R.selector(t) || t, (g(t) || L(t)) && "number" != typeof t[0]) {
@@ -686,17 +742,27 @@
                     } else if (t._gsTweenID)
                         for (i = (n = Z(t).concat()).length; --i > -1;)(n[i]._gc || e && !n[i].isActive()) && n.splice(i, 1);
                     return n || []
-                }, R.killTweensOf = R.killDelayedCallsTo = function(t, e, i) {
+                }, 
+                
+                // Function to kill tweens of a target
+                R.killTweensOf = R.killDelayedCallsTo = function(t, e, i) {
                     "object" == typeof e && (i = e, e = !1);
                     for (var n = R.getTweensOf(t, e), r = n.length; --r > -1;) n[r]._kill(i, t)
                 };
+
+                // TweenPlugin class definition
                 var it = b("plugins.TweenPlugin", function(t, e) {
-                    this._overwriteProps = (t || "").split(","), this._propName = this._overwriteProps[0], this._priority = e || 0, this._super = it.prototype
+                    this._overwriteProps = (t || "").split(","), 
+                    this._propName = this._overwriteProps[0], 
+                    this._priority = e || 0, 
+                    this._super = it.prototype
                 }, !0);
+
+                // Prototype and static properties
                 if (a = it.prototype, it.version = "1.19.0", it.API = 2, a._firstPT = null, a._addTween = $, a.setRatio = B, a._kill = function(t) {
                         var e, i = this._overwriteProps,
                             n = this._firstPT;
-                        if (null != t[this._propName]) this._overwriteProps = [];
+                        if (null != t[this._propName]) this._overwriteProps = []; // Clear overwrite props if main property exists
                         else
                             for (e = i.length; --e > -1;) null != t[i[e]] && i.splice(e, 1);
                         for (; n;) null != t[n.n] && (n._next && (n._next._prev = n._prev), n._prev ? (n._prev._next = n._next, n._prev = null) : this._firstPT === n && (this._firstPT = n._next)), n = n._next;
@@ -705,7 +771,7 @@
                         for (var e, i = this._firstPT; i;)(e = t[this._propName] || null != i.n && t[i.n.split(this._propName + "_").join("")]) && "function" == typeof e && (2 === i.f ? i.t._applyPT.m = e : i.m = e), i = i._next
                     }, R._onPluginEvent = function(t, e) {
                         var i, n, r, o, s, a = e._firstPT;
-                        if ("_onInitAllProps" === t) {
+                        if ("_onInitAllProps" === t) {  // Initialize all properties
                             for (; a;) {
                                 for (s = a._next, n = r; n && n.pr > a.pr;) n = n._next;
                                 (a._prev = n ? n._prev : o) ? a._prev._next = a: r = a, (a._next = n) ? n._prev = a : o = a, a = s
@@ -714,10 +780,10 @@
                         }
                         for (; a;) a.pg && "function" == typeof a.t[t] && a.t[t]() && (i = !0), a = a._next;
                         return i
-                    }, it.activate = function(t) {
+                    }, it.activate = function(t) { // Activate the plugin
                         for (var e = t.length; --e > -1;) t[e].API === it.API && (q[(new t[e])._propName] = t[e]);
                         return !0
-                    }, y.plugin = function(t) {
+                    }, y.plugin = function(t) {  // Plugin registration function
                         if (!(t && t.propName && t.init && t.API)) throw "illegal plugin definition.";
                         var e, i = t.propName,
                             n = t.priority || 0,
@@ -750,12 +816,18 @@
             h = (s.Linear, s.Power1, s.Power2, s.Power3, s.Power4, s.TweenPlugin);
         a.events.EventDispatcher
     }).call(this, i(27)(t), i(28))
-}, function(t, e, i) {
+},
+
+
+function(t, e, i) {
     var n;
+
+    // Main module function that initializes the module system
     n = function() {
         return function(t) {
             var e = {};
 
+            // Function to require a module by id
             function i(n) {
                 if (e[n]) return e[n].exports;
                 var r = e[n] = {
@@ -765,8 +837,13 @@
                 };
                 return t[n].call(r.exports, r, r.exports, i), r.loaded = !0, r.exports
             }
-            return i.m = t, i.c = e, i.p = "http://localhost:8080/dist", i(0)
-        }([function(t, e, i) {
+            return i.m = t, 
+            i.c = e,
+            i.p = "http://localhost:8080/dist",// Public path for the modules
+             i(0) // Initialize the main module
+        }([
+            // Module 0: Main module
+            function(t, e, i) {
             "function" != typeof Promise && (window.Promise = i(1));
             var n = {
                 version: "1.0.0",
@@ -780,7 +857,10 @@
                 Utils: i(5)
             };
             t.exports = n
-        }, function(t, e, i) {
+        }, 
+        
+        // Module 1: Polyfill for Promise
+        function(t, e, i) {
             (function(e) {
                 ! function(i) {
                     var n = setTimeout;
@@ -793,12 +873,18 @@
                             "undefined" != typeof console && console && console.warn("Possible Unhandled Promise Rejection:", t)
                         };
 
-                    function a(t) {
+                   // Constructor for the Promise polyfill
+                        function a(t) {
                         if ("object" != typeof this) throw new TypeError("Promises must be constructed via new");
                         if ("function" != typeof t) throw new TypeError("not a function");
-                        this._state = 0, this._handled = !1, this._value = void 0, this._deferreds = [], d(t, this)
+                        this._state = 0, 
+                        this._handled = !1, 
+                        this._value = void 0, 
+                        this._deferreds = [], 
+                        d(t, this) // Execute the resolver function
                     }
 
+                    // Handle promise resolution or rejection
                     function l(t, e) {
                         for (; 3 === t._state;) t = t._value;
                         0 !== t._state ? (t._handled = !0, o(function() {
@@ -815,6 +901,7 @@
                         })) : t._deferreds.push(e)
                     }
 
+                    // Resolve the promise
                     function u(t, e) {
                         try {
                             if (e === t) throw new TypeError("A promise cannot be resolved with itself.");
@@ -831,11 +918,13 @@
                         }
                         var n, r
                     }
-
+                 
+                    // Reject the promise
                     function c(t, e) {
                         t._state = 2, t._value = e, h(t)
                     }
-
+                    
+                    // Handle deferreds
                     function h(t) {
                         2 === t._state && 0 === t._deferreds.length && o(function() {
                             t._handled || s(t._value)
@@ -844,10 +933,12 @@
                         t._deferreds = null
                     }
 
+                    // Deferred handler
                     function f(t, e, i) {
                         this.onFulfilled = "function" == typeof t ? t : null, this.onRejected = "function" == typeof e ? e : null, this.promise = i
                     }
 
+                    // Execute the resolver function
                     function d(t, e) {
                         var i = !1;
                         try {
@@ -861,17 +952,27 @@
                             i = !0, c(e, t)
                         }
                     }
+
+                    // Add catch method to the Promise prototype
                     a.prototype.catch = function(t) {
                         return this.then(null, t)
+
+                        // Add then method to the Promise prototype
                     }, a.prototype.then = function(t, e) {
                         var i = new this.constructor(r);
                         return l(this, new f(t, e, i)), i
-                    }, a.all = function(t) {
+                    },
+                    
+                   // Adding Promise utility methods to the Promise constructor
+                    a.all = function(t) {
+
+                         // Converts arguments to an array and returns a new Promise
                         var e = Array.prototype.slice.call(t);
                         return new a(function(t, i) {
                             if (0 === e.length) return t([]);
                             var n = e.length;
 
+                            // Function to handle resolution of each Promise in the array
                             function r(o, s) {
                                 try {
                                     if (s && ("object" == typeof s || "function" == typeof s)) {
@@ -906,7 +1007,10 @@
                     }, void 0 !== t && t.exports ? t.exports = a : i.Promise || (i.Promise = a)
                 }(this)
             }).call(e, i(2).setImmediate)
-        }, function(t, e, i) {
+        }, 
+
+        // Node.js-like environment setup for timers
+        function(t, e, i) {
             (function(t, n) {
                 var r = i(3).nextTick,
                     o = Function.prototype.apply,
@@ -914,38 +1018,61 @@
                     a = {},
                     l = 0;
 
+                // Timer constructor
                 function u(t, e) {
-                    this._id = t, this._clearFn = e
+                    this._id = t,
+                     this._clearFn = e
                 }
+                 // setTimeout implementation
                 e.setTimeout = function() {
                     return new u(o.call(setTimeout, window, arguments), clearTimeout)
-                }, e.setInterval = function() {
+                }, 
+                 // setInterval implementation
+                e.setInterval = function() {
                     return new u(o.call(setInterval, window, arguments), clearInterval)
-                }, e.clearTimeout = e.clearInterval = function(t) {
+                }, 
+                // clearTimeout and clearInterval implementation
+                e.clearTimeout = e.clearInterval = function(t) {
                     t.close()
-                }, u.prototype.unref = u.prototype.ref = function() {}, u.prototype.close = function() {
+                }, 
+                // Timer prototype methods
+                u.prototype.unref = u.prototype.ref = function() {}, 
+                u.prototype.close = function() {
                     this._clearFn.call(window, this._id)
-                }, e.enroll = function(t, e) {
+                }, 
+                 // Enrollment functions for timers
+                e.enroll = function(t, e) {
                     clearTimeout(t._idleTimeoutId), t._idleTimeout = e
-                }, e.unenroll = function(t) {
+                }, 
+                e.unenroll = function(t) {
                     clearTimeout(t._idleTimeoutId), t._idleTimeout = -1
-                }, e._unrefActive = e.active = function(t) {
+                },
+                 // Active function for timers 
+                e._unrefActive = e.active = function(t) {
                     clearTimeout(t._idleTimeoutId);
                     var e = t._idleTimeout;
                     e >= 0 && (t._idleTimeoutId = setTimeout(function() {
                         t._onTimeout && t._onTimeout()
                     }, e))
-                }, e.setImmediate = "function" == typeof t ? t : function(t) {
+                }, 
+                 // setImmediate implementation
+                e.setImmediate = "function" == typeof t ? t : function(t) {
                     var i = l++,
                         n = !(arguments.length < 2) && s.call(arguments, 1);
                     return a[i] = !0, r(function() {
                         a[i] && (n ? t.apply(null, n) : t.call(null), e.clearImmediate(i))
                     }), i
-                }, e.clearImmediate = "function" == typeof n ? n : function(t) {
+                }, 
+                // clearImmediate implementation
+                e.clearImmediate = "function" == typeof n ? n : function(t) {
                     delete a[t]
                 }
-            }).call(e, i(2).setImmediate, i(2).clearImmediate)
-        }, function(t, e) {
+            })
+            .call(e, i(2).setImmediate, i(2).clearImmediate)
+        }, 
+
+// Polyfill for setTimeout and clearTimeout
+        function(t, e) {
             var i, n, r = t.exports = {};
             ! function() {
                 try {
@@ -967,10 +1094,12 @@
                 a = !1,
                 l = -1;
 
+                 // Drains the task queue
             function u() {
                 a && o && (a = !1, o.length ? s = o.concat(s) : l = -1, s.length && c())
             }
 
+            // Executes the task queue
             function c() {
                 if (!a) {
                     var t = i(u);
@@ -983,19 +1112,41 @@
                 }
             }
 
+            // Constructor for the task handler
             function h(t, e) {
-                this.fun = t, this.array = e
+                this.fun = t, 
+                this.array = e
             }
 
+            // No-op function for event handling
             function f() {}
+
+            // nextTick implementation to defer execution
             r.nextTick = function(t) {
                 var e = new Array(arguments.length - 1);
                 if (arguments.length > 1)
                     for (var n = 1; n < arguments.length; n++) e[n - 1] = arguments[n];
                 s.push(new h(t, e)), 1 !== s.length || a || i(c, 0)
-            }, h.prototype.run = function() {
+            }, h.prototype.run = function() {// Prototype method to run the task
                 this.fun.apply(null, this.array)
-            }, r.title = "browser", r.browser = !0, r.env = {}, r.argv = [], r.version = "", r.versions = {}, r.on = f, r.addListener = f, r.once = f, r.off = f, r.removeListener = f, r.removeAllListeners = f, r.emit = f, r.binding = function(t) {
+            }, 
+            // Browser-specific properties and methods
+            r.title = "browser", 
+            r.browser = !0, 
+            r.env = {}, 
+            r.argv = [], 
+            r.version = "", 
+            r.versions = {}, 
+            // Event handling no-op methods
+            r.on = f, 
+            r.addListener = f, 
+            r.once = f, 
+            r.off = f, 
+            r.removeListener = f, 
+            r.removeAllListeners = f, 
+            r.emit = f, 
+            // Not supported methods in the browser environment
+            r.binding = function(t) {
                 throw new Error("process.binding is not supported")
             }, r.cwd = function() {
                 return "/"
@@ -1004,7 +1155,9 @@
             }, r.umask = function() {
                 return 0
             }
-        }, function(t, e, i) {
+        }, 
+        // Module for handling container transitions
+        function(t, e, i) {
             var n = i(5),
                 r = {
                     oldContainer: void 0,
@@ -1013,19 +1166,32 @@
                     extend: function(t) {
                         return n.extend(this, t)
                     },
+
+                    // Initialize the transition
                     init: function(t, e) {
                         var i = this;
-                        return this.oldContainer = t, this._newContainerPromise = e, this.deferred = n.deferred(), this.newContainerReady = n.deferred(), this.newContainerLoading = this.newContainerReady.promise, this.start(), this._newContainerPromise.then(function(t) {
+                        return this.oldContainer = t, 
+                        this._newContainerPromise = e, 
+                        this.deferred = n.deferred(), 
+                        this.newContainerReady = n.deferred(), 
+                        this.newContainerLoading = this.newContainerReady.promise, 
+                        this.start(), 
+                         // Handle the new container when ready
+                        this._newContainerPromise.then(function(t) {
                             i.newContainer = t, i.newContainerReady.resolve()
                         }), this.deferred.promise
                     },
+                    // Complete the transition
                     done: function() {
                         this.oldContainer.parentNode.removeChild(this.oldContainer), this.newContainer.style.visibility = "visible", this.deferred.resolve()
                     },
+                    // Start method to be overridden by specific transitions
                     start: function() {}
                 };
             t.exports = r
-        }, function(t, e) {
+        }, 
+        // Utility module
+        function(t, e) {
             var i = {
                 getCurrentUrl: function() {
                     return window.location.protocol + "//" + window.location.host + window.location.pathname + window.location.search
@@ -1033,7 +1199,9 @@
                 cleanLink: function(t) {
                     return t.replace(/#.*/, "")
                 },
-                xhrTimeout: 5e3,
+                xhrTimeout: 5000, // Timeout for XHR requests in milliseconds
+                
+                // Perform an XHR request
                 xhr: function(t) {
                     var e = this.deferred(),
                         i = new XMLHttpRequest;
@@ -1043,18 +1211,25 @@
                         return e.reject(new Error("xhr: Timeout exceeded"))
                     }, i.open("GET", t), i.timeout = this.xhrTimeout, i.setRequestHeader("x-barba", "yes"), i.send(), e.promise
                 },
+
+                // Extend an object with properties from another object
                 extend: function(t, e) {
                     var i = Object.create(t);
                     for (var n in e) e.hasOwnProperty(n) && (i[n] = e[n]);
                     return i
                 },
+                 // Create a deferred object
                 deferred: function() {
                     return new function() {
-                        this.resolve = null, this.reject = null, this.promise = new Promise(function(t, e) {
-                            this.resolve = t, this.reject = e
+                        this.resolve = null, 
+                        this.reject = null, 
+                        this.promise = new Promise(function(t, e) {
+                            this.resolve = t, 
+                            this.reject = e
                         }.bind(this))
                     }
                 },
+                // Get the port number
                 getPort: function(t) {
                     var e = void 0 !== t ? t : window.location.port,
                         i = window.location.protocol;
@@ -1062,7 +1237,13 @@
                 }
             };
             t.exports = i
-        }, function(t, e, i) {
+        },
+        
+        
+        
+        
+        
+        function(t, e, i) {
             var n = i(7),
                 r = i(5),
                 o = {
