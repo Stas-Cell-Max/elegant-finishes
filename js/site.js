@@ -1239,19 +1239,16 @@ function(t, e, i) {
             t.exports = i
         },
         
-        
-        
-        
-        
+        // Module to handle page transitions
         function(t, e, i) {
             var n = i(7),
                 r = i(5),
                 o = {
                     namespace: null,
-                    extend: function(t) {
+                    extend: function(t) {// Extend the current object with properties from another object
                         return r.extend(this, t)
                     },
-                    init: function() {
+                    init: function() {// Initialize the module and set up event listeners
                         var t = this;
                         n.on("initStateChange", function(e, i) {
                             i && i.namespace === t.namespace && t.onLeave()
@@ -1261,32 +1258,37 @@ function(t, e, i) {
                             e.namespace === t.namespace && t.onEnterCompleted(), i && i.namespace === t.namespace && t.onLeaveCompleted()
                         })
                     },
+                    // Event handlers for the lifecycle of the transition
                     onEnter: function() {},
                     onEnterCompleted: function() {},
                     onLeave: function() {},
                     onLeaveCompleted: function() {}
                 };
             t.exports = o
-        }, function(t, e) {
+        }, 
+        // Event manager module
+        function(t, e) {
             var i = {
                 events: {},
-                on: function(t, e) {
+                on: function(t, e) {// Register an event listener
                     this.events[t] = this.events[t] || [], this.events[t].push(e)
                 },
-                off: function(t, e) {
+                off: function(t, e) {// Remove an event listener
                     t in this.events != !1 && this.events[t].splice(this.events[t].indexOf(e), 1)
                 },
-                trigger: function(t) {
+                trigger: function(t) {// Trigger an event
                     if (t in this.events != !1)
                         for (var e = 0; e < this.events[t].length; e++) this.events[t][e].apply(this, Array.prototype.slice.call(arguments, 1))
                 }
             };
             t.exports = i
-        }, function(t, e, i) {
+        }, 
+        // Module to manage a simple data cache
+        function(t, e, i) {
             var n = i(5),
                 r = {
                     data: {},
-                    extend: function(t) {
+                    extend: function(t) {// Extend the current object with properties from another object
                         return n.extend(this, t)
                     },
                     set: function(t, e) {
@@ -1300,25 +1302,30 @@ function(t, e, i) {
                     }
                 };
             t.exports = r
-        }, function(t, e) {
+        }, 
+        
+        // Module to manage history states
+        function(t, e) {
             var i = {
-                history: [],
-                add: function(t, e) {
+                history: [],// Array to store history states
+                add: function(t, e) { // Add a new history state
                     e || (e = void 0), this.history.push({
                         url: t,
                         namespace: e
                     })
                 },
-                currentStatus: function() {
+                currentStatus: function() {// Get the current history state
                     return this.history[this.history.length - 1]
                 },
-                prevStatus: function() {
+                prevStatus: function() { // Get the previous history state
                     var t = this.history;
                     return t.length < 2 ? null : t[t.length - 2]
                 }
             };
             t.exports = i
-        }, function(t, e, i) {
+        }, 
+        // Main module to manage page transitions
+        function(t, e, i) {
             var n = i(5),
                 r = i(7),
                 o = i(11),
@@ -1331,26 +1338,26 @@ function(t, e, i) {
                     cacheEnabled: !0,
                     transitionProgress: !1,
                     ignoreClassLink: "no-barba",
-                    start: function() {
+                    start: function() {// Start the transition manager
                         this.init()
                     },
-                    init: function() {
+                    init: function() {   // Initialize the transition manager
                         var t = this.Dom.getContainer();
                         this.Dom.getWrapper().setAttribute("aria-live", "polite"), this.History.add(this.getCurrentUrl(), this.Dom.getNamespace(t)), r.trigger("initStateChange", this.History.currentStatus()), r.trigger("newPageReady", this.History.currentStatus(), {}, t, this.Dom.currentHTML), r.trigger("transitionCompleted", this.History.currentStatus()), this.bindEvents()
                     },
-                    bindEvents: function() {
+                    bindEvents: function() {// Bind event listeners
                         document.addEventListener("click", this.onLinkClick.bind(this)), window.addEventListener("popstate", this.onStateChange.bind(this))
                     },
-                    getCurrentUrl: function() {
+                    getCurrentUrl: function() { // Get the current URL
                         return n.cleanLink(n.getCurrentUrl())
                     },
-                    goTo: function(t) {
+                    goTo: function(t) { // Navigate to a new URL
                         window.history.pushState(null, null, t), this.onStateChange()
                     },
-                    forceGoTo: function(t) {
+                    forceGoTo: function(t) {// Force navigate to a new URL
                         window.location = t
                     },
-                    load: function(t) {
+                    load: function(t) { // Load a new page
                         var e, i = n.deferred(),
                             r = this;
                         return (e = this.Cache.get(t)) || (e = n.xhr(t), this.Cache.set(t, e)), e.then(function(t) {
@@ -1360,9 +1367,11 @@ function(t, e, i) {
                             r.forceGoTo(t), i.reject()
                         }), i.promise
                     },
-                    getHref: function(t) {
+                    getHref: function(t) { // Get the href attribute of an element
                         if (t) return t.getAttribute && "string" == typeof t.getAttribute("xlink:href") ? t.getAttribute("xlink:href") : "string" == typeof t.href ? t.href : void 0
                     },
+
+                     // Handle link click events
                     onLinkClick: function(t) {
                         for (var e = t.target; e && !this.getHref(e);) e = e.parentNode;
                         if (this.preventCheck(t, e)) {
@@ -1371,14 +1380,19 @@ function(t, e, i) {
                             this.goTo(i)
                         }
                     },
+
+                    // Check if navigation should be prevented
                     preventCheck: function(t, e) {
                         if (!window.history.pushState) return !1;
                         var i = this.getHref(e);
                         return !(!e || !i) && (!(t.which > 1 || t.metaKey || t.ctrlKey || t.shiftKey || t.altKey) && ((!e.target || "_blank" !== e.target) && (window.location.protocol === e.protocol && window.location.hostname === e.hostname && (n.getPort() === n.getPort(e.port) && (!(i.indexOf("#") > -1) && ((!e.getAttribute || "string" != typeof e.getAttribute("download")) && (n.cleanLink(i) != n.cleanLink(location.href) && !e.classList.contains(this.ignoreClassLink))))))))
                     },
+                    // Get the transition object
                     getTransition: function() {
                         return o
                     },
+
+                      // Handle state change events
                     onStateChange: function() {
                         var t = this.getCurrentUrl();
                         if (this.transitionProgress && this.forceGoTo(t), this.History.currentStatus().url === t) return !1;
@@ -1389,69 +1403,80 @@ function(t, e, i) {
                         var n = i.init(this.Dom.getContainer(), e);
                         e.then(this.onNewContainerLoaded.bind(this)), n.then(this.onTransitionEnd.bind(this))
                     },
+                     // Handle new container loaded event
                     onNewContainerLoaded: function(t) {
                         this.History.currentStatus().namespace = this.Dom.getNamespace(t), r.trigger("newPageReady", this.History.currentStatus(), this.History.prevStatus(), t, this.Dom.currentHTML)
                     },
+                    // Handle transition end event
                     onTransitionEnd: function() {
                         this.transitionProgress = !1, r.trigger("transitionCompleted", this.History.currentStatus(), this.History.prevStatus())
                     }
                 };
             t.exports = l
-        }, function(t, e, i) {
-            var n = i(4).extend({
+        }, 
+        
+        
+       // Transition module 
+        function(t, e, i) {
+            var n = i(4).extend({ // Start the transition by waiting for the new container to load
                 start: function() {
                     this.newContainerLoading.then(this.finish.bind(this))
                 },
-                finish: function() {
+                finish: function() {// Finish the transition by scrolling to the top and marking as done
                     document.body.scrollTop = 0, this.done()
                 }
             });
             t.exports = n
-        }, function(t, e) {
+        }, 
+        // DOM manipulation and parsing module
+        function(t, e) {
             var i = {
                 dataNamespace: "namespace",
                 wrapperId: "barba-wrapper",
                 containerClass: "barba-container",
                 currentHTML: document.documentElement.innerHTML,
-                parseResponse: function(t) {
+                parseResponse: function(t) {// Parse the response HTML to extract the container
                     this.currentHTML = t;
                     var e = document.createElement("div");
                     e.innerHTML = t;
                     var i = e.querySelector("title");
                     return i && (document.title = i.textContent), this.getContainer(e)
                 },
-                getWrapper: function() {
+                getWrapper: function() { // Get the wrapper element
                     var t = document.getElementById(this.wrapperId);
                     if (!t) throw new Error("Barba.js: wrapper not found!");
                     return t
                 },
-                getContainer: function(t) {
+                getContainer: function(t) { // Get the container element
                     if (t || (t = document.body), !t) throw new Error("Barba.js: DOM not ready!");
                     var e = this.parseContainer(t);
                     if (e && e.jquery && (e = e[0]), !e) throw new Error("Barba.js: no container found");
                     return e
                 },
-                getNamespace: function(t) {
+                getNamespace: function(t) {// Get the namespace from the container
                     return t && t.dataset ? t.dataset[this.dataNamespace] : t ? t.getAttribute("data-" + this.dataNamespace) : null
                 },
-                putContainer: function(t) {
+                putContainer: function(t) { // Insert the new container into the DOM
                     t.style.visibility = "hidden", this.getWrapper().appendChild(t)
                 },
-                parseContainer: function(t) {
+                parseContainer: function(t) {// Parse the container from the given element
                     return t.querySelector("." + this.containerClass)
                 }
             };
             t.exports = i
-        }, function(t, e, i) {
+        }, 
+        
+        // Prefetch module for loading pages on hover or touch
+        function(t, e, i) {
             var n = i(5),
                 r = i(10),
                 o = {
                     ignoreClassLink: "no-barba-prefetch",
-                    init: function() {
+                    init: function() {  // Initialize prefetch by adding event listeners
                         if (!window.history.pushState) return !1;
                         document.body.addEventListener("mouseover", this.onLinkEnter.bind(this)), document.body.addEventListener("touchstart", this.onLinkEnter.bind(this))
                     },
-                    onLinkEnter: function(t) {
+                    onLinkEnter: function(t) {// Handle link enter events for prefetching
                         for (var e = t.target; e && !r.getHref(e);) e = e.parentNode;
                         if (e && !e.classList.contains(this.ignoreClassLink)) {
                             var i = r.getHref(e);
@@ -1465,14 +1490,23 @@ function(t, e, i) {
             t.exports = o
         }])
     }, t.exports = n()
-}, function(t, e, i) {
+},
+
+// Event module for adding, removing, and emitting events
+function(t, e, i) {
     var n = i(24),
+
+        // Add an event listener
         r = function(t, e, i, n) {
             return t.addEventListener(e, i, n || !1)
         },
+
+        // Remove an event listener
         o = function(t, e, i, n) {
             return t.removeEventListener(e, i, n || !1)
         },
+
+        // Dispatch an event
         s = function(t, e, i) {
             var r = n(e, i);
             t.dispatchEvent(r)
@@ -1487,6 +1521,8 @@ function(t, e, i) {
     }), t.exports = {
         on: r,
         off: o,
+
+        // Add an event listener that removes itself after execution
         once: function(t, e, i, n) {
             r(t, e, function r(s) {
                 o(t, e, r, n), i(s)
@@ -1494,17 +1530,21 @@ function(t, e, i) {
         },
         emit: s
     }
-}, function(t, e, i) {
+}, 
+// Utility functions for class manipulation
+function(t, e, i) {
     var n = i(17),
         r = /\s+/,
         o = Object.prototype.toString;
 
+        // Get class list of an element
     function s(t) {
         if (t.classList) return t.classList;
         var e = t.className.replace(/^\s+|\s+$/g, "").split(r);
         return "" === e[0] && e.shift(), e
     }
 
+    // Add a class to an element
     function a(t, e) {
         if (t.classList) t.classList.add(e);
         else {
@@ -1513,10 +1553,12 @@ function(t, e, i) {
         }
     }
 
+    // Check if an element has a class
     function l(t, e) {
         return t.classList ? t.classList.contains(e) : !!~n(s(t), e)
     }
 
+    // Remove a class from an element
     function u(t, e) {
         if ("[object RegExp]" == o.call(e)) return c(t, e);
         if (t.classList) t.classList.remove(e);
@@ -1527,6 +1569,7 @@ function(t, e, i) {
         }
     }
 
+    // Remove classes matching a regular expression
     function c(t, e, i) {
         for (var n = Array.prototype.slice.call(s(t)), r = 0; r < n.length; r++) e.test(n[r]) && u(t, n[r])
     }
@@ -1534,41 +1577,60 @@ function(t, e, i) {
         if (t.classList) return t.classList.toggle(e);
         l(t, e) ? u(t, e) : a(t, e)
     }, t.exports.remove = u, t.exports.removeMatching = c
-}, function(module, __webpack_exports__, __webpack_require__) {
+},
+
+// Module definition using Webpack
+function(module, __webpack_exports__, __webpack_require__) {
     "use strict";
+    // Import Barba.js and site pack modules
     var barba_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1),
         barba_js__WEBPACK_IMPORTED_MODULE_0___default = __webpack_require__.n(barba_js__WEBPACK_IMPORTED_MODULE_0__),
         _site_pack__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7);
-    const barbaJs = {
-        initReady() {
+    
+     // BarbaJs object definition
+        const barbaJs = {
+        initReady() {// Initialization function to start Barba.js
             this.initBarba()
         },
-        initBarba() {
+        initBarba() { // Function to configure and start Barba.js
             barba_js__WEBPACK_IMPORTED_MODULE_0___default.a.Pjax.start(), barba_js__WEBPACK_IMPORTED_MODULE_0___default.a.Dispatcher.on("transitionCompleted", function() {
                 if ("undefined" != typeof ga && "function" == typeof ga.getAll) {
                     const t = ga.getAll()[0];
                     t && t.send("pageview", location.pathname)
                 }
                 _site_pack__WEBPACK_IMPORTED_MODULE_1__.default.rebuildAllEvents()
-            }), barba_js__WEBPACK_IMPORTED_MODULE_0___default.a.Dispatcher.on("newPageReady", function(currentStatus, oldStatus, container) {
+            }),
+             // Event listener for link click
+            barba_js__WEBPACK_IMPORTED_MODULE_0___default.a.Dispatcher.on("newPageReady", function(currentStatus, oldStatus, container) {
                 let js = container.querySelectorAll("script");
                 if (null != js && js.length > 0)
                     for (i in js) "" !== js[i].innerHTML && eval(js[i].innerHTML), "" !== js[i].src && $.getScript(js[i].src)
-            }), barba_js__WEBPACK_IMPORTED_MODULE_0___default.a.Dispatcher.on("linkClicked", function() {
+            }),
+        
+         // Define the transition function
+             barba_js__WEBPACK_IMPORTED_MODULE_0___default.a.Dispatcher.on("linkClicked", function() {
                 $(".header__menu").is(":visible") && $("#menu-toggle").trigger("click")
-            }), barba_js__WEBPACK_IMPORTED_MODULE_0___default.a.Pjax.getTransition = function() {
+            }),
+             // Extend the prevent check function to exclude PDFs
+            barba_js__WEBPACK_IMPORTED_MODULE_0___default.a.Pjax.getTransition = function() {
                 return barbaJs.FadeTransition
             }, barba_js__WEBPACK_IMPORTED_MODULE_0___default.a.Pjax.originalPreventCheck = barba_js__WEBPACK_IMPORTED_MODULE_0___default.a.Pjax.preventCheck, barba_js__WEBPACK_IMPORTED_MODULE_0___default.a.Pjax.preventCheck = function(t, e) {
                 return !!barba_js__WEBPACK_IMPORTED_MODULE_0___default.a.Pjax.originalPreventCheck(t, e) && !/.pdf/.test(e.href.toLowerCase())
             }
         },
+
+        // Definition of the fade transition
         FadeTransition: barba_js__WEBPACK_IMPORTED_MODULE_0___default.a.BaseTransition.extend({
             start: function() {
                 Promise.all([this.newContainerLoading, this.fadeOut()]).then(this.fadeIn.bind(this))
             },
+
+            // Function to handle fade out
             fadeOut: function() {
                 return $(".cursor").removeClass("active"), $(".cursor-follower").removeClass("active").addClass("loading"), $(".grid").removeClass("off").promise()
             },
+
+            // Function to handle fade in
             fadeIn: function() {
                 setTimeout(() => {
                     window.scrollTo(0, 0)
@@ -1578,8 +1640,12 @@ function(t, e, i) {
             }
         })
     };
+    // Export the barbaJs object
     __webpack_exports__.a = barbaJs
-}, function(t, e) {
+}, 
+
+// Function to create and configure a DOM element
+function(t, e) {
     t.exports = function(t) {
         t = t || {};
         var e = document.createElement(t.selector);
@@ -1589,50 +1655,43 @@ function(t, e, i) {
             e.style.opacity = 1
         })), t.id && (e.id = t.id), t.styles && (e.className = t.styles), t.html && (e.innerHTML = t.html), t.children && e.appendChild(t.children), e
     }
-}, function(t, e, i) {
+}, 
+
+
+/*!
+     * jQuery JavaScript Library v3.3.1
+     * https://jquery.com/
+     *
+     * Includes Sizzle.js
+     * https://sizzlejs.com/
+     *
+     * Copyright JS Foundation and other contributors
+     * Released under the MIT license
+     * https://jquery.org/license
+     *
+     * Date: 2018-01-20T17:24Z
+     */
+    /*!
+     * jQuery JavaScript Library v3.3.1
+     * https://jquery.com/
+     *
+     * Includes Sizzle.js
+     * https://sizzlejs.com/
+     *
+     * Copyright JS Foundation and other contributors
+     * Released under the MIT license
+     * https://jquery.org/license
+     *
+     * Date: 2018-01-20T17:24Z
+     */
+
+
+    // Module definition
+function(t, e, i) {
     var n;
 
-
-
-
     
-
-
-
-/*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-
-    /*!
-     * jQuery JavaScript Library v3.3.1
-     * https://jquery.com/
-     *
-     * Includes Sizzle.js
-     * https://sizzlejs.com/
-     *
-     * Copyright JS Foundation and other contributors
-     * Released under the MIT license
-     * https://jquery.org/license
-     *
-     * Date: 2018-01-20T17:24Z
-     */
-    /*!
-     * jQuery JavaScript Library v3.3.1
-     * https://jquery.com/
-     *
-     * Includes Sizzle.js
-     * https://sizzlejs.com/
-     *
-     * Copyright JS Foundation and other contributors
-     * Released under the MIT license
-     * https://jquery.org/license
-     *
-     * Date: 2018-01-20T17:24Z
-     */
-    ! function(e, i) {
+    ! function(e, i) {// Anonymous function to initialize jQuery
         "use strict";
         "object" == typeof t.exports ? t.exports = e.document ? i(e, !0) : function(t) {
             if (!t.document) throw new Error("jQuery requires a window with a document");
@@ -1640,6 +1699,8 @@ function(t, e, i) {
         } : i(e)
     }("undefined" != typeof window ? window : this, function(i, r) {
         "use strict";
+        
+        // Helper variables and functions
         var o = [],
             s = i.document,
             a = Object.getPrototypeOf,
@@ -1665,6 +1726,7 @@ function(t, e, i) {
                 noModule: !0
             };
 
+               // Execute a script in a global context
         function x(t, e, i) {
             var n, r = (e = e || s).createElement("script");
             if (r.text = t, i)
@@ -1672,19 +1734,25 @@ function(t, e, i) {
             e.head.appendChild(r).parentNode.removeChild(r)
         }
 
+        // Determine the type of a value
         function w(t) {
             return null == t ? t + "" : "object" == typeof t || "function" == typeof t ? f[d.call(t)] || "object" : typeof t
         }
+
+         // jQuery constructor function
         var T = function(t, e) {
                 return new T.fn.init(t, e)
             },
-            C = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
+            C = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g; // Regular expression to trim whitespace
 
+           // Check if a value is an array-like object   
         function k(t) {
             var e = !!t && "length" in t && t.length,
                 i = w(t);
             return !_(t) && !y(t) && ("array" === i || 0 === e || "number" == typeof e && e > 0 && e - 1 in t)
         }
+
+        // jQuery prototype definition
         T.fn = T.prototype = {
             jquery: "3.3.1",
             constructor: T,
@@ -1692,42 +1760,44 @@ function(t, e, i) {
             toArray: function() {
                 return l.call(this)
             },
-            get: function(t) {
+            get: function(t) { // Get an element at a specific index
                 return null == t ? l.call(this) : t < 0 ? this[t + this.length] : this[t]
             },
-            pushStack: function(t) {
+            pushStack: function(t) { // Push a new set of elements onto the jQuery stack
                 var e = T.merge(this.constructor(), t);
                 return e.prevObject = this, e
             },
-            each: function(t) {
+            each: function(t) { // Iterate over a jQuery object
                 return T.each(this, t)
             },
-            map: function(t) {
+            map: function(t) {  // Map the jQuery object to a new set of elements
                 return this.pushStack(T.map(this, function(e, i) {
                     return t.call(e, i, e)
                 }))
             },
-            slice: function() {
+            slice: function() { // Slice elements from the jQuery object
                 return this.pushStack(l.apply(this, arguments))
             },
-            first: function() {
+            first: function() {// Get the first element
                 return this.eq(0)
             },
-            last: function() {
+            last: function() {// Get the last element
                 return this.eq(-1)
             },
-            eq: function(t) {
+            eq: function(t) {// Get an element at a specific index
                 var e = this.length,
                     i = +t + (t < 0 ? e : 0);
                 return this.pushStack(i >= 0 && i < e ? [this[i]] : [])
             },
-            end: function() {
+            end: function() {// End the most recent filtering operation in the current chain
                 return this.prevObject || this.constructor()
             },
             push: c,
             sort: o.sort,
             splice: o.splice
-        }, T.extend = T.fn.extend = function() {
+        }, 
+        // Extend the jQuery object
+        T.extend = T.fn.extend = function() {
             var t, e, i, n, r, o, s = arguments[0] || {},
                 a = 1,
                 l = arguments.length,
@@ -1736,7 +1806,10 @@ function(t, e, i) {
                 if (null != (t = arguments[a]))
                     for (e in t) i = s[e], s !== (n = t[e]) && (u && n && (T.isPlainObject(n) || (r = Array.isArray(n))) ? (r ? (r = !1, o = i && Array.isArray(i) ? i : []) : o = i && T.isPlainObject(i) ? i : {}, s[e] = T.extend(u, o, n)) : void 0 !== n && (s[e] = n));
             return s
-        }, T.extend({
+        },
+        
+        // Extend the jQuery object with static properties and methods
+        T.extend({
             expando: "jQuery" + ("3.3.1" + Math.random()).replace(/\D/g, ""),
             isReady: !0,
             error: function(t) {
@@ -1793,42 +1866,12 @@ function(t, e, i) {
             },
             guid: 1,
             support: v
-        }), "function" == typeof Symbol && (T.fn[Symbol.iterator] = o[Symbol.iterator]), T.each("Boolean Number String Function Array Date RegExp Object Error Symbol".split(" "), function(t, e) {
+        }), "function" == typeof Symbol && (T.fn[Symbol.iterator] = o[Symbol.iterator]), 
+        
+         // Add type checks for various types
+        T.each("Boolean Number String Function Array Date RegExp Object Error Symbol".split(" "), function(t, e) {
             f["[object " + e + "]"] = e.toLowerCase()
         });
-
-
-
-
-
-
-
-
-
-/*vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-
-
-
-
-
-
-
-
-
-
-
-
-vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-        */
-
-
-
-
-
-
-
-
-
 
        
             /*!
@@ -1841,7 +1884,8 @@ vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
              *
              * Date: 2016-08-08
              */
-
+            
+            // Main function definition
             var E =
             function(t) {
                 var e, i, n, r, o, s, a, l, u, c, h, f, d, p, m, g, v, _, y, b = "sizzle" + 1 * new Date,
@@ -1860,11 +1904,15 @@ vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
                     M = O.push,
                     D = O.push,
                     R = O.slice,
+
+                    // Function to find the index of an element in an array
                     L = function(t, e) {
                         for (var i = 0, n = t.length; i < n; i++)
                             if (t[i] === e) return i;
                         return -1
                     },
+
+                    // Regular expressions for various selectors
                     I = "checked|selected|async|autofocus|autoplay|controls|defer|disabled|hidden|ismap|loop|multiple|open|readonly|required|scoped",
                     N = "[\\x20\\t\\r\\n\\f]",
                     j = "(?:\\\\.|[\\w-]|[^\0-\\xa0])+",
@@ -1893,17 +1941,27 @@ vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
                     Q = /^(?:#([\w-]+)|(\w+)|\.([\w-]+))$/,
                     Z = /[+~]/,
                     J = new RegExp("\\\\([\\da-f]{1,6}" + N + "?|(" + N + ")|.)", "ig"),
+                    
+                    // Function to decode escaped characters
                     tt = function(t, e, i) {
                         var n = "0x" + e - 65536;
                         return n != n || i ? e : n < 0 ? String.fromCharCode(n + 65536) : String.fromCharCode(n >> 10 | 55296, 1023 & n | 56320)
                     },
+
+                      // Function to escape special characters
                     et = /([\0-\x1f\x7f]|^-?\d)|^-$|[^\0-\x1f\x7f-\uFFFF\w-]/g,
+                    
+                    // Function to escape identifiers
                     it = function(t, e) {
                         return e ? "\0" === t ? "�" : t.slice(0, -1) + "\\" + t.charCodeAt(t.length - 1).toString(16) + " " : "\\" + t
                     },
+
+                    // Function to reset the document
                     nt = function() {
                         f()
                     },
+
+                     // Function to test if an element is disabled
                     rt = _t(function(t) {
                         return !0 === t.disabled && ("form" in t || "label" in t)
                     }, {
@@ -1923,6 +1981,7 @@ vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
                     }
                 }
 
+                 // Main selector function
                 function ot(t, e, n, r) {
                     var o, a, u, c, h, p, v, _ = e && e.ownerDocument,
                         w = e ? e.nodeType : 9;
@@ -1953,6 +2012,7 @@ vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
                     return l(t.replace($, "$1"), e, n, r)
                 }
 
+                // Cache function for storing selectors
                 function st() {
                     var t = [];
                     return function e(i, r) {
@@ -1960,10 +2020,12 @@ vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
                     }
                 }
 
+                // Function to mark a function as having been checked
                 function at(t) {
                     return t[b] = !0, t
                 }
 
+                 // Test if an element is usable
                 function lt(t) {
                     var e = d.createElement("fieldset");
                     try {
@@ -1975,10 +2037,12 @@ vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
                     }
                 }
 
+                // Set attribute handler
                 function ut(t, e) {
                     for (var i = t.split("|"), r = i.length; r--;) n.attrHandle[i[r]] = e
                 }
 
+                // Function to compare two nodes for ordering
                 function ct(t, e) {
                     var i = e && t,
                         n = i && 1 === t.nodeType && 1 === e.nodeType && t.sourceIndex - e.sourceIndex;
@@ -1989,12 +2053,14 @@ vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
                     return t ? 1 : -1
                 }
 
+                // Function to create a filter for input types
                 function ht(t) {
                     return function(e) {
                         return "input" === e.nodeName.toLowerCase() && e.type === t
                     }
                 }
 
+                // Function to create a filter for button types
                 function ft(t) {
                     return function(e) {
                         var i = e.nodeName.toLowerCase();
@@ -2002,12 +2068,14 @@ vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
                     }
                 }
 
+                // Function to test if an element is disabled
                 function dt(t) {
                     return function(e) {
                         return "form" in e ? e.parentNode && !1 === e.disabled ? "label" in e ? "label" in e.parentNode ? e.parentNode.disabled === t : e.disabled === t : e.isDisabled === t || e.isDisabled !== !t && rt(e) === t : e.disabled === t : "label" in e && e.disabled === t
                     }
                 }
 
+                 // Function to create a negated filter
                 function pt(t) {
                     return at(function(e) {
                         return e = +e, at(function(i, n) {
@@ -2016,36 +2084,38 @@ vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
                     })
                 }
 
-
-
-
-
-
-
-
-
-
-
+             // Helper function to check if the element has the getElementsByTagName method
                 function mt(t) {
                     return t && void 0 !== t.getElementsByTagName && t
                 }
+
+                // Set up support and XML detection
                 for (e in i = ot.support = {}, o = ot.isXML = function(t) {
                         var e = t && (t.ownerDocument || t).documentElement;
                         return !!e && "HTML" !== e.nodeName
-                    }, f = ot.setDocument = function(t) {
+                    },
+                    
+                    // Function to set the document
+                    f = ot.setDocument = function(t) {
                         var e, r, s = t ? t.ownerDocument || t : x;
-                        return s !== d && 9 === s.nodeType && s.documentElement ? (p = (d = s).documentElement, m = !o(d), x !== d && (r = d.defaultView) && r.top !== r && (r.addEventListener ? r.addEventListener("unload", nt, !1) : r.attachEvent && r.attachEvent("onunload", nt)), i.attributes = lt(function(t) {
-                            return t.className = "i", !t.getAttribute("className")
-                        }), i.getElementsByTagName = lt(function(t) {
+                        return s !== d && 9 === s.nodeType && s.documentElement ? (p = (d = s).documentElement, m = !o(d), x !== d && (r = d.defaultView) && r.top !== r && (r.addEventListener ? r.addEventListener("unload", nt, !1) : r.attachEvent && r.attachEvent("onunload", nt)), 
+                        i.attributes = lt(function(t) {
+                            return t.className = "i",
+                             !t.getAttribute("className")
+                        }), 
+                        i.getElementsByTagName = lt(function(t) {
                             return t.appendChild(d.createComment("")), !t.getElementsByTagName("*").length
-                        }), i.getElementsByClassName = G.test(d.getElementsByClassName), i.getById = lt(function(t) {
+                        }), 
+                        i.getElementsByClassName = G.test(d.getElementsByClassName), i.getById = lt(function(t) {
                             return p.appendChild(t).id = b, !d.getElementsByName || !d.getElementsByName(b).length
-                        }), i.getById ? (n.filter.ID = function(t) {
+                        }), 
+                        i.getById ? (n.filter.ID = function(t) {
                             var e = t.replace(J, tt);
                             return function(t) {
                                 return t.getAttribute("id") === e
                             }
-                        }, n.find.ID = function(t, e) {
+                        },
+                         n.find.ID = function(t, e) {
                             if (void 0 !== e.getElementById && m) {
                                 var i = e.getElementById(t);
                                 return i ? [i] : []
@@ -2056,7 +2126,8 @@ vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
                                 var i = void 0 !== t.getAttributeNode && t.getAttributeNode("id");
                                 return i && i.value === e
                             }
-                        }, n.find.ID = function(t, e) {
+                        },
+                         n.find.ID = function(t, e) {
                             if (void 0 !== e.getElementById && m) {
                                 var i, n, r, o = e.getElementById(t);
                                 if (o) {
@@ -2066,7 +2137,10 @@ vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
                                 }
                                 return []
                             }
-                        }), n.find.TAG = i.getElementsByTagName ? function(t, e) {
+                        }),
+
+                        // TAG filter and find functions
+                         n.find.TAG = i.getElementsByTagName ? function(t, e) {
                             return void 0 !== e.getElementsByTagName ? e.getElementsByTagName(t) : i.qsa ? e.querySelectorAll(t) : void 0
                         } : function(t, e) {
                             var i, n = [],
@@ -2077,17 +2151,34 @@ vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
                                 return n
                             }
                             return o
-                        }, n.find.CLASS = i.getElementsByClassName && function(t, e) {
+                        },
+
+                        // CLASS filter and find functions
+                         n.find.CLASS = i.getElementsByClassName && function(t, e) {
                             if (void 0 !== e.getElementsByClassName && m) return e.getElementsByClassName(t)
-                        }, v = [], g = [], (i.qsa = G.test(d.querySelectorAll)) && (lt(function(t) {
+                        },
+
+                         // QSA support tests
+                     v = [], 
+                     g = [], 
+                     (i.qsa = G.test(d.querySelectorAll)) && (lt(function(t) {
                             p.appendChild(t).innerHTML = "<a id='" + b + "'></a><select id='" + b + "-\r\\' msallowcapture=''><option selected=''></option></select>", t.querySelectorAll("[msallowcapture^='']").length && g.push("[*^$]=" + N + "*(?:''|\"\")"), t.querySelectorAll("[selected]").length || g.push("\\[" + N + "*(?:value|" + I + ")"), t.querySelectorAll("[id~=" + b + "-]").length || g.push("~="), t.querySelectorAll(":checked").length || g.push(":checked"), t.querySelectorAll("a#" + b + "+*").length || g.push(".#.+[+~]")
-                        }), lt(function(t) {
+                        }),
+                         lt(function(t) {
                             t.innerHTML = "<a href='' disabled='disabled'></a><select disabled='disabled'><option/></select>";
                             var e = d.createElement("input");
                             e.setAttribute("type", "hidden"), t.appendChild(e).setAttribute("name", "D"), t.querySelectorAll("[name=d]").length && g.push("name" + N + "*[*^$|!~]?="), 2 !== t.querySelectorAll(":enabled").length && g.push(":enabled", ":disabled"), p.appendChild(t).disabled = !0, 2 !== t.querySelectorAll(":disabled").length && g.push(":enabled", ":disabled"), t.querySelectorAll("*,:x"), g.push(",.*:")
-                        })), (i.matchesSelector = G.test(_ = p.matches || p.webkitMatchesSelector || p.mozMatchesSelector || p.oMatchesSelector || p.msMatchesSelector)) && lt(function(t) {
+                        })),
+
+                         // MatchesSelector support tests
+                         (i.matchesSelector = G.test(_ = p.matches || p.webkitMatchesSelector || p.mozMatchesSelector || p.oMatchesSelector || p.msMatchesSelector)) && lt(function(t) {
                             i.disconnectedMatch = _.call(t, "*"), _.call(t, "[s!='']:x"), v.push("!=", B)
-                        }), g = g.length && new RegExp(g.join("|")), v = v.length && new RegExp(v.join("|")), e = G.test(p.compareDocumentPosition), y = e || G.test(p.contains) ? function(t, e) {
+                        }),
+
+                        // Compile the selector matchers
+                         g = g.length && new RegExp(g.join("|")), 
+                         v = v.length && new RegExp(v.join("|")), 
+                         e = G.test(p.compareDocumentPosition), y = e || G.test(p.contains) ? function(t, e) {
                             var i = 9 === t.nodeType ? t.documentElement : t,
                                 n = e && e.parentNode;
                             return t === n || !(!n || 1 !== n.nodeType || !(i.contains ? i.contains(n) : t.compareDocumentPosition && 16 & t.compareDocumentPosition(n)))
@@ -2096,7 +2187,10 @@ vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
                                 for (; e = e.parentNode;)
                                     if (e === t) return !0;
                             return !1
-                        }, P = e ? function(t, e) {
+                        },
+
+                        // Sorting function
+                         P = e ? function(t, e) {
                             if (t === e) return h = !0, 0;
                             var n = !t.compareDocumentPosition - !e.compareDocumentPosition;
                             return n || (1 & (n = (t.ownerDocument || t) === (e.ownerDocument || e) ? t.compareDocumentPosition(e) : 1) || !i.sortDetached && e.compareDocumentPosition(t) === n ? t === d || t.ownerDocument === x && y(x, t) ? -1 : e === d || e.ownerDocument === x && y(x, e) ? 1 : c ? L(c, t) - L(c, e) : 0 : 4 & n ? -1 : 1)
@@ -2114,26 +2208,35 @@ vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
                             for (; s[n] === a[n];) n++;
                             return n ? ct(s[n], a[n]) : s[n] === x ? -1 : a[n] === x ? 1 : 0
                         }, d) : d
-                    }, ot.matches = function(t, e) {
+                    },
+
+                    // Selector matching functions
+                     ot.matches = function(t, e) {
                         return ot(t, null, null, e)
-                    }, ot.matchesSelector = function(t, e) {
+                    }, 
+                    ot.matchesSelector = function(t, e) {
                         if ((t.ownerDocument || t) !== d && f(t), e = e.replace(W, "='$1']"), i.matchesSelector && m && !E[e + " "] && (!v || !v.test(e)) && (!g || !g.test(e))) try {
                             var n = _.call(t, e);
                             if (n || i.disconnectedMatch || t.document && 11 !== t.document.nodeType) return n
                         } catch (t) {}
                         return ot(e, d, null, [t]).length > 0
-                    }, ot.contains = function(t, e) {
+                    }, 
+                    ot.contains = function(t, e) {
                         return (t.ownerDocument || t) !== d && f(t), y(t, e)
-                    }, ot.attr = function(t, e) {
+                    }, 
+                    ot.attr = function(t, e) {
                         (t.ownerDocument || t) !== d && f(t);
                         var r = n.attrHandle[e.toLowerCase()],
                             o = r && S.call(n.attrHandle, e.toLowerCase()) ? r(t, e, !m) : void 0;
                         return void 0 !== o ? o : i.attributes || !m ? t.getAttribute(e) : (o = t.getAttributeNode(e)) && o.specified ? o.value : null
-                    }, ot.escape = function(t) {
+                    }, 
+                    ot.escape = function(t) {
                         return (t + "").replace(et, it)
-                    }, ot.error = function(t) {
+                    },
+                     ot.error = function(t) {
                         throw new Error("Syntax error, unrecognized expression: " + t)
-                    }, ot.uniqueSort = function(t) {
+                    },
+                     ot.uniqueSort = function(t) {
                         var e, n = [],
                             r = 0,
                             o = 0;
@@ -2142,7 +2245,8 @@ vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
                             for (; r--;) t.splice(n[r], 1)
                         }
                         return c = null, t
-                    }, r = ot.getText = function(t) {
+                    }, 
+                    r = ot.getText = function(t) {
                         var e, i = "",
                             n = 0,
                             o = t.nodeType;
@@ -2154,7 +2258,10 @@ vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
                         } else
                             for (; e = t[n++];) i += r(e);
                         return i
-                    }, (n = ot.selectors = {
+                    }, 
+
+                    // Set up selectors
+                    (n = ot.selectors = {
                         cacheLength: 50,
                         createPseudo: at,
                         match: U,
@@ -2364,23 +2471,24 @@ vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
                     }) n.pseudos[e] = ft(e);
 
 
-
-
-
-
-
-
-
-
-
-
-
+                    // Function to generate a random GUID
                 function gt() {}
 
+               // Function to concatenate values of an array of elements
                 function vt(t) {
                     for (var e = 0, i = t.length, n = ""; e < i; e++) n += t[e].value;
                     return n
                 }
+
+
+
+
+
+
+
+                
+
+                
 
                 function _t(t, e, i) {
                     var n = e.dir,
