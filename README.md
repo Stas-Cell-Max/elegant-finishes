@@ -15,19 +15,26 @@ Welcome to the Maxidom website project! This repository contains the source code
 - [License](#license)
 
 ## Features
-- Responsive design with a modern look and feel
-- SEO and social media optimized
-- Interactive elements such as custom cursors and parallax effects
+- Business & Corporate style
+- Smooth animations and transitions
+- Minimal and clean design
+- Parallax scrolling effects
+- Fully responsive design
+- Interactive elements such as custom cursors
 - Integration with Google Analytics for traffic analysis
 - Contact form and map for service areas using Leaflet.js
 
 ## Technologies Used
-- HTML5
-- CSS3
-- JavaScript
-- jQuery
-- Leaflet.js for interactive maps
-- Google Analytics for tracking and analytics
+- **HTML5**: Markup language used for creating the structure of the website.
+- **CSS3**: Styling language used for the design and layout of the website.
+- **JavaScript**: Programming language used for interactive elements and functionality.
+- **jQuery**: JavaScript library used to simplify DOM manipulation.
+- **SVG**: Scalable Vector Graphics used for icons and images.
+- **Webpack**: Module bundler used for managing and bundling the assets.
+- **tween.js**: JavaScript library for tweening and animating values.
+- **BARBA.js**: Library for creating smooth transitions between pages.
+- **Leaflet.js**: Library for interactive maps.
+- **Google Analytics**: Service for tracking and analyzing website traffic.
 
 ## Setup and Installation
 To set up the project locally, follow these steps:
