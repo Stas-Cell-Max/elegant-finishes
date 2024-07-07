@@ -2488,6 +2488,11 @@ function(t, e, i) {
 
                 
 
+
+
+
+
+
                 
 
                 function _t(t, e, i) {
@@ -4647,6 +4652,21 @@ function(t, e) {
                         k(-1, t)
                     }
                 } else k(-1, "No Transport");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                 function k(t, e, s, a) {
                     var u, f, d, b, x, w = e;
@@ -8821,43 +8841,61 @@ function(t, e) {
 
 
 
+    document.addEventListener("DOMContentLoaded", function() {
+        console.log("DOM fully loaded and parsed");
+        if (typeof L !== 'undefined' && L.map) {
+            console.log("Leaflet is loaded");
+            ie.initReady();
+        } else {
+            console.error("Leaflet.js is not loaded.");
+        }
+    });
+    
     const ie = {
         initReady() {
+            console.log("initReady called");
             this.loadMap();
         },
         loadMap: () => {
-            if (0 === $("#map").length) return !1;
+            console.log("loadMap called");
+            if (document.getElementById("map") === null) {
+                console.error("Map element not found.");
+                return false;
+            }
             ie.initMap();
         },
         initMap: () => {
-            if (0 === $("#map").length) return !1;
-            let t = {
-                lat: 45.9782324,
-                lng: 12.683141
-            };
+            console.log("initMap called");
+            if (typeof L === 'undefined' || !L.map) {
+                console.error("Leaflet.js is not loaded or L.map is not a function.");
+                return;
+            }
             
+            const t = { lat: 45.9782324, lng: 12.683141 };
             const map = L.map('map').setView([t.lat, t.lng], 13);
-            
+            console.log("Map initialized.");
+    
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             }).addTo(map);
+            console.log("Tile layer added.");
     
             const marker = L.marker([t.lat, t.lng], {
                 icon: L.icon({
                     iconUrl: '/images/marker.png',
-                    iconSize: [38, 95], // size of the icon
-                    iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
-                    popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+                    iconSize: [38, 95],
+                    iconAnchor: [22, 94],
+                    popupAnchor: [-3, -76]
                 })
             }).addTo(map);
-            
-            marker.on('click', function() {
-                window.open("https://www.google.it/maps/place/Maxidom/@45.9782324,12.683141,15z/data=!4m5!3m4!1s0x0:0xc0a14b37bc471457!8m2!3d45.9782324!4d12.683141", "_blank");
-            });
+            console.log("Marker added.");
     
-            // Custom styles can be added using CSS or JavaScript, depending on the exact customization needed
+            marker.on('click', function() {
+                window.open("https://www.google.com/maps/place/Toronto,+ON,+Canada/@43.651070,-79.347015,15z", "_blank");
+            });
         }
     };
+    
 
 
 
@@ -8938,8 +8976,8 @@ function(t, e) {
         initConsoleMsg() {
             if (navigator.userAgent.toLowerCase().indexOf("chrome") > -1) {
                 const t = ["background: #1A1818;", "color: #fab162", "padding: 12px 20px"].join(";");
-                console.log("%c Tappezzeria Novecento | To my father!❤️ Code and Design by Giacomo Mottin. https://www.linkedin.com/in/giacomo-mottin-bb38bba0/", t)
-            } else window.console && window.console.log("Tappezzeria Novecento | To my father!❤️ Code and Design by Giacomo Mottin. https://www.linkedin.com/in/giacomo-mottin-bb38bba0/")
+                console.log("%c Maxidom | To my lovely son!❤️ ", t)
+            } else window.console && window.console.log("Maxidom | To my lovely son!❤️ ")
         },
         registerGAEvents() {
             const t = $(".ga-events");
@@ -8961,18 +8999,18 @@ function(t, e) {
             t.click(function() {
                 if ("undefined" != typeof ga && "function" == typeof ga.getAll) {
                     const t = ga.getAll()[0];
-                    t && t.send("event", "Phone track contact map", "Click to call", "0434540006", 0)
+                    t && t.send("event", "Phone track contact map", "Click to call", "+16477745321", 0)
                 }
             }), e.click(function() {
                 if ("undefined" != typeof ga && "function" == typeof ga.getAll) {
                     const t = ga.getAll()[0];
-                    t && t.send("event", "Mail from contact map", "Click to action", "info@tappezzerianovecento.it", 0)
+                    t && t.send("event", "Mail from contact map", "Click to action", "info@maxidom.ca", 0)
                 }
             })
         },
         manageCookie: () => {
             if (!oe.a.get("cookie")) {
-                const t = '\n        <div class="cookie">\n          <div class="cookie__inner">\n            <span class="cookie__msg">\n              Our site uses Cookies: some are essential to make the site work, others help us improve the user experience.<br/>By using the site, you consent to the use of these Cookies. You can get more details and block the use of all or just some cookies by viewing the extended information.\n <a href="/privacy.html" target="_blank" class="cookie__info">(Click here)</a>\n <button type="button" class="cookie__ok button circleCursor">I accept</button>\n           </span>\n          </div>\n        </div>\n      ';
+                const t = '\n        <div class="cookie">\n          <div class="cookie__inner">\n <span class="cookie__msg">\n Our site uses Cookies: some are essential to make the site work, others help us improve the user experience.<br/>By using the site, you consent to the use of these Cookies. You can get more details and block the use of all or just some cookies by viewing the extended information.\n <a href="/privacy.html" target="_blank" class="cookie__info">(Click here)</a>\n <button type="button" class="cookie__ok button circleCursor">I accept</button>\n           </span>\n          </div>\n        </div>\n      ';
                 $("body").prepend(t), $(".cookie__ok").on("click", () => {
                     $("body>.cookie").remove(), oe.a.set("cookie", "accepted", {
                         expires: 99999,
@@ -9014,7 +9052,13 @@ function(t, e) {
                 return window.Cookies = s, a
             }
         }
-    }(function() {
+    }
+    
+    
+    
+    
+    
+    (function() {
         function t() {
             for (var t = 0, e = {}; t < arguments.length; t++) {
                 var i = arguments[t];
