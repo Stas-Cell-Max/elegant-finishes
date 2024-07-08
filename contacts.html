@@ -3,7 +3,7 @@
 <head>
   <title>Contacts - Service Area GTA | Maxidom</title>
   <meta name="description" content="Maxidom: Finishing Carpentry, Cabinetry, Flooring, Stairs, Repairs Services">
-  
+
   <!-- Open Graph Meta Tags for social media sharing -->
   <meta property="og:site_name" content="Contacts - Service Area GTA | Maxidom">
   <meta property="og:title" content="Contacts - Service Area GTA | Maxidom">
@@ -24,17 +24,12 @@
   <meta name="msapplication-TileColor" content="#da532c">
   <meta name="theme-color" content="#272727">
 
-  <!-- Internal CSS Styles -->
-  <link href="css/site.css" rel="stylesheet">
-  
   <!-- Leaflet.js CSS -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/rellax/1.12.1/rellax.min.js"></script>
-  <script src="js/site.js"></script>
-
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
   <!-- Font Awesome for Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <!-- Internal CSS Styles -->
+  <link href="css/site.css" rel="stylesheet">
 
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-46667632-1"></script>
@@ -44,6 +39,10 @@
     gtag('js', new Date());
     gtag('config', 'UA-46667632-1', { 'anonymize_ip': true });
   </script>
+  
+  <!-- Leaflet.js JavaScript -->
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/rellax/1.12.1/rellax.min.js"></script>
 </head>
 <body>
   <!-- No JavaScript Warning -->
@@ -151,7 +150,7 @@
               <div class="container">
                 <div class="section__generic__imgContainer">
                   <div class="section__generic__imgWrapper parallax" data-rellax-speed="-3" data-rellax-percentage="0.5">
-                    <div id="map" class="map"></div>
+                    <div id="map" class="map" style="width: 100%; height: 500px;"></div> <!-- Ensure map has height -->
                     <div class="imgPlaceholder"></div>
                   </div>
                 </div>
@@ -166,7 +165,6 @@
                     <p>Toronto - Thornhill</p>
                     <p>Markham - Richmond Hill - Vaughan</p>
                     <p>King City - Aurora - Newmarket - Bradford</p>
-
                   </div>
                 </div>
               </div>
@@ -245,13 +243,64 @@
         "postalCode": "M4G 3E7",
         "streetAddress": "720-7 Copeland St"
       },
-      "email": "stasma.sm17@gmail.com",
-      "telephone": "+1 647 774 5321",
+      "email": "info@maxidom.ca",
+      "telephone": "+16477745321",
       "name": "Maxidom",
       "url" : "https://www.maxidom.ca/",
       "BN": "01750420935",
       "logo": "https://www.maxidom.ca/img/share/logo.png"
     }
- 
+  </script>
+
+  <!-- Map Initialization Script -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      console.log('initReady called');
+      
+      // Check if Leaflet.js is loaded
+      if (typeof L !== 'undefined' && typeof L.map === 'function') {
+        console.log('loadMap called');
+        initMap();
+      } else {
+        console.error('Leaflet.js is not loaded or L.map is not a function.');
+      }
+    });
+
+    function initMap() {
+      console.log('initMap called');
+      
+      // Check if the map div exists
+      var mapDiv = document.getElementById('map');
+      if (!mapDiv) {
+        console.error('Map container not found.');
+        return;
+      }
+
+      var map = L.map('map').setView([43.65107, -79.347015], 10);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(map);
+
+      const locations = [
+        { lat: 43.6532, lng: -79.3832, name: "Toronto" },
+        { lat: 43.8130, lng: -79.3560, name: "Thornhill" },
+        { lat: 43.8561, lng: -79.3370, name: "Markham" },
+        { lat: 43.8372, lng: -79.4245, name: "Richmond Hill" },
+        { lat: 43.8390, lng: -79.5080, name: "Vaughan" },
+        { lat: 43.9250, lng: -79.4459, name: "King City" },
+        { lat: 43.9982, lng: -79.4637, name: "Aurora" },
+        { lat: 44.0521, lng: -79.4559, name: "Newmarket" },
+        { lat: 44.1142, lng: -79.5602, name: "Bradford" }
+      ];
+
+      locations.forEach(function(location) {
+        L.marker([location.lat, location.lng]).addTo(map).bindPopup(location.name);
+      });
+      console.log("Markers added.");
+    }
+  </script>
+
+<script src="js/site.js"></script>
+
 </body>
 </html>

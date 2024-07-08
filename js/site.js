@@ -8843,6 +8843,7 @@ function(t, e) {
 
     document.addEventListener("DOMContentLoaded", function() {
         console.log("DOM fully loaded and parsed");
+    
         if (typeof L !== 'undefined' && L.map) {
             console.log("Leaflet is loaded");
             ie.initReady();
@@ -8856,23 +8857,28 @@ function(t, e) {
             console.log("initReady called");
             this.loadMap();
         },
-        loadMap: () => {
+        loadMap() {
             console.log("loadMap called");
-            if (document.getElementById("map") === null) {
+    
+            const mapElement = document.getElementById("map");
+            if (mapElement === null) {
                 console.error("Map element not found.");
                 return false;
             }
-            ie.initMap();
+    
+            // Adding a small delay to ensure the element is fully rendered
+            setTimeout(() => {
+                this.initMap();
+            }, 100); 
         },
-        initMap: () => {
+        initMap() {
             console.log("initMap called");
             if (typeof L === 'undefined' || !L.map) {
                 console.error("Leaflet.js is not loaded or L.map is not a function.");
                 return;
             }
-            
-            const t = { lat: 45.9782324, lng: 12.683141 };
-            const map = L.map('map').setView([t.lat, t.lng], 13);
+    
+            const map = L.map('map').setView([43.8561, -79.3370], 9);
             console.log("Map initialized.");
     
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -8880,23 +8886,25 @@ function(t, e) {
             }).addTo(map);
             console.log("Tile layer added.");
     
-            const marker = L.marker([t.lat, t.lng], {
-                icon: L.icon({
-                    iconUrl: '/images/marker.png',
-                    iconSize: [38, 95],
-                    iconAnchor: [22, 94],
-                    popupAnchor: [-3, -76]
-                })
-            }).addTo(map);
-            console.log("Marker added.");
+            const locations = [
+                { lat: 43.6532, lng: -79.3832, name: "Toronto" },
+                { lat: 43.8130, lng: -79.3560, name: "Thornhill" },
+                { lat: 43.8561, lng: -79.3370, name: "Markham" },
+                { lat: 43.8372, lng: -79.4245, name: "Richmond Hill" },
+                { lat: 43.8390, lng: -79.5080, name: "Vaughan" },
+                { lat: 43.9250, lng: -79.4459, name: "King City" },
+                { lat: 43.9982, lng: -79.4637, name: "Aurora" },
+                { lat: 44.0521, lng: -79.4559, name: "Newmarket" },
+                { lat: 44.1142, lng: -79.5602, name: "Bradford" }
+            ];
     
-            marker.on('click', function() {
-                window.open("https://www.google.com/maps/place/Toronto,+ON,+Canada/@43.651070,-79.347015,15z", "_blank");
+            locations.forEach(function(location) {
+                L.marker([location.lat, location.lng]).addTo(map).bindPopup(location.name);
             });
+            console.log("Markers added.");
         }
     };
     
-
 
 
 
