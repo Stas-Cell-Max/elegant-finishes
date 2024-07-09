@@ -8841,69 +8841,71 @@ function(t, e) {
 
 
 
-    document.addEventListener("DOMContentLoaded", function() {
-        console.log("DOM fully loaded and parsed");
-    
-        if (typeof L !== 'undefined' && L.map) {
-            console.log("Leaflet is loaded");
-            ie.initReady();
-        } else {
-            console.error("Leaflet.js is not loaded.");
+   
+document.addEventListener("DOMContentLoaded", function() {
+    console.log("DOM fully loaded and parsed");
+
+    if (typeof L !== 'undefined' && L.map) {
+        console.log("Leaflet is loaded");
+        ie.initReady();
+    } else {
+        console.error("Leaflet.js is not loaded.");
+    }
+});
+
+const ie = {
+    initReady() {
+        console.log("initReady called");
+        this.loadMap();
+    },
+    loadMap() {
+        console.log("loadMap called");
+
+        const mapElement = document.getElementById("map");
+        if (mapElement === null) {
+            console.error("Map element not found.");
+            return false;
         }
-    });
-    
-    const ie = {
-        initReady() {
-            console.log("initReady called");
-            this.loadMap();
-        },
-        loadMap() {
-            console.log("loadMap called");
-    
-            const mapElement = document.getElementById("map");
-            if (mapElement === null) {
-                console.error("Map element not found.");
-                return false;
-            }
-    
-            // Adding a small delay to ensure the element is fully rendered
-            setTimeout(() => {
-                this.initMap();
-            }, 100); 
-        },
-        initMap() {
-            console.log("initMap called");
-            if (typeof L === 'undefined' || !L.map) {
-                console.error("Leaflet.js is not loaded or L.map is not a function.");
-                return;
-            }
-    
-            const map = L.map('map').setView([43.8561, -79.3370], 9);
-            console.log("Map initialized.");
-    
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            }).addTo(map);
-            console.log("Tile layer added.");
-    
-            const locations = [
-                { lat: 43.6532, lng: -79.3832, name: "Toronto" },
-                { lat: 43.8130, lng: -79.3560, name: "Thornhill" },
-                { lat: 43.8561, lng: -79.3370, name: "Markham" },
-                { lat: 43.8372, lng: -79.4245, name: "Richmond Hill" },
-                { lat: 43.8390, lng: -79.5080, name: "Vaughan" },
-                { lat: 43.9250, lng: -79.4459, name: "King City" },
-                { lat: 43.9982, lng: -79.4637, name: "Aurora" },
-                { lat: 44.0521, lng: -79.4559, name: "Newmarket" },
-                { lat: 44.1142, lng: -79.5602, name: "Bradford" }
-            ];
-    
-            locations.forEach(function(location) {
-                L.marker([location.lat, location.lng]).addTo(map).bindPopup(location.name);
-            });
-            console.log("Markers added.");
+
+        // Adding a small delay to ensure the element is fully rendered
+        setTimeout(() => {
+            this.initMap();
+        }, 100); 
+    },
+    initMap() {
+        console.log("initMap called");
+        if (typeof L === 'undefined' || !L.map) {
+            console.error("Leaflet.js is not loaded or L.map is not a function.");
+            return;
         }
-    };
+
+        const map = L.map('map').setView([43.8561, -79.3370], 9);
+        console.log("Map initialized.");
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+        console.log("Tile layer added.");
+
+        const locations = [
+            { lat: 43.6532, lng: -79.3832, name: "Toronto" },
+            { lat: 43.8130, lng: -79.3560, name: "Thornhill" },
+            { lat: 43.8561, lng: -79.3370, name: "Markham" },
+            { lat: 43.8372, lng: -79.4245, name: "Richmond Hill" },
+            { lat: 43.8390, lng: -79.5080, name: "Vaughan" },
+            { lat: 43.9250, lng: -79.4459, name: "King City" },
+            { lat: 43.9982, lng: -79.4637, name: "Aurora" },
+            { lat: 44.0521, lng: -79.4559, name: "Newmarket" },
+            { lat: 44.1142, lng: -79.5602, name: "Bradford" }
+        ];
+
+        locations.forEach(function(location) {
+            L.marker([location.lat, location.lng]).addTo(map).bindPopup(location.name);
+        });
+        console.log("Markers added.");
+    }
+};
+
     
 
 
