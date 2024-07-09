@@ -57,7 +57,7 @@ You can use any local server to serve the static files. For example, you can use
 - Add more interactive elements and animations
 
 ## Deployment
-The portfolio is deployed on GitHub Pages: https://stas-cell-max.github.io/elegant-finishes/ 
+The website is deployed on GitHub Pages: https://stas-cell-max.github.io/elegant-finishes/ 
 
 ## Author
 Stanislav Morozan is a dedicated software developer with a passion for creating elegant and performant web applications. With a keen eye for design and user experience, Stanislav strives to bridge the gap between technology and users seamlessly.
