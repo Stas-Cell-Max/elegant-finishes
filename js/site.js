@@ -2260,6 +2260,13 @@ function(t, e, i) {
                         return i
                     }, 
 
+
+
+
+
+
+
+
                     // Set up selectors
                     (n = ot.selectors = {
                         cacheLength: 50,
@@ -2480,19 +2487,6 @@ function(t, e, i) {
                     return n
                 }
 
-
-
-
-
-
-
-                
-
-
-
-
-
-
                 
 
                 function _t(t, e, i) {
@@ -2501,7 +2495,9 @@ function(t, e, i) {
                         o = r || n,
                         s = i && "parentNode" === o,
                         a = T++;
-                    return e.first ? function(e, i, r) {
+
+                        // Function to traverse the DOM in the given direction and apply the filter
+                    return e.first ? function(e, i, r) {// Traverse the DOM in the specified direction
                         for (; e = e[n];)
                             if (1 === e.nodeType || s) return t(e, i, r);
                         return !1
@@ -2521,7 +2517,7 @@ function(t, e, i) {
                     }
                 }
 
-                function yt(t) {
+                function yt(t) { // Combine multiple filter functions into one
                     return t.length > 1 ? function(e, i, n) {
                         for (var r = t.length; r--;)
                             if (!t[r](e, i, n)) return !1;
@@ -2529,11 +2525,13 @@ function(t, e, i) {
                     } : t[0]
                 }
 
-                function bt(t, e, i, n, r) {
+                 // Filter the array based on the provided condition
+                function bt(t, e, i, n, r) { 
                     for (var o, s = [], a = 0, l = t.length, u = null != e; a < l; a++)(o = t[a]) && (i && !i(o, n, r) || (s.push(o), u && e.push(a)));
                     return s
                 }
 
+                 // Function to process and filter elements in the context of selectors
                 function xt(t, e, i, n, r, o) {
                     return n && !n[b] && (n = xt(n)), r && !r[b] && (r = xt(r, o)), at(function(o, s, a, l) {
                         var u, c, h, f = [],
@@ -2559,6 +2557,7 @@ function(t, e, i) {
                     })
                 }
 
+               // Recursive function to process and filter elements based on the selector
                 function wt(t) {
                     for (var e, i, r, o = t.length, s = n.relative[t[0].type], a = s || n.relative[" "], l = s ? 1 : 0, c = _t(function(t) {
                             return t === e
@@ -2579,7 +2578,10 @@ function(t, e, i) {
                             f.push(i)
                         } return yt(f)
                 }
-                return gt.prototype = n.filters = n.pseudos, n.setFilters = new gt, s = ot.tokenize = function(t, e) {
+                return gt.prototype = n.filters = n.pseudos, n.setFilters = new gt, 
+
+                // Tokenize the selector string into an array of tokens
+                s = ot.tokenize = function(t, e) {
                     var i, r, o, s, a, l, u, c = k[t + " "];
                     if (c) return e ? 0 : c.slice(0);
                     for (a = t, l = [], u = n.preFilter; a;) {
@@ -2594,7 +2596,10 @@ function(t, e, i) {
                         if (!i) break
                     }
                     return e ? a.length : a ? ot.error(t) : k(t, l).slice(0)
-                }, a = ot.compile = function(t, e) {
+                }, 
+                
+               // Compile the tokenized selector string into a function 
+                a = ot.compile = function(t, e) {
                     var i, r = [],
                         o = [],
                         a = E[t + " "];
@@ -2637,7 +2642,10 @@ function(t, e, i) {
                         }(o, r))).selector = t
                     }
                     return a
-                }, l = ot.select = function(t, e, i, r) {
+                }, 
+                
+                // Select elements based on the compiled selector function
+                l = ot.select = function(t, e, i, r) {
                     var o, l, u, c, h, f = "function" == typeof t && t,
                         d = !r && s(t = f.selector || t);
                     if (i = i || [], 1 === d.length) {
@@ -2652,24 +2660,50 @@ function(t, e, i) {
                             }
                     }
                     return (f || a(t, d))(r, e, !m, i, !e || Z.test(t) && mt(e.parentNode) || e), i
-                }, i.sortStable = b.split("").sort(P).join("") === b, i.detectDuplicates = !!h, f(), i.sortDetached = lt(function(t) {
+                },
+                // Check if sorting is stable
+                i.sortStable = b.split("").sort(P).join("") === b,
+                // Detect duplicates
+                i.detectDuplicates = !!h,
+                // Detect duplicates
+                f(), 
+                
+                i.sortDetached = lt(function(t) {
                     return 1 & t.compareDocumentPosition(d.createElement("fieldset"))
-                }), lt(function(t) {
+                }), 
+                
+                // Check if innerHTML maintains href attribute
+                lt(function(t) {
                     return t.innerHTML = "<a href='#'></a>", "#" === t.firstChild.getAttribute("href")
                 }) || ut("type|href|height|width", function(t, e, i) {
                     if (!i) return t.getAttribute(e, "type" === e.toLowerCase() ? 1 : 2)
-                }), i.attributes && lt(function(t) {
+                }),
+            // Check if value attribute is correctly set for inputs
+                i.attributes && lt(function(t) {
                     return t.innerHTML = "<input/>", t.firstChild.setAttribute("value", ""), "" === t.firstChild.getAttribute("value")
                 }) || ut("value", function(t, e, i) {
                     if (!i && "input" === t.nodeName.toLowerCase()) return t.defaultValue
-                }), lt(function(t) {
+                }), 
+                // Check if disabled attribute is correctly handled
+                lt(function(t) {
                     return null == t.getAttribute("disabled")
                 }) || ut(I, function(t, e, i) {
                     var n;
                     if (!i) return !0 === t[e] ? e.toLowerCase() : (n = t.getAttributeNode(e)) && n.specified ? n.value : null
-                }), ot
+                }), 
+                ot
             }(i);
-        T.find = E, T.expr = E.selectors, T.expr[":"] = T.expr.pseudos, T.uniqueSort = T.unique = E.uniqueSort, T.text = E.getText, T.isXMLDoc = E.isXML, T.contains = E.contains, T.escapeSelector = E.escape;
+
+            // Assign find and expr properties to T
+        T.find = E, 
+        T.expr = E.selectors, 
+        T.expr[":"] = T.expr.pseudos,
+         T.uniqueSort = T.unique = E.uniqueSort,
+          T.text = E.getText, T.isXMLDoc = E.isXML, 
+          T.contains = E.contains,
+           T.escapeSelector = E.escape;
+
+        // Function to find elements based on a selector
         var P = function(t, e, i) {
                 for (var n = [], r = void 0 !== i;
                     (t = t[e]) && 9 !== t.nodeType;)
@@ -2678,17 +2712,24 @@ function(t, e, i) {
                         n.push(t)
                     } return n
             },
+
+            // Function to find siblings of an element
             S = function(t, e) {
                 for (var i = []; t; t = t.nextSibling) 1 === t.nodeType && t !== e && i.push(t);
                 return i
             },
+
+            // Regular expression to match context-needing selectors
             O = T.expr.match.needsContext;
 
-        function A(t, e) {
+        function A(t, e) {// Check if the nodeName of t matches e
             return t.nodeName && t.nodeName.toLowerCase() === e.toLowerCase()
         }
+
+        // Regular expression to match HTML tags
         var M = /^<([a-z][^\/\0>:\x20\t\r\n\f]*)[\x20\t\r\n\f]*\/?>(?:<\/\1>|)$/i;
 
+        // Filter elements based on the provided condition
         function D(t, e, i) {
             return _(e) ? T.grep(t, function(t, n) {
                 return !!e.call(t, n, t) !== i
@@ -2698,12 +2739,16 @@ function(t, e, i) {
                 return h.call(e, t) > -1 !== i
             }) : T.filter(e, t, i)
         }
+
+        // Filter function for T
         T.filter = function(t, e, i) {
             var n = e[0];
             return i && (t = ":not(" + t + ")"), 1 === e.length && 1 === n.nodeType ? T.find.matchesSelector(n, t) ? [n] : [] : T.find.matches(t, T.grep(e, function(t) {
                 return 1 === t.nodeType
             }))
-        }, T.fn.extend({
+        }, 
+        // Extend T with additional functions
+        T.fn.extend({
             find: function(t) {
                 var e, i, n = this.length,
                     r = this;
@@ -2724,6 +2769,8 @@ function(t, e, i) {
                 return !!D(this, "string" == typeof t && O.test(t) ? T(t) : t || [], !1).length
             }
         });
+
+        // Initialize T with a selector or an HTML element
         var R, L = /^(?:\s*(<[\w\W]+>)[^>]*|#([\w-]+))$/;
         (T.fn.init = function(t, e, i) {
             var n, r;
@@ -2739,6 +2786,8 @@ function(t, e, i) {
             }
             return t.nodeType ? (this[0] = t, this.length = 1, this) : _(t) ? void 0 !== i.ready ? i.ready(t) : t(T) : T.makeArray(t, this)
         }).prototype = T.fn, R = T(s);
+
+        // Regular expressions for traversing parents and siblings
         var I = /^(?:parents|prev(?:Until|All))/,
             N = {
                 children: !0,
