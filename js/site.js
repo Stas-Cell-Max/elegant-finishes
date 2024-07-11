@@ -2260,13 +2260,6 @@ function(t, e, i) {
                         return i
                     }, 
 
-
-
-
-
-
-
-
                     // Set up selectors
                     (n = ot.selectors = {
                         cacheLength: 50,
@@ -2807,12 +2800,13 @@ function(t, e, i) {
 
       
             
-
+        // Function to find the next sibling element that is a node
         function j(t, e) {
             for (;
                 (t = t[e]) && 1 !== t.nodeType;);
             return t
         }
+        // Extend jQuery with additional functions
         T.fn.extend({
             has: function(t) {
                 var e = T(t, this),
@@ -2822,6 +2816,7 @@ function(t, e, i) {
                         if (T.contains(this, e[t])) return !0
                 })
             },
+            // Find the closest ancestor that matches the selector
             closest: function(t, e) {
                 var i, n = 0,
                     r = this.length,
@@ -2835,36 +2830,46 @@ function(t, e, i) {
                                 break
                             } return this.pushStack(o.length > 1 ? T.uniqueSort(o) : o)
             },
+            // Get the index of the element within its siblings
             index: function(t) {
                 return t ? "string" == typeof t ? h.call(T(t), this[0]) : h.call(this, t.jquery ? t[0] : t) : this[0] && this[0].parentNode ? this.first().prevAll().length : -1
             },
+
+            // Add elements to the current set of matched elements
             add: function(t, e) {
                 return this.pushStack(T.uniqueSort(T.merge(this.get(), T(t, e))))
             },
+
+            // Add the previous set of matched elements to the current set
             addBack: function(t) {
                 return this.add(null == t ? this.prevObject : this.prevObject.filter(t))
             }
-        }), T.each({
-            parent: function(t) {
+        }), 
+        // Extend jQuery with traversal functions
+        T.each({
+
+            parent: function(t) { // Get the parent of each element in the current set
                 var e = t.parentNode;
                 return e && 11 !== e.nodeType ? e : null
             },
-            parents: function(t) {
+
+            parents: function(t) {// Get all ancestors of each element in the current set
                 return P(t, "parentNode")
             },
-            parentsUntil: function(t, e, i) {
+
+            parentsUntil: function(t, e, i) { // Get all ancestors of each element in the current set, up to but not including the element matched by the selector
                 return P(t, "parentNode", i)
             },
-            next: function(t) {
+            next: function(t) {// Get the immediately following sibling of each element in the current set
                 return j(t, "nextSibling")
             },
-            prev: function(t) {
+            prev: function(t) {// Get the immediately preceding sibling of each element in the current set
                 return j(t, "previousSibling")
             },
-            nextAll: function(t) {
+            nextAll: function(t) { // Get all following siblings of each element in the current set
                 return P(t, "nextSibling")
             },
-            prevAll: function(t) {
+            prevAll: function(t) { // Get all preceding siblings of each element in the current set
                 return P(t, "previousSibling")
             },
             nextUntil: function(t, e, i) {
@@ -2882,22 +2887,28 @@ function(t, e, i) {
             contents: function(t) {
                 return A(t, "iframe") ? t.contentDocument : (A(t, "template") && (t = t.content || t), T.merge([], t.childNodes))
             }
-        }, function(t, e) {
+        }, 
+        
+         // Add each traversal method to the jQuery prototype
+        function(t, e) {
             T.fn[t] = function(i, n) {
                 var r = T.map(this, e, i);
                 return "Until" !== t.slice(-5) && (n = i), n && "string" == typeof n && (r = T.filter(n, r)), this.length > 1 && (N[t] || T.uniqueSort(r), I.test(t) && r.reverse()), this.pushStack(r)
             }
         });
-        var F = /[^\x20\t\r\n\f]+/g;
 
+        // Regular expression to match non-whitespace characters
+        var F = /[^\x20\t\r\n\f]+/g;
+        // Return the input value as is
         function B(t) {
             return t
         }
-
+          // Throw an error with the input value
         function z(t) {
             throw t
         }
-
+  
+          // Handle promises or callbacks
         function $(t, e, i, n) {
             var r;
             try {
@@ -2906,6 +2917,8 @@ function(t, e, i) {
                 i.apply(void 0, [t])
             }
         }
+
+        // jQuery Callbacks implementation
         T.Callbacks = function(t) {
             t = "string" == typeof t ? function(t) {
                 var e = {};
@@ -2964,7 +2977,18 @@ function(t, e, i) {
                     }
                 };
             return u
-        }, T.extend({
+        },
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        T.extend({
             Deferred: function(t) {
                 var e = [
                         ["notify", "progress", T.Callbacks("memory"), T.Callbacks("memory"), 2],
