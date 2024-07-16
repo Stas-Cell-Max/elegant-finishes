@@ -2922,6 +2922,8 @@ function(t, e, i) {
         T.Callbacks = function(t) {
             t = "string" == typeof t ? function(t) {
                 var e = {};
+
+                // Split the string by spaces and set each value to true in the options object
                 return T.each(t.match(F) || [], function(t, i) {
                     e[i] = !0
                 }), e
@@ -2935,6 +2937,8 @@ function(t, e, i) {
                     t.memory || (i = !1), e = !1, r && (o = i ? [] : "")
                 },
                 u = {
+
+                     // Add a callback or a collection of callbacks to the list
                     add: function() {
                         return o && (i && !e && (a = o.length - 1, s.push(i)), function e(i) {
                             T.each(i, function(i, n) {
@@ -2942,36 +2946,51 @@ function(t, e, i) {
                             })
                         }(arguments), i && !e && l()), this
                     },
+
+                     // Remove a callback from the list
                     remove: function() {
                         return T.each(arguments, function(t, e) {
                             for (var i;
                                 (i = T.inArray(e, o, i)) > -1;) o.splice(i, 1), i <= a && a--
                         }), this
                     },
+
+                      // Check if a given callback is in the list
                     has: function(t) {
                         return t ? T.inArray(t, o) > -1 : o.length > 0
                     },
+
+                    // Remove all callbacks from the list
                     empty: function() {
                         return o && (o = []), this
                     },
+
+                      // Disable the callbacks list
                     disable: function() {
                         return r = s = [], o = i = "", this
                     },
+                     // Check if the callbacks list is disabled
                     disabled: function() {
                         return !o
                     },
+                    // Lock the callbacks list in its current state
                     lock: function() {
                         return r = s = [], i || e || (o = i = ""), this
                     },
+
+                    // Check if the callbacks list is locked
                     locked: function() {
                         return !!r
                     },
+                    // Call all callbacks with the given context and arguments
                     fireWith: function(t, i) {
                         return r || (i = [t, (i = i || []).slice ? i.slice() : i], s.push(i), e || l()), this
                     },
+                    // Call all callbacks with the given arguments
                     fire: function() {
                         return u.fireWith(this, arguments), this
                     },
+                    // Check if the callbacks list has been called at least once
                     fired: function() {
                         return !!n
                     }
