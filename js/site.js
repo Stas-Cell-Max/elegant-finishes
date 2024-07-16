@@ -3000,31 +3000,30 @@ function(t, e, i) {
         
         
         
-        
-        
-        
-        
-        
-        
-        
+        // Extend jQuery with Deferred functionality
         T.extend({
             Deferred: function(t) {
+                 // Define states for the Deferred object
                 var e = [
                         ["notify", "progress", T.Callbacks("memory"), T.Callbacks("memory"), 2],
                         ["resolve", "done", T.Callbacks("once memory"), T.Callbacks("once memory"), 0, "resolved"],
                         ["reject", "fail", T.Callbacks("once memory"), T.Callbacks("once memory"), 1, "rejected"]
                     ],
-                    n = "pending",
+                    n = "pending",   // Initial state
                     r = {
+                        // Get the current state
                         state: function() {
                             return n
                         },
+                        // Attach done and fail callbacks
                         always: function() {
                             return o.done(arguments).fail(arguments), this
                         },
+                        // Attach fail callback
                         catch: function(t) {
                             return r.then(null, t)
                         },
+                         // Create a new Deferred that is resolved or rejected
                         pipe: function() {
                             var t = arguments;
                             return T.Deferred(function(i) {
@@ -3037,6 +3036,8 @@ function(t, e, i) {
                                 }), t = null
                             }).promise()
                         },
+
+                        // Add handlers for resolved, rejected, and progress states
                         then: function(t, n, r) {
                             var o = 0;
 
@@ -3065,11 +3066,14 @@ function(t, e, i) {
                                 e[0][3].add(s(0, i, _(r) ? r : B, i.notifyWith)), e[1][3].add(s(0, i, _(t) ? t : B)), e[2][3].add(s(0, i, _(n) ? n : z))
                             }).promise()
                         },
+
+                         // Return a promise object
                         promise: function(t) {
                             return null != t ? T.extend(t, r) : r
                         }
                     },
                     o = {};
+                    // Set up the Deferred object and its methods
                 return T.each(e, function(t, i) {
                     var s = i[2],
                         a = i[5];
@@ -3080,6 +3084,17 @@ function(t, e, i) {
                     }, o[i[0] + "With"] = s.fireWith
                 }), r.promise(o), t && t.call(o, o), o
             },
+
+
+
+
+
+
+
+
+
+
+
             when: function(t) {
                 var e = arguments.length,
                     i = e,
