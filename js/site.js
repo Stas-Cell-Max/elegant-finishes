@@ -3094,7 +3094,7 @@ function(t, e, i) {
 
 
 
-
+          // This function handles multiple Deferred objects, ensuring that they all complete before executing a callback.
             when: function(t) {
                 var e = arguments.length,
                     i = e,
@@ -3112,29 +3112,41 @@ function(t, e, i) {
             }
         });
         var H = /^(Eval|Internal|Range|Reference|Syntax|Type|URI)Error$/;
+
+         // This function logs exceptions that occur within Deferred objects to the console.
         T.Deferred.exceptionHook = function(t, e) {
             i.console && i.console.warn && t && H.test(t.name) && i.console.warn("jQuery.Deferred exception: " + t.message, t.stack, e)
-        }, T.readyException = function(t) {
+        },
+         // This function ensures that exceptions during the document ready process are thrown asynchronously.
+        T.readyException = function(t) {
             i.setTimeout(function() {
                 throw t
             })
         };
         var q = T.Deferred();
 
+         // This function is called when the DOMContentLoaded or load event is triggered, signaling that the document is ready.
         function W() {
             s.removeEventListener("DOMContentLoaded", W), i.removeEventListener("load", W), T.ready()
         }
+        
+         // This function adds a callback to be executed when the document is ready.
         T.fn.ready = function(t) {
             return q.then(t).catch(function(t) {
                 T.readyException(t)
             }), this
-        }, T.extend({
+        }, 
+        // This function sets the document as ready and resolves the ready Deferred object.
+        T.extend({
             isReady: !1,
             readyWait: 1,
             ready: function(t) {
                 (!0 === t ? --T.readyWait : T.isReady) || (T.isReady = !0, !0 !== t && --T.readyWait > 0 || q.resolveWith(s, [T]))
             }
-        }), T.ready.then = q.then, "complete" === s.readyState || "loading" !== s.readyState && !s.documentElement.doScroll ? i.setTimeout(T.ready) : (s.addEventListener("DOMContentLoaded", W), i.addEventListener("load", W));
+        }),
+        
+         // This function iterates over elements, applying a callback function to each one.
+        T.ready.then = q.then, "complete" === s.readyState || "loading" !== s.readyState && !s.documentElement.doScroll ? i.setTimeout(T.ready) : (s.addEventListener("DOMContentLoaded", W), i.addEventListener("load", W));
         var X = function(t, e, i, n, r, o, s) {
                 var a = 0,
                     l = t.length,
@@ -3150,6 +3162,13 @@ function(t, e, i) {
             Y = /^-ms-/,
             U = /-([a-z])/g;
 
+
+
+
+
+
+
+            
         function V(t, e) {
             return e.toUpperCase()
         }
