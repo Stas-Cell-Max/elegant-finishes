@@ -3085,15 +3085,6 @@ function(t, e, i) {
                 }), r.promise(o), t && t.call(o, o), o
             },
 
-
-
-
-
-
-
-
-
-
           // This function handles multiple Deferred objects, ensuring that they all complete before executing a callback.
             when: function(t) {
                 var e = arguments.length,
@@ -3162,86 +3153,79 @@ function(t, e, i) {
             Y = /^-ms-/,
             U = /-([a-z])/g;
 
-
-
-
-
-
-
-            
-        function V(t, e) {
-            return e.toUpperCase()
-        }
-
-        function K(t) {
-            return t.replace(Y, "ms-").replace(U, V)
-        }
-        var G = function(t) {
-            return 1 === t.nodeType || 9 === t.nodeType || !+t.nodeType
-        };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        function Q() {
-            this.expando = T.expando + Q.uid++
-        }
-        Q.uid = 1, Q.prototype = {
-            cache: function(t) {
-                var e = t[this.expando];
-                return e || (e = {}, G(t) && (t.nodeType ? t[this.expando] = e : Object.defineProperty(t, this.expando, {
-                    value: e,
-                    configurable: !0
-                }))), e
-            },
-            set: function(t, e, i) {
-                var n, r = this.cache(t);
-                if ("string" == typeof e) r[K(e)] = i;
-                else
-                    for (n in e) r[K(n)] = e[n];
-                return r
-            },
-            get: function(t, e) {
-                return void 0 === e ? this.cache(t) : t[this.expando] && t[this.expando][K(e)]
-            },
-            access: function(t, e, i) {
-                return void 0 === e || e && "string" == typeof e && void 0 === i ? this.get(t, e) : (this.set(t, e, i), void 0 !== i ? i : e)
-            },
-            remove: function(t, e) {
-                var i, n = t[this.expando];
-                if (void 0 !== n) {
-                    if (void 0 !== e) {
-                        i = (e = Array.isArray(e) ? e.map(K) : (e = K(e)) in n ? [e] : e.match(F) || []).length;
-                        for (; i--;) delete n[e[i]]
-                    }(void 0 === e || T.isEmptyObject(n)) && (t.nodeType ? t[this.expando] = void 0 : delete t[this.expando])
-                }
-            },
-            hasData: function(t) {
-                var e = t[this.expando];
-                return void 0 !== e && !T.isEmptyObject(e)
+            function V(t, e) {
+                // This function converts the second argument (e) to uppercase.
+                return e.toUpperCase();
             }
-        };
-        var Z = new Q,
-            J = new Q,
-            tt = /^(?:\{[\w\W]*\}|\[[\w\W]*\])$/,
-            et = /[A-Z]/g;
+            
+            function K(t) {
+                // This function replaces the "-ms-" prefix with "ms-" and converts any subsequent letter following a hyphen to uppercase.
+                return t.replace(Y, "ms-").replace(U, V);
+            }
+            
+            var G = function(t) {
+                // This function checks if the given argument (t) is a node (element or document) or an object.
+                return 1 === t.nodeType || 9 === t.nodeType || !+t.nodeType;
+            };
+            
+            function Q() {
+                // This function creates a new instance of Q, initializing it with a unique expando property.
+                this.expando = T.expando + Q.uid++;
+            }
+            
+            Q.uid = 1;  // Initialize a unique identifier for each instance of Q.
+            Q.prototype = {
+                cache: function(t) {
+                    // This function retrieves or creates a cache object for the given element (t).
+                    var e = t[this.expando];
+                    return e || (e = {}, G(t) && (t.nodeType ? t[this.expando] = e : Object.defineProperty(t, this.expando, {
+                        value: e,
+                        configurable: !0
+                    }))), e;
+                },
+                set: function(t, e, i) {
+                    // This function sets a value (i) in the cache for the given key (e) on the element (t). If e is an object, it sets multiple values.
+                    var n, r = this.cache(t);
+                    if ("string" == typeof e) r[K(e)] = i;
+                    else
+                        for (n in e) r[K(n)] = e[n];
+                    return r;
+                },
+                get: function(t, e) {
+                    // This function retrieves a value from the cache for the given key (e) on the element (t).
+                    return void 0 === e ? this.cache(t) : t[this.expando] && t[this.expando][K(e)];
+                },
+                access: function(t, e, i) {
+                    // This function provides access to the cache, either setting or getting values based on the arguments provided.
+                    return void 0 === e || e && "string" == typeof e && void 0 === i ? this.get(t, e) : (this.set(t, e, i), void 0 !== i ? i : e);
+                },
+                remove: function(t, e) {
+                    // This function removes a key (or keys) from the cache of the given element (t). If no key is provided, it removes the entire cache.
+                    var i, n = t[this.expando];
+                    if (void 0 !== n) {
+                        if (void 0 !== e) {
+                            i = (e = Array.isArray(e) ? e.map(K) : (e = K(e)) in n ? [e] : e.match(F) || []).length;
+                            for (; i--;) delete n[e[i]];
+                        }(void 0 === e || T.isEmptyObject(n)) && (t.nodeType ? t[this.expando] = void 0 : delete t[this.expando]);
+                    }
+                },
+                hasData: function(t) {
+                    // This function checks if the given element (t) has any data in its cache.
+                    var e = t[this.expando];
+                    return void 0 !== e && !T.isEmptyObject(e);
+                }
+            };
+            
+            var Z = new Q,  // Create a new instance of Q for general use.
+                J = new Q,  // Create another instance of Q, potentially for a different purpose.
+                tt = /^(?:\{[\w\W]*\}|\[[\w\W]*\])$/,  // Regular expression to match JSON-like strings.
+                et = /[A-Z]/g;  // Regular expression to match uppercase letters.
+            
+
+
+
+                
+                
 
         function it(t, e, i) {
             var n;
