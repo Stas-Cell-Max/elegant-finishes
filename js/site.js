@@ -3225,9 +3225,10 @@ function(t, e, i) {
 
 
                 
-                
+
 
         function it(t, e, i) {
+            // This function retrieves a data attribute from an element.
             var n;
             if (void 0 === i && 1 === t.nodeType)
                 if (n = "data-" + e.replace(et, "-$&").toLowerCase(), "string" == typeof(i = t.getAttribute(n))) {
@@ -3242,25 +3243,32 @@ function(t, e, i) {
         }
         T.extend({
             hasData: function(t) {
+                // Check if the element has any data stored in the cache
                 return J.hasData(t) || Z.hasData(t)
             },
             data: function(t, e, i) {
+                 // Access or set data on the element
                 return J.access(t, e, i)
             },
             removeData: function(t, e) {
+                // Remove data from the element
                 J.remove(t, e)
             },
             _data: function(t, e, i) {
+                // Access or set private data on the element
                 return Z.access(t, e, i)
             },
             _removeData: function(t, e) {
+                 // Remove private data from the element
                 Z.remove(t, e)
             }
         }), T.fn.extend({
             data: function(t, e) {
+                   // This function retrieves or sets data attributes on matched elements.
                 var i, n, r, o = this[0],
                     s = o && o.attributes;
                 if (void 0 === t) {
+                     // If no key is provided, return all data attributes
                     if (this.length && (r = J.get(o), 1 === o.nodeType && !Z.get(o, "hasDataAttrs"))) {
                         for (i = s.length; i--;) s[i] && 0 === (n = s[i].name).indexOf("data-") && (n = K(n.slice(5)), it(o, n, r[n]));
                         Z.set(o, "hasDataAttrs", !0)
@@ -3278,16 +3286,19 @@ function(t, e, i) {
                 }, null, e, arguments.length > 1, null, !0)
             },
             removeData: function(t) {
+                 // Remove data attributes from matched elements
                 return this.each(function() {
                     J.remove(this, t)
                 })
             }
         }), T.extend({
+            // Manage queues of functions to be executed on elements
             queue: function(t, e, i) {
                 var n;
                 if (t) return e = (e || "fx") + "queue", n = Z.get(t, e), i && (!n || Array.isArray(i) ? n = Z.access(t, e, T.makeArray(i)) : n.push(i)), n || []
             },
             dequeue: function(t, e) {
+                // Remove a function from the queue and execute it
                 e = e || "fx";
                 var i = T.queue(t, e),
                     n = i.length,
@@ -3298,6 +3309,7 @@ function(t, e, i) {
                 }, o)), !n && o && o.empty.fire()
             },
             _queueHooks: function(t, e) {
+                 // Create hooks for the queue to manage its state
                 var i = e + "queueHooks";
                 return Z.get(t, i) || Z.access(t, i, {
                     empty: T.Callbacks("once memory").add(function() {
@@ -3307,6 +3319,7 @@ function(t, e, i) {
             }
         }), T.fn.extend({
             queue: function(t, e) {
+                // Add functions to the queue of matched elements
                 var i = 2;
                 return "string" != typeof t && (e = t, t = "fx", i--), arguments.length < i ? T.queue(this[0], t) : void 0 === e ? this : this.each(function() {
                     var i = T.queue(this, t, e);
@@ -3345,6 +3358,18 @@ function(t, e, i) {
                 for (o in r = i.apply(t, n || []), e) t.style[o] = s[o];
                 return r
             };
+
+
+
+
+
+
+
+
+
+
+            
+
 
         function lt(t, e, i, n) {
             var r, o, s = 20,
