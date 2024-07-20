@@ -3327,14 +3327,17 @@ function(t, e, i) {
                 })
             },
             dequeue: function(t) {
+                  // Remove a function from the queue and execute it
                 return this.each(function() {
                     T.dequeue(this, t)
                 })
             },
             clearQueue: function(t) {
+                // Clear the queue of matched elements
                 return this.queue(t || "fx", [])
             },
             promise: function(t, e) {
+                // Return a promise that resolves when all functions in the queue are executed
                 var i, n = 1,
                     r = T.Deferred(),
                     o = this,
@@ -3350,9 +3353,11 @@ function(t, e, i) {
             rt = new RegExp("^(?:([+-])=|)(" + nt + ")([a-z%]*)$", "i"),
             ot = ["Top", "Right", "Bottom", "Left"],
             st = function(t, e) {
+                // Check if the element is hidden
                 return "none" === (t = e || t).style.display || "" === t.style.display && T.contains(t.ownerDocument, t) && "none" === T.css(t, "display")
             },
             at = function(t, e, i, n) {
+                   // Temporarily apply styles to an element, execute a function, and then revert the styles
                 var r, o, s = {};
                 for (o in e) s[o] = t.style[o], t.style[o] = e[o];
                 for (o in r = i.apply(t, n || []), e) t.style[o] = s[o];
