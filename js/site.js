@@ -3438,17 +3438,20 @@ function(t, e, i) {
             };
 
         function gt(t, e) {
+            // This function gets all elements by tag name or query selector within a given element.
             var i;
             return i = void 0 !== t.getElementsByTagName ? t.getElementsByTagName(e || "*") : void 0 !== t.querySelectorAll ? t.querySelectorAll(e || "*") : [], void 0 === e || e && A(t, e) ? T.merge([t], i) : i
         }
 
         function vt(t, e) {
+               // This function ensures that scripts within the given elements are marked for global evaluation.
             for (var i = 0, n = t.length; i < n; i++) Z.set(t[i], "globalEval", !e || Z.get(e[i], "globalEval"))
         }
         mt.optgroup = mt.option, mt.tbody = mt.tfoot = mt.colgroup = mt.caption = mt.thead, mt.th = mt.td;
         var _t, yt, bt = /<|&#?\w+;/;
 
         function xt(t, e, i, n, r) {
+            // This function creates and manipulates a document fragment, handling HTML strings and nodes.
             for (var o, s, a, l, u, c, h = e.createDocumentFragment(), f = [], d = 0, p = t.length; d < p; d++)
                 if ((o = t[d]) || 0 === o)
                     if ("object" === w(o)) T.merge(f, o.nodeType ? [o] : o);
@@ -3469,20 +3472,24 @@ function(t, e, i) {
             kt = /^([^.]*)(?:\.(.+)|)/;
 
         function Et() {
+             // This function returns true.
             return !0
         }
 
         function Pt() {
+            // This function returns false.
             return !1
         }
 
         function St() {
+             // This function returns the currently active element.
             try {
                 return s.activeElement
             } catch (t) {}
         }
 
         function Ot(t, e, i, n, r, o) {
+            // This function handles event delegation and binding.
             var s, a;
             if ("object" == typeof e) {
                 for (a in "string" != typeof i && (n = n || i, i = void 0), e) Ot(t, a, i, n, e[a], o);
@@ -3496,9 +3503,11 @@ function(t, e, i) {
                 T.event.add(this, e, r, n, i)
             })
         }
+
         T.event = {
             global: {},
             add: function(t, e, i, n, r) {
+                // This function adds an event listener to an element.
                 var o, s, a, l, u, c, h, f, d, p, m, g = Z.get(t);
                 if (g)
                     for (i.handler && (i = (o = i).handler, r = o.selector), r && T.find.matchesSelector(wt, r), i.guid || (i.guid = T.guid++), (l = g.events) || (l = g.events = {}), (s = g.handle) || (s = g.handle = function(e) {
@@ -3514,7 +3523,9 @@ function(t, e, i) {
                         namespace: p.join(".")
                     }, o), (f = l[d]) || ((f = l[d] = []).delegateCount = 0, h.setup && !1 !== h.setup.call(t, n, p, s) || t.addEventListener && t.addEventListener(d, s)), h.add && (h.add.call(t, c), c.handler.guid || (c.handler.guid = i.guid)), r ? f.splice(f.delegateCount++, 0, c) : f.push(c), T.event.global[d] = !0)
             },
+
             remove: function(t, e, i, n, r) {
+                // This function removes an event listener from an element.
                 var o, s, a, l, u, c, h, f, d, p, m, g = Z.hasData(t) && Z.get(t);
                 if (g && (l = g.events)) {
                     for (u = (e = (e || "").match(F) || [""]).length; u--;)
@@ -3527,6 +3538,7 @@ function(t, e, i) {
                 }
             },
             dispatch: function(t) {
+                // This function dispatches an event.
                 var e, i, n, r, o, s, a = T.event.fix(t),
                     l = new Array(arguments.length),
                     u = (Z.get(this, "events") || {})[a.type] || [],
@@ -3541,6 +3553,7 @@ function(t, e, i) {
                 }
             },
             handlers: function(t, e) {
+                // This function retrieves the handlers for the event.
                 var i, n, r, o, s, a = [],
                     l = e.delegateCount,
                     u = t.target;
@@ -3558,6 +3571,7 @@ function(t, e, i) {
                 }), a
             },
             addProp: function(t, e) {
+                // This function adds properties to the event object.
                 Object.defineProperty(T.Event.prototype, t, {
                     enumerable: !0,
                     configurable: !0,
@@ -3577,6 +3591,7 @@ function(t, e, i) {
                 })
             },
             fix: function(t) {
+                // This function normalizes the event object.
                 return t[T.expando] ? t : new T.Event(t)
             },
             special: {
@@ -3609,12 +3624,17 @@ function(t, e, i) {
                     }
                 }
             }
-        }, T.removeEvent = function(t, e, i) {
+        },
+         T.removeEvent = function(t, e, i) {
+            // This function removes an event listener from an element.
             t.removeEventListener && t.removeEventListener(e, i)
-        }, T.Event = function(t, e) {
+        }, 
+        T.Event = function(t, e) {
+             // This function creates a new Event object.
             if (!(this instanceof T.Event)) return new T.Event(t, e);
             t && t.type ? (this.originalEvent = t, this.type = t.type, this.isDefaultPrevented = t.defaultPrevented || void 0 === t.defaultPrevented && !1 === t.returnValue ? Et : Pt, this.target = t.target && 3 === t.target.nodeType ? t.target.parentNode : t.target, this.currentTarget = t.currentTarget, this.relatedTarget = t.relatedTarget) : this.type = t, e && T.extend(this, e), this.timeStamp = t && t.timeStamp || Date.now(), this[T.expando] = !0
-        }, T.Event.prototype = {
+        }, 
+        T.Event.prototype = {
             constructor: T.Event,
             isDefaultPrevented: Pt,
             isPropagationStopped: Pt,
@@ -3632,7 +3652,8 @@ function(t, e, i) {
                 var t = this.originalEvent;
                 this.isImmediatePropagationStopped = Et, t && !this.isSimulated && t.stopImmediatePropagation(), this.stopPropagation()
             }
-        }, T.each({
+        },
+         T.each({
             altKey: !0,
             bubbles: !0,
             cancelable: !0,
