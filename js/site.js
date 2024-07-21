@@ -3377,6 +3377,7 @@ function(t, e, i) {
 
 
         function lt(t, e, i, n) {
+             // This function adjusts the CSS property value of an element, handling units and conversions.
             var r, o, s = 20,
                 a = n ? function() {
                     return n.cur()
@@ -3395,6 +3396,7 @@ function(t, e, i) {
         var ut = {};
 
         function ct(t) {
+             // This function determines the default display value of an element.
             var e, i = t.ownerDocument,
                 n = t.nodeName,
                 r = ut[n];
@@ -3402,18 +3404,22 @@ function(t, e, i) {
         }
 
         function ht(t, e) {
+               // This function shows or hides elements based on the value of e.
             for (var i, n, r = [], o = 0, s = t.length; o < s; o++)(n = t[o]).style && (i = n.style.display, e ? ("none" === i && (r[o] = Z.get(n, "display") || null, r[o] || (n.style.display = "")), "" === n.style.display && st(n) && (r[o] = ct(n))) : "none" !== i && (r[o] = "none", Z.set(n, "display", i)));
             for (o = 0; o < s; o++) null != r[o] && (t[o].style.display = r[o]);
             return t
         }
         T.fn.extend({
+            // This function shows the matched elements.
             show: function() {
                 return ht(this, !0)
             },
             hide: function() {
+                 // This function hides the matched elements.
                 return ht(this)
             },
             toggle: function(t) {
+                 // This function toggles the visibility of matched elements.
                 return "boolean" == typeof t ? t ? this.show() : this.hide() : this.each(function() {
                     st(this) ? T(this).show() : T(this).hide()
                 })
@@ -3665,8 +3671,19 @@ function(t, e, i) {
             mouseleave: "mouseout",
             pointerenter: "pointerover",
             pointerleave: "pointerout"
-},
+  },
     
+
+
+
+
+
+
+
+
+
+
+
 
 function(t, e) {
             T.event.special[t] = {
