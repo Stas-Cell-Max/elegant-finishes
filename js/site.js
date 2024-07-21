@@ -3694,19 +3694,8 @@ function(t, e, i) {
             pointerleave: "pointerout"
   },
     
-
-
-
-
-
-
-
-
-
-
-
-
 function(t, e) {
+    // This function defines special event handling in jQuery for custom events.
             T.event.special[t] = {
                 delegateType: e,
                 bindType: e,
