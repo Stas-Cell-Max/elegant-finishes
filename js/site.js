@@ -3709,24 +3709,18 @@ function(t, e) {
         
 
 
+        // Extend jQuery prototype with event handling methods
 
-
-
-
-
-
-        
-
-
-
-        
         T.fn.extend({
+             // Attach an event handler function for one or more events to the selected elements
             on: function(t, e, i, n) {
                 return Ot(this, t, e, i, n)
             },
+             // Attach a handler to an event for the elements. The handler is executed at most once per element
             one: function(t, e, i, n) {
                 return Ot(this, t, e, i, n, 1)
             },
+             // Remove an event handler
             off: function(t, e, i) {
                 var n, r;
                 if (t && t.preventDefault && t.handleObj) return n = t.handleObj, T(t.delegateTarget).off(n.namespace ? n.origType + "." + n.namespace : n.origType, n.selector, n.handler), this;
@@ -3739,23 +3733,28 @@ function(t, e) {
                 })
             }
         });
+        // Regular expressions for HTML string manipulation
         var At = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([a-z][^\/\0>\x20\t\r\n\f]*)[^>]*)\/>/gi,
             Mt = /<script|<style|<link/i,
             Dt = /checked\s*(?:[^=]|=\s*.checked.)/i,
             Rt = /^\s*<!(?:\[CDATA\[|--)|(?:\]\]|--)>\s*$/g;
 
+            // Ensure the right context for table rows
         function Lt(t, e) {
             return A(t, "table") && A(11 !== e.nodeType ? e : e.firstChild, "tr") && T(t).children("tbody")[0] || t
         }
 
+        // Mark scripts as already evaluated
         function It(t) {
             return t.type = (null !== t.getAttribute("type")) + "/" + t.type, t
         }
 
+        // Unmark scripts as already evaluated
         function Nt(t) {
             return "true/" === (t.type || "").slice(0, 5) ? t.type = t.type.slice(5) : t.removeAttribute("type"), t
         }
-
+        
+        // Clone data and events from one element to another
         function jt(t, e) {
             var i, n, r, o, s, a, l, u;
             if (1 === e.nodeType) {
@@ -3765,7 +3764,8 @@ function(t, e) {
                 J.hasData(t) && (a = J.access(t), l = T.extend({}, a), J.set(e, l))
             }
         }
-
+        
+        // Execute a callback for every matched element
         function Ft(t, e, i, n) {
             e = u.apply([], e);
             var r, o, s, a, l, c, h = 0,
@@ -3784,11 +3784,14 @@ function(t, e) {
             }
             return t
         }
-
+        
+        // Remove elements from the DOM
         function Bt(t, e, i) {
             for (var n, r = e ? T.filter(e, t) : t, o = 0; null != (n = r[o]); o++) i || 1 !== n.nodeType || T.cleanData(gt(n)), n.parentNode && (i && T.contains(n.ownerDocument, n) && vt(gt(n, "script")), n.parentNode.removeChild(n));
             return t
         }
+
+        // Extend jQuery with DOM manipulation methods
         T.extend({
             htmlPrefilter: function(t) {
                 return t.replace(At, "<$1></$2>")
@@ -3923,6 +3926,15 @@ function(t, e) {
                     n = "1%" !== t.top, l = 12 === e(t.marginLeft), c.style.right = "60%", a = 36 === e(t.right), r = 36 === e(t.width), c.style.position = "absolute", o = 36 === c.offsetWidth || "absolute", wt.removeChild(u), c = null
                 }
             }
+
+
+
+
+
+
+
+
+            
 
             function e(t) {
                 return Math.round(parseFloat(t))
