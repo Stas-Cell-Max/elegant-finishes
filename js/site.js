@@ -3796,6 +3796,7 @@ function(t, e) {
             htmlPrefilter: function(t) {
                 return t.replace(At, "<$1></$2>")
             },
+            // Clone elements
             clone: function(t, e, i) {
                 var n, r, o, s, a, l, u, c = t.cloneNode(!0),
                     h = T.contains(t.ownerDocument, t);
@@ -3807,6 +3808,8 @@ function(t, e) {
                     else jt(t, c);
                 return (s = gt(c, "script")).length > 0 && vt(s, !h && gt(t, "script")), c
             },
+
+            // Clean up data associated with an element
             cleanData: function(t) {
                 for (var e, i, n, r = T.event.special, o = 0; void 0 !== (i = t[o]); o++)
                     if (G(i)) {
@@ -3818,7 +3821,10 @@ function(t, e) {
                         i[J.expando] && (i[J.expando] = void 0)
                     }
             }
-        }), T.fn.extend({
+        }),
+        
+        // Extend jQuery prototype with DOM manipulation methods
+        T.fn.extend({
             detach: function(t) {
                 return Bt(this, t, !0)
             },
@@ -3887,7 +3893,10 @@ function(t, e) {
                     T.inArray(this, t) < 0 && (T.cleanData(gt(this)), i && i.replaceChild(e, this))
                 }, t)
             }
-        }), T.each({
+        }), 
+        
+        // Add methods to manipulate the DOM
+        T.each({
             appendTo: "append",
             prependTo: "prepend",
             insertBefore: "before",
@@ -3899,18 +3908,22 @@ function(t, e) {
                 return this.pushStack(n)
             }
         });
+
+        // Regular expressions for CSS value manipulation
         var zt = new RegExp("^(" + nt + ")(?!px)[a-z%]+$", "i"),
             $t = function(t) {
                 var e = t.ownerDocument.defaultView;
                 return e && e.opener || (e = i), e.getComputedStyle(t)
             },
             Ht = new RegExp(ot.join("|"), "i");
-
+   
+            // Get computed CSS value
         function qt(t, e, i) {
             var n, r, o, s, a = t.style;
             return (i = i || $t(t)) && ("" !== (s = i.getPropertyValue(e) || i[e]) || T.contains(t.ownerDocument, t) || (s = T.style(t, e)), !v.pixelBoxStyles() && zt.test(s) && Ht.test(e) && (n = a.width, r = a.minWidth, o = a.maxWidth, a.minWidth = a.maxWidth = a.width = s, s = i.width, a.width = n, a.minWidth = r, a.maxWidth = o)), void 0 !== s ? s + "" : s
         }
 
+        // Ensure margin-left is computed correctly
         function Wt(t, e) {
             return {
                 get: function() {
@@ -3918,7 +3931,9 @@ function(t, e) {
                     delete this.get
                 }
             }
-        }! function() {
+        }
+        // Immediately invoked function to setup CSS property reliability checks
+        ! function() {
             function t() {
                 if (c) {
                     u.style.cssText = "position:absolute;left:-11111px;width:60px;margin-top:1px;padding:0;border:0", c.style.cssText = "position:relative;display:block;box-sizing:border-box;overflow:scroll;margin:auto;border:1px;padding:1px;width:60%;top:1%", wt.appendChild(u).appendChild(c);
