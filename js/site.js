@@ -3999,11 +3999,13 @@ function(t, e) {
             }(t) || t), e
         }
 
+        // Function to adjust CSS values
         function Zt(t, e, i) {
             var n = rt.exec(e);
             return n ? Math.max(0, n[2] - (i || 0)) + (n[3] || "px") : e
         }
 
+        // Function to calculate the width or height of an element
         function Jt(t, e, i, n, r, o) {
             var s = "width" === e ? 1 : 0,
                 a = 0,
@@ -4013,6 +4015,7 @@ function(t, e) {
             return !n && o >= 0 && (l += Math.max(0, Math.ceil(t["offset" + e[0].toUpperCase() + e.slice(1)] - o - l - a - .5))), l
         }
 
+        // Function to get the computed style of an element and adjust for box-sizing
         function te(t, e, i) {
             var n = $t(t),
                 r = qt(t, e, n),
@@ -4025,9 +4028,12 @@ function(t, e) {
             return s = s && (v.boxSizingReliable() || r === t.style[e]), ("auto" === r || !parseFloat(r) && "inline" === T.css(t, "display", !1, n)) && (r = t["offset" + e[0].toUpperCase() + e.slice(1)], s = !0), (r = parseFloat(r) || 0) + Jt(t, e, i || (o ? "border" : "content"), s, n, r) + "px"
         }
 
+        // Constructor function for a new CSS property hook
         function ee(t, e, i, n, r) {
             return new ee.prototype.init(t, e, i, n, r)
         }
+
+        // Extend jQuery with new CSS hooks and properties
         T.extend({
             cssHooks: {
                 opacity: {
@@ -4068,7 +4074,9 @@ function(t, e) {
                 var r, o, s, a = K(e);
                 return Yt.test(e) || (e = Qt(a)), (s = T.cssHooks[e] || T.cssHooks[a]) && "get" in s && (r = s.get(t, !0, i)), void 0 === r && (r = qt(t, e, n)), "normal" === r && e in Vt && (r = Vt[e]), "" === i || i ? (o = parseFloat(r), !0 === i || isFinite(o) ? o || 0 : r) : r
             }
-        }), T.each(["height", "width"], function(t, e) {
+        }),
+        // Extend jQuery with CSS hooks for height and width
+        T.each(["height", "width"], function(t, e) {
             T.cssHooks[e] = {
                 get: function(t, i, n) {
                     if (i) return !Xt.test(T.css(t, "display")) || t.getClientRects().length && t.getBoundingClientRect().width ? te(t, e, n) : at(t, Ut, function() {
@@ -4082,13 +4090,19 @@ function(t, e) {
                     return s && v.scrollboxSize() === o.position && (a -= Math.ceil(t["offset" + e[0].toUpperCase() + e.slice(1)] - parseFloat(o[e]) - Jt(t, e, "border", !1, o) - .5)), a && (r = rt.exec(i)) && "px" !== (r[3] || "px") && (t.style[e] = i, i = T.css(t, e)), Zt(0, i, a)
                 }
             }
-        }), T.cssHooks.marginLeft = Wt(v.reliableMarginLeft, function(t, e) {
+        }),
+
+        // Add a CSS hook for marginLeft
+         T.cssHooks.marginLeft = Wt(v.reliableMarginLeft, function(t, e) {
             if (e) return (parseFloat(qt(t, "marginLeft")) || t.getBoundingClientRect().left - at(t, {
                 marginLeft: 0
             }, function() {
                 return t.getBoundingClientRect().left
             })) + "px"
-        }), T.each({
+        }), 
+
+        // Add CSS hooks for margin, padding, and border properties
+        T.each({
             margin: "",
             padding: "",
             border: "Width"
