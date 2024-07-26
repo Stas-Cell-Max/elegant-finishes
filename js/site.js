@@ -3943,20 +3943,19 @@ function(t, e) {
             }
 
 
-
-
-
-
-
-
             
-
+         // Helper function to parse and round a floating-point number
             function e(t) {
                 return Math.round(parseFloat(t))
             }
             var n, r, o, a, l, u = s.createElement("div"),
                 c = s.createElement("div");
-            c.style && (c.style.backgroundClip = "content-box", c.cloneNode(!0).style.backgroundClip = "", v.clearCloneStyle = "content-box" === c.style.backgroundClip, T.extend(v, {
+
+                // Check if the browser supports setting the backgroundClip property on cloned elements
+            c.style && (c.style.backgroundClip = "content-box", c.cloneNode(!0).style.backgroundClip = "", v.clearCloneStyle = "content-box" === c.style.backgroundClip, 
+            
+            // Extend the v object with functions to check various CSS properties
+            T.extend(v, {
                 boxSizingReliable: function() {
                     return t(), r
                 },
@@ -3974,6 +3973,8 @@ function(t, e) {
                 }
             }))
         }();
+
+        // Regular expressions for matching CSS values and properties
         var Xt = /^(none|table(?!-c[ea]).+)/,
             Yt = /^--/,
             Ut = {
@@ -3988,6 +3989,7 @@ function(t, e) {
             Kt = ["Webkit", "Moz", "ms"],
             Gt = s.createElement("div").style;
 
+            // Function to get the correct vendor-prefixed CSS property
         function Qt(t) {
             var e = T.cssProps[t];
             return e || (e = T.cssProps[t] = function(t) {
