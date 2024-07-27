@@ -4338,7 +4338,9 @@ function(t, e) {
                 return T.fx.off ? n.duration = 0 : "number" != typeof n.duration && (n.duration in T.fx.speeds ? n.duration = T.fx.speeds[n.duration] : n.duration = T.fx.speeds._default), null != n.queue && !0 !== n.queue || (n.queue = "fx"), n.old = n.complete, n.complete = function() {
                     _(n.old) && n.old.call(this), n.queue && T.dequeue(this, n.queue)
                 }, n
-            }, T.fn.extend({
+            }, 
+            // Extend jQuery's prototype with animation methods
+            T.fn.extend({
                 fadeTo: function(t, e, i, n) {
                     return this.filter(st).css("opacity", 0).show().end().animate({
                         opacity: e
@@ -4371,23 +4373,7 @@ function(t, e) {
                     })
                 },
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+               // Ensure the queue is not false and set the default type to "fx" if not provided.
                 finish: function(t) {
                     return !1 !== t && (t = t || "fx"), this.each(function() {
                         var e, i = Z.get(this),
@@ -4400,12 +4386,18 @@ function(t, e) {
                         delete i.finish
                     })
                 }
-            }), T.each(["toggle", "show", "hide"], function(t, e) {
+            }),
+            
+            // Extend jQuery with custom animations for toggle, show, and hide.
+            T.each(["toggle", "show", "hide"], function(t, e) {
                 var i = T.fn[e];
                 T.fn[e] = function(t, n, r) {
                     return null == t || "boolean" == typeof t ? i.apply(this, arguments) : this.animate(le(e, !0), t, n, r)
                 }
-            }), T.each({
+            }),
+            
+            // Define custom animations for sliding and fading effects.
+            T.each({
                 slideDown: le("show"),
                 slideUp: le("hide"),
                 slideToggle: le("toggle"),
@@ -4418,26 +4410,46 @@ function(t, e) {
                 fadeToggle: {
                     opacity: "toggle"
                 }
-            }, function(t, e) {
+            }, 
+               // Attach the custom animations to jQuery's prototype.
+            function(t, e) {
                 T.fn[t] = function(t, i, n) {
                     return this.animate(e, t, i, n)
                 }
-            }), T.timers = [], T.fx.tick = function() {
+            }), 
+            
+            // Initialize the array of timers.
+            T.timers = [], T.fx.tick = function() {
                 var t, e = 0,
                     i = T.timers;
                 for (ie = Date.now(); e < i.length; e++)(t = i[e])() || i[e] !== t || i.splice(e--, 1);
                 i.length || T.fx.stop(), ie = void 0
-            }, T.fx.timer = function(t) {
+            },
+            // Add a timer to the list of timers and start the animation frame loop.
+            T.fx.timer = function(t) {
                 T.timers.push(t), T.fx.start()
-            }, T.fx.interval = 13, T.fx.start = function() {
+            },
+            // Set the interval for the animation frame loop to 13 milliseconds.
+            T.fx.interval = 13, 
+            
+            // Start the animation frame loop.
+            T.fx.start = function() {
                 ne || (ne = !0, se())
-            }, T.fx.stop = function() {
+            },
+            // Stop the animation frame loop.
+            T.fx.stop = function() {
                 ne = null
-            }, T.fx.speeds = {
+            },
+            
+            // Define default speeds for animations.
+            T.fx.speeds = {
                 slow: 600,
                 fast: 200,
                 _default: 400
-            }, T.fn.delay = function(t, e) {
+            },
+            
+            // Define a delay function to delay the execution of functions in the queue.
+            T.fn.delay = function(t, e) {
                 return t = T.fx && T.fx.speeds[t] || t, e = e || "fx", this.queue(e, function(e, n) {
                     var r = i.setTimeout(e, t);
                     n.stop = function() {
@@ -4445,6 +4457,24 @@ function(t, e) {
                     }
                 })
             },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+
             function() {
                 var t = s.createElement("input"),
                     e = s.createElement("select").appendChild(s.createElement("option"));
