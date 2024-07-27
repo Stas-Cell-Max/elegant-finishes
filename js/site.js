@@ -4183,7 +4183,10 @@ function(t, e) {
             set: function(t) {
                 t.elem.nodeType && t.elem.parentNode && (t.elem[t.prop] = t.now)
             }
-        }, T.easing = {
+        },
+        
+        // Define easing functions
+         T.easing = {
             linear: function(t) {
                 return t
             },
@@ -4191,20 +4194,26 @@ function(t, e) {
                 return .5 - Math.cos(t * Math.PI) / 2
             },
             _default: "swing"
-        }, T.fx = ee.prototype.init, T.fx.step = {};
+        }, 
+
+        // Define the main animation function
+        T.fx = ee.prototype.init, T.fx.step = {};
         var ie, ne, re = /^(?:toggle|show|hide)$/,
             oe = /queueHooks$/;
-
+      
+            // Function to tick the animation frame
         function se() {
             ne && (!1 === s.hidden && i.requestAnimationFrame ? i.requestAnimationFrame(se) : i.setTimeout(se, T.fx.interval), T.fx.tick())
         }
 
+         // Function to get the current timestamp
         function ae() {
             return i.setTimeout(function() {
                 ie = void 0
             }), ie = Date.now()
         }
 
+        // Function to create an object with CSS properties for animation
         function le(t, e) {
             var i, n = 0,
                 r = {
@@ -4214,6 +4223,7 @@ function(t, e) {
             return e && (r.opacity = r.width = t), r
         }
 
+        // Main animation function
         function ue(t, e, i) {
             for (var n, r = (ce.tweeners[e] || []).concat(ce.tweeners["*"]), o = 0, s = r.length; o < s; o++)
                 if (n = r[o].call(i, e, t)) return n
@@ -4255,9 +4265,9 @@ function(t, e) {
                     }
                 }),
                 c = u.props;
-            for (! function(t, e) {
+            for (! function(t, e) {   // Pre-filter properties before animation
                     var i, n, r, o, s;
-                    for (i in t)
+                    for (i in t)    // Apply prefilters
                         if (r = e[n = K(i)], o = t[i], Array.isArray(o) && (r = o[1], o = t[i] = o[0]), i !== n && (t[n] = o, delete t[i]), (s = T.cssHooks[n]) && "expand" in s)
                             for (i in o = s.expand(o), delete t[n], o) i in t || (t[i] = o[i], e[i] = r);
                         else e[n] = r
@@ -4269,6 +4279,8 @@ function(t, e) {
                 queue: u.opts.queue
             })), u
         }
+
+        // Define animation methods on jQuery's prototype
         T.Animation = T.extend(ce, {
                 tweeners: {
                     "*": [function(t, e) {
@@ -4314,7 +4326,10 @@ function(t, e) {
                 prefilter: function(t, e) {
                     e ? ce.prefilters.unshift(t) : ce.prefilters.push(t)
                 }
-            }), T.speed = function(t, e, i) {
+            }), 
+            
+            // Define speed settings for animations
+            T.speed = function(t, e, i) {
                 var n = t && "object" == typeof t ? T.extend({}, t) : {
                     complete: i || !i && e || _(t) && t,
                     duration: t,
