@@ -4122,16 +4122,21 @@ function(t, e) {
         
         
         
-        
+        // Function to expand shorthand CSS properties like margin, padding, etc.
         
         function(t, e) {
+             // Expand the shorthand property (e.g., "margin") into individual properties
             T.cssHooks[t + e] = {
                 expand: function(i) {
                     for (var n = 0, r = {}, o = "string" == typeof i ? i.split(" ") : [i]; n < 4; n++) r[t + ot[n] + e] = o[n] || o[n - 2] || o[0];
                     return r
                 }
-            }, "margin" !== t && (T.cssHooks[t + e].set = Zt)
-        }), T.fn.extend({
+            }, 
+            "margin" !== t && (T.cssHooks[t + e].set = Zt)
+        }),
+       
+          // Extend jQuery with a method to set or get CSS properties
+         T.fn.extend({
             css: function(t, e) {
                 return X(this, function(t, e, i) {
                     var n, r, o = {},
@@ -4143,7 +4148,9 @@ function(t, e) {
                     return void 0 !== i ? T.style(t, e, i) : T.css(t, e)
                 }, t, e, arguments.length > 1)
             }
-        }), T.Tween = ee, ee.prototype = {
+        }),
+        // Define the Tween constructor and its prototype methods
+         T.Tween = ee, ee.prototype = {
             constructor: ee,
             init: function(t, e, i, n, r, o) {
                 this.elem = t, this.prop = i, this.easing = r || T.easing._default, this.options = e, this.start = this.now = this.cur(), this.end = n, this.unit = o || (T.cssNumber[i] ? "" : "px")
@@ -4156,7 +4163,11 @@ function(t, e) {
                 var e, i = ee.propHooks[this.prop];
                 return this.options.duration ? this.pos = e = T.easing[this.easing](t, this.options.duration * t, 0, 1, this.options.duration) : this.pos = e = t, this.now = (this.end - this.start) * e + this.start, this.options.step && this.options.step.call(this.elem, this.now, this), i && i.set ? i.set(this) : ee.propHooks._default.set(this), this
             }
-        }, ee.prototype.init.prototype = ee.prototype, ee.propHooks = {
+        }, 
+        ee.prototype.init.prototype = ee.prototype, 
+        
+        // Define property hooks for getting and setting properties during animation
+        ee.propHooks = {
             _default: {
                 get: function(t) {
                     var e;
@@ -4166,7 +4177,9 @@ function(t, e) {
                     T.fx.step[t.prop] ? T.fx.step[t.prop](t) : 1 !== t.elem.nodeType || null == t.elem.style[T.cssProps[t.prop]] && !T.cssHooks[t.prop] ? t.elem[t.prop] = t.now : T.style(t.elem, t.prop, t.now + t.unit)
                 }
             }
-        }, ee.propHooks.scrollTop = ee.propHooks.scrollLeft = {
+        },
+       // Define property hooks for scrollTop and scrollLeft
+        ee.propHooks.scrollTop = ee.propHooks.scrollLeft = {
             set: function(t) {
                 t.elem.nodeType && t.elem.parentNode && (t.elem[t.prop] = t.now)
             }
@@ -4342,6 +4355,24 @@ function(t, e) {
                         !e && i || T.dequeue(this, t)
                     })
                 },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 finish: function(t) {
                     return !1 !== t && (t = t || "fx"), this.each(function() {
                         var e, i = Z.get(this),
