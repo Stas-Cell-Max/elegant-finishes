@@ -4473,28 +4473,34 @@ function(t, e) {
 
 
 
-            
 
+// Immediately invoked function expression to set up initial configurations.
             function() {
                 var t = s.createElement("input"),
                     e = s.createElement("select").appendChild(s.createElement("option"));
                 t.type = "checkbox", v.checkOn = "" !== t.value, v.optSelected = e.selected, (t = s.createElement("input")).value = "t", t.type = "radio", v.radioValue = "t" === t.value
             }();
         var he, fe = T.expr.attrHandle;
+        // Extend jQuery with methods for setting and removing attributes.
         T.fn.extend({
+            // Method to set attributes on elements.
             attr: function(t, e) {
                 return X(this, T.attr, t, e, arguments.length > 1)
             },
+            // Method to remove attributes from elements.
             removeAttr: function(t) {
                 return this.each(function() {
                     T.removeAttr(this, t)
                 })
             }
-        }), T.extend({
+        }), 
+        // Extend jQuery with core attribute handling methods.
+        T.extend({
             attr: function(t, e, i) {
                 var n, r, o = t.nodeType;
                 if (3 !== o && 8 !== o && 2 !== o) return void 0 === t.getAttribute ? T.prop(t, e, i) : (1 === o && T.isXMLDoc(t) || (r = T.attrHooks[e.toLowerCase()] || (T.expr.match.bool.test(e) ? he : void 0)), void 0 !== i ? null === i ? void T.removeAttr(t, e) : r && "set" in r && void 0 !== (n = r.set(t, i, e)) ? n : (t.setAttribute(e, i + ""), i) : r && "get" in r && null !== (n = r.get(t, e)) ? n : null == (n = T.find.attr(t, e)) ? void 0 : n)
             },
+         // Attribute hooks to provide custom behavior for specific attributes.
             attrHooks: {
                 type: {
                     set: function(t, e) {
@@ -4505,17 +4511,22 @@ function(t, e) {
                     }
                 }
             },
+            // Method to remove attributes from elements.
             removeAttr: function(t, e) {
                 var i, n = 0,
                     r = e && e.match(F);
                 if (r && 1 === t.nodeType)
                     for (; i = r[n++];) t.removeAttribute(i)
             }
-        }), he = {
+        }), 
+        // Custom hooks for boolean attributes.
+        he = {
             set: function(t, e, i) {
                 return !1 === e ? T.removeAttr(t, i) : t.setAttribute(i, i), i
             }
-        }, T.each(T.expr.match.bool.source.match(/\w+/g), function(t, e) {
+        },
+        // Custom attribute handling for boolean attributes.
+         T.each(T.expr.match.bool.source.match(/\w+/g), function(t, e) {
             var i = fe[e] || T.find.attr;
             fe[e] = function(t, e, n) {
                 var r, o, s = e.toLowerCase();
@@ -4796,6 +4807,22 @@ function(t, e) {
             Ne = {},
             je = "*/".concat("*"),
             Fe = s.createElement("a");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         function Be(t) {
             return function(e, i) {
