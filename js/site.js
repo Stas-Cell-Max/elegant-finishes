@@ -4570,7 +4570,10 @@ function(t, e) {
                 var n, r, o = t.nodeType;
                 if (3 !== o && 8 !== o && 2 !== o) return 1 === o && T.isXMLDoc(t) || (e = T.propFix[e] || e, r = T.propHooks[e]), void 0 !== i ? r && "set" in r && void 0 !== (n = r.set(t, i, e)) ? n : t[e] = i : r && "get" in r && null !== (n = r.get(t, e)) ? n : t[e]
             },
+
+            // Property hooks to provide custom behavior for specific properties.
             propHooks: {
+             // Custom hook for the 'tabIndex' property.
                 tabIndex: {
                     get: function(t) {
                         var e = T.find.attr(t, "tabindex");
@@ -4578,11 +4581,14 @@ function(t, e) {
                     }
                 }
             },
+             // Property fix to normalize property names.
             propFix: {
                 for: "htmlFor",
                 class: "className"
             }
-        }), v.optSelected || (T.propHooks.selected = {
+        }), 
+        // Handling the 'selected' property for options.
+        v.optSelected || (T.propHooks.selected = {
             get: function(t) {
                 var e = t.parentNode;
                 return e && e.parentNode && e.parentNode.selectedIndex, null
@@ -4591,9 +4597,16 @@ function(t, e) {
                 var e = t.parentNode;
                 e && (e.selectedIndex, e.parentNode && e.parentNode.selectedIndex)
             }
-        }), T.each(["tabIndex", "readOnly", "maxLength", "cellSpacing", "cellPadding", "rowSpan", "colSpan", "useMap", "frameBorder", "contentEditable"], function() {
+        }), 
+
+        // Normalize certain property names.
+        T.each(["tabIndex", "readOnly", "maxLength", "cellSpacing", "cellPadding", "rowSpan", "colSpan", "useMap", "frameBorder", "contentEditable"],
+             function() {
             T.propFix[this.toLowerCase()] = this
-        }), T.fn.extend({
+        }),
+         // Extend jQuery with methods for handling classes.
+        T.fn.extend({
+        // Method to add classes to elements.
             addClass: function(t) {
                 var e, i, n, r, o, s, a, l = 0;
                 if (_(t)) return this.each(function(e) {
@@ -4606,6 +4619,7 @@ function(t, e) {
                             r !== (a = me(n)) && i.setAttribute("class", a)
                         } return this
             },
+            // Method to remove classes from elements.
             removeClass: function(t) {
                 var e, i, n, r, o, s, a, l = 0;
                 if (_(t)) return this.each(function(e) {
@@ -4620,6 +4634,7 @@ function(t, e) {
                             r !== (a = me(n)) && i.setAttribute("class", a)
                         } return this
             },
+            // Method to toggle classes on elements.
             toggleClass: function(t, e) {
                 var i = typeof t,
                     n = "string" === i || Array.isArray(t);
@@ -4632,6 +4647,7 @@ function(t, e) {
                     else void 0 !== t && "boolean" !== i || ((e = ge(this)) && Z.set(this, "__className__", e), this.setAttribute && this.setAttribute("class", e || !1 === t ? "" : Z.get(this, "__className__") || ""))
                 })
             },
+            // Method to check if elements have a specific class.
             hasClass: function(t) {
                 var e, i, n = 0;
                 for (e = " " + t + " "; i = this[n++];)
@@ -4640,7 +4656,10 @@ function(t, e) {
             }
         });
         var _e = /\r/g;
-        T.fn.extend({
+
+            // Extend jQuery with methods for handling values.
+          T.fn.extend({
+          // Method to get or set the value of elements.
             val: function(t) {
                 var e, i, n, r = this[0];
                 return arguments.length ? (n = _(t), this.each(function(i) {
