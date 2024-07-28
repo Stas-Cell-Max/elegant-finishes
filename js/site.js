@@ -4669,15 +4669,25 @@ function(t, e) {
                     })), (e = T.valHooks[this.type] || T.valHooks[this.nodeName.toLowerCase()]) && "set" in e && void 0 !== e.set(this, r, "value") || (this.value = r))
                 })) : r ? (e = T.valHooks[r.type] || T.valHooks[r.nodeName.toLowerCase()]) && "get" in e && void 0 !== (i = e.get(r, "value")) ? i : "string" == typeof(i = r.value) ? i.replace(_e, "") : null == i ? "" : i : void 0
             }
-        }), T.extend({
+        }), 
+
+        // Extend jQuery with core value handling methods.
+        T.extend({
+            
             valHooks: {
+                // Hook to get the value of an option element.
                 option: {
                     get: function(t) {
+
                         var e = T.find.attr(t, "value");
                         return null != e ? e : me(T.text(t))
                     }
                 },
+
+                  // Hook to get or set the value of a select element.
                 select: {
+
+
                     get: function(t) {
                         var e, i, n, r = t.options,
                             o = t.selectedIndex,
@@ -4696,7 +4706,9 @@ function(t, e) {
                     }
                 }
             }
-        }), T.each(["radio", "checkbox"], function() {
+        }),
+        // Custom hooks for radio and checkbox inputs.
+        T.each(["radio", "checkbox"], function() {
             T.valHooks[this] = {
                 set: function(t, e) {
                     if (Array.isArray(e)) return t.checked = T.inArray(T(t).val(), e) > -1
@@ -4704,12 +4716,17 @@ function(t, e) {
             }, v.checkOn || (T.valHooks[this].get = function(t) {
                 return null === t.getAttribute("value") ? "on" : t.value
             })
-        }), v.focusin = "onfocusin" in i;
+        }),
+        // Focus handling for focusin and focusout events.
+        v.focusin = "onfocusin" in i;
         var ye = /^(?:focusinfocus|focusoutblur)$/,
             be = function(t) {
                 t.stopPropagation()
             };
+
+            // Extend jQuery with methods for triggering events.
         T.extend(T.event, {
+            // Method to trigger an event.
             trigger: function(t, e, n, r) {
                 var o, a, l, u, c, h, f, d, m = [n || s],
                     g = p.call(t, "type") ? t.type : t,
@@ -4724,6 +4741,8 @@ function(t, e) {
                     return t.type = g, r || t.isDefaultPrevented() || f._default && !1 !== f._default.apply(m.pop(), e) || !G(n) || c && _(n[g]) && !y(n) && ((l = n[c]) && (n[c] = null), T.event.triggered = g, t.isPropagationStopped() && d.addEventListener(g, be), n[g](), t.isPropagationStopped() && d.removeEventListener(g, be), T.event.triggered = void 0, l && (n[c] = l)), t.result
                 }
             },
+
+             // Method to simulate an event.
             simulate: function(t, e, i) {
                 var n = T.extend(new T.Event, i, {
                     type: t,
@@ -4731,17 +4750,23 @@ function(t, e) {
                 });
                 T.event.trigger(n, null, e)
             }
-        }), T.fn.extend({
+        }),
+        // Extend jQuery with methods for triggering events on elements.
+        T.fn.extend({
+            // Method to trigger an event.
             trigger: function(t, e) {
                 return this.each(function() {
                     T.event.trigger(t, e, this)
                 })
             },
+            // Method to trigger an event handler.
             triggerHandler: function(t, e) {
                 var i = this[0];
                 if (i) return T.event.trigger(t, e, i, !0)
             }
-        }), v.focusin || T.each({
+        }),
+        // Special handling for focus and blur events.
+        v.focusin || T.each({
             focus: "focusin",
             blur: "focusout"
         }, function(t, e) {
@@ -4764,6 +4789,8 @@ function(t, e) {
         var xe = i.location,
             we = Date.now(),
             Te = /\?/;
+
+            // Utility function to parse XML strings.
         T.parseXML = function(t) {
             var e;
             if (!t || "string" != typeof t) return null;
@@ -4779,6 +4806,7 @@ function(t, e) {
             Ee = /^(?:submit|button|image|reset|file)$/i,
             Pe = /^(?:input|select|textarea|keygen)/i;
 
+        // Serialize and param handling for form elements.    
         function Se(t, e, i, n) {
             var r;
             if (Array.isArray(e)) T.each(e, function(e, r) {
@@ -4788,6 +4816,7 @@ function(t, e) {
             else
                 for (r in e) Se(t + "[" + r + "]", e[r], i, n)
         }
+       // Method to serialize an array of form elements or a set of key/value pairs into a query string.
         T.param = function(t, e) {
             var i, n = [],
                 r = function(t, e) {
