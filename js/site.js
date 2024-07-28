@@ -4535,28 +4535,37 @@ function(t, e) {
         });
         var de = /^(?:input|select|textarea|button)$/i,
             pe = /^(?:a|area)$/i;
-
+     
+            // Utility function to join an array or string into a class string.
         function me(t) {
             return (t.match(F) || []).join(" ")
         }
-
+          // Utility function to get the class attribute of an element.
         function ge(t) {
             return t.getAttribute && t.getAttribute("class") || ""
         }
-
+         // Utility function to normalize class names into an array.
         function ve(t) {
             return Array.isArray(t) ? t : "string" == typeof t && t.match(F) || []
         }
+
+             // Extend jQuery with methods for handling properties.
         T.fn.extend({
+             // Method to set properties on elements.
             prop: function(t, e) {
                 return X(this, T.prop, t, e, arguments.length > 1)
             },
+             // Method to remove properties from elements.
             removeProp: function(t) {
                 return this.each(function() {
                     delete this[T.propFix[t] || t]
                 })
             }
-        }), T.extend({
+        }), 
+        
+         // Extend jQuery with core property handling methods.
+         T.extend({
+            // Method to handle setting and getting properties.
             prop: function(t, e, i) {
                 var n, r, o = t.nodeType;
                 if (3 !== o && 8 !== o && 2 !== o) return 1 === o && T.isXMLDoc(t) || (e = T.propFix[e] || e, r = T.propHooks[e]), void 0 !== i ? r && "set" in r && void 0 !== (n = r.set(t, i, e)) ? n : t[e] = i : r && "get" in r && null !== (n = r.get(t, e)) ? n : t[e]
