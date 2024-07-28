@@ -4829,11 +4829,16 @@ function(t, e) {
             else
                 for (i in t) Se(i, t[i], e, r);
             return n.join("&")
-        }, T.fn.extend({
+        }, 
+        // Extend jQuery with methods to serialize form elements.
+        T.fn.extend({
+             // Method to serialize a form into a query string.
             serialize: function() {
+                // Method to serialize a form into an array of objects.
                 return T.param(this.serializeArray())
             },
             serializeArray: function() {
+                // Method to serialize a form into an array of objects.
                 return this.map(function() {
                     var t = T.prop(this, "elements");
                     return t ? T.makeArray(t) : this
