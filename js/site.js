@@ -4870,22 +4870,7 @@ function(t, e) {
             je = "*/".concat("*"),
             Fe = s.createElement("a");
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        // Function to create an add method for ajax prefilters or transports
         function Be(t) {
             return function(e, i) {
                 "string" != typeof e && (i = e, e = "*");
@@ -4896,10 +4881,12 @@ function(t, e) {
             }
         }
 
+        // Function to inspect dataTypes and find a suitable prefilter or transport
         function ze(t, e, i, n) {
             var r = {},
                 o = t === Ne;
 
+       // Helper function to iterate through dataTypes
             function s(a) {
                 var l;
                 return r[a] = !0, T.each(t[a] || [], function(t, a) {
@@ -4910,11 +4897,14 @@ function(t, e) {
             return s(e.dataTypes[0]) || !r["*"] && s("*")
         }
 
+         // Function to merge settings into a target object
         function $e(t, e) {
             var i, n, r = T.ajaxSettings.flatOptions || {};
             for (i in e) void 0 !== e[i] && ((r[i] ? t : n || (n = {}))[i] = e[i]);
             return n && T.extend(!0, t, n), t
         }
+
+        // Initialize the anchor element with the current location
         Fe.href = xe.href, T.extend({
             active: 0,
             lastModified: {},
@@ -4955,11 +4945,15 @@ function(t, e) {
                     context: !0
                 }
             },
+            // Method to setup global ajax settings
             ajaxSetup: function(t, e) {
                 return e ? $e($e(t, T.ajaxSettings), e) : $e(T.ajaxSettings, t)
             },
+                 // Method to register prefilters
             ajaxPrefilter: Be(Ie),
+               // Method to register transports
             ajaxTransport: Be(Ne),
+                // Main ajax method
             ajax: function(t, e) {
                 "object" == typeof t && (e = t, t = void 0), e = e || {};
                 var n, r, o, a, l, u, c, h, f, d, p = T.ajaxSetup({}, e),
@@ -5004,6 +4998,8 @@ function(t, e) {
                             return n && n.abort(e), k(0, e), this
                         }
                     };
+
+                    // If the promise is resolved
                 if (v.promise(C), p.url = ((t || p.url || xe.href) + "").replace(Le, xe.protocol + "//"), p.type = e.method || e.type || p.method || p.type, p.dataTypes = (p.dataType || "*").toLowerCase().match(F) || [""], null == p.crossDomain) {
                     u = s.createElement("a");
                     try {
