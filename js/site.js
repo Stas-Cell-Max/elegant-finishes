@@ -5023,25 +5023,12 @@ function(t, e) {
                         k(-1, t)
                     }
                 } else k(-1, "No Transport");
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                 
+             // Handle the completion of an AJAX request
                 function k(t, e, s, a) {
                     var u, f, d, b, x, w = e;
                     c || (c = !0, l && i.clearTimeout(l), n = void 0, o = a || "", C.readyState = t > 0 ? 4 : 0, u = t >= 200 && t < 300 || 304 === t, s && (b = function(t, e, i) {
+                       // Parse the response based on content type
                         for (var n, r, o, s, a = t.contents, l = t.dataTypes;
                             "*" === l[0];) l.shift(), void 0 === n && (n = t.mimeType || e.getResponseHeader("Content-Type"));
                         if (n)
@@ -5062,6 +5049,7 @@ function(t, e) {
                         }
                         if (o) return o !== l[0] && l.unshift(o), i[o]
                     }(p, C, s)), b = function(t, e, i, n) {
+                       // Convert the response to the requested format
                         var r, o, s, a, l, u = {},
                             c = t.dataTypes.slice();
                         if (c[1])
@@ -5094,13 +5082,18 @@ function(t, e) {
                 }
                 return C
             },
+
+            // Handle GET request for JSON
             getJSON: function(t, e, i) {
                 return T.get(t, e, i, "json")
             },
+            // Handle GET request for script
             getScript: function(t, e) {
                 return T.get(t, void 0, e, "script")
             }
-        }), T.each(["get", "post"], function(t, e) {
+        }),
+            // Handle GET and POST requests
+        T.each(["get", "post"], function(t, e) {
             T[e] = function(t, i, n, r) {
                 return _(i) && (r = r || n, n = i, i = void 0), T.ajax(T.extend({
                     url: t,
@@ -5110,7 +5103,9 @@ function(t, e) {
                     success: n
                 }, T.isPlainObject(t) && t))
             }
-        }), T._evalUrl = function(t) {
+        }),
+        // Evaluate script in the global context
+         T._evalUrl = function(t) {
             return T.ajax({
                 url: t,
                 type: "GET",
@@ -5120,7 +5115,9 @@ function(t, e) {
                 global: !1,
                 throws: !0
             })
-        }, T.fn.extend({
+        }, 
+        // Methods for wrapping elements
+        T.fn.extend({
             wrapAll: function(t) {
                 var e;
                 return this[0] && (_(t) && (t = t.call(this[0])), e = T(t, this[0].ownerDocument).eq(0).clone(!0), this[0].parentNode && e.insertBefore(this[0]), e.map(function() {
@@ -5148,11 +5145,16 @@ function(t, e) {
                     T(this).replaceWith(this.childNodes)
                 }), this
             }
-        }), T.expr.pseudos.hidden = function(t) {
+        }),
+        // Pseudo-selectors for visibility
+         T.expr.pseudos.hidden = function(t) {
             return !T.expr.pseudos.visible(t)
-        }, T.expr.pseudos.visible = function(t) {
+        },
+         T.expr.pseudos.visible = function(t) {
             return !!(t.offsetWidth || t.offsetHeight || t.getClientRects().length)
-        }, T.ajaxSettings.xhr = function() {
+        }, 
+        // XHR settings and transport
+        T.ajaxSettings.xhr = function() {
             try {
                 return new i.XMLHttpRequest
             } catch (t) {}
@@ -5193,9 +5195,12 @@ function(t, e) {
                     e && e()
                 }
             }
-        }), T.ajaxPrefilter(function(t) {
+        }),
+        // Prefilter and transport for scripts
+         T.ajaxPrefilter(function(t) {
             t.crossDomain && (t.contents.script = !1)
-        }), T.ajaxSetup({
+        }),
+         T.ajaxSetup({
             accepts: {
                 script: "text/javascript, application/javascript, application/ecmascript, application/x-ecmascript"
             },
@@ -5207,9 +5212,11 @@ function(t, e) {
                     return T.globalEval(t), t
                 }
             }
-        }), T.ajaxPrefilter("script", function(t) {
+        }),
+         T.ajaxPrefilter("script", function(t) {
             void 0 === t.cache && (t.cache = !1), t.crossDomain && (t.type = "GET")
-        }), T.ajaxTransport("script", function(t) {
+        }),
+         T.ajaxTransport("script", function(t) {
             var e, i;
             if (t.crossDomain) return {
                 send: function(n, r) {
@@ -5225,6 +5232,7 @@ function(t, e) {
                 }
             }
         });
+        // JSONP setup and transport
         var We, Xe = [],
             Ye = /(=)\?(?=&|$)|\?\?/;
         T.ajaxSetup({
@@ -5233,7 +5241,8 @@ function(t, e) {
                 var t = Xe.pop() || T.expando + "_" + we++;
                 return this[t] = !0, t
             }
-        }), T.ajaxPrefilter("json jsonp", function(t, e, n) {
+        }), 
+        T.ajaxPrefilter("json jsonp", function(t, e, n) {
             var r, o, s, a = !1 !== t.jsonp && (Ye.test(t.url) ? "url" : "string" == typeof t.data && 0 === (t.contentType || "").indexOf("application/x-www-form-urlencoded") && Ye.test(t.data) && "data");
             if (a || "jsonp" === t.dataTypes[0]) return r = t.jsonpCallback = _(t.jsonpCallback) ? t.jsonpCallback() : t.jsonpCallback, a ? t[a] = t[a].replace(Ye, "$1" + r) : !1 !== t.jsonp && (t.url += (Te.test(t.url) ? "&" : "?") + t.jsonp + "=" + r), t.converters["script json"] = function() {
                 return s || T.error(r + " was not called"), s[0]
@@ -5242,10 +5251,16 @@ function(t, e) {
             }, n.always(function() {
                 void 0 === o ? T(i).removeProp(r) : i[r] = o, t[r] && (t.jsonpCallback = e.jsonpCallback, Xe.push(r)), s && _(o) && o(s[0]), s = o = void 0
             }), "script"
-        }), v.createHTMLDocument = ((We = s.implementation.createHTMLDocument("").body).innerHTML = "<form></form><form></form>", 2 === We.childNodes.length), T.parseHTML = function(t, e, i) {
+        }),
+        // Create HTML document if needed
+        v.createHTMLDocument = ((We = s.implementation.createHTMLDocument("").body).innerHTML = "<form></form><form></form>", 2 === We.childNodes.length),
+        // Parse HTML string
+        T.parseHTML = function(t, e, i) {
             return "string" != typeof t ? [] : ("boolean" == typeof e && (i = e, e = !1), e || (v.createHTMLDocument ? ((n = (e = s.implementation.createHTMLDocument("")).createElement("base")).href = s.location.href, e.head.appendChild(n)) : e = s), o = !i && [], (r = M.exec(t)) ? [e.createElement(r[1])] : (r = xt([t], e, o), o && o.length && T(o).remove(), T.merge([], r.childNodes)));
             var n, r, o
-        }, T.fn.load = function(t, e, i) {
+        },
+        // Load content via AJAX
+         T.fn.load = function(t, e, i) {
             var n, r, o, s = this,
                 a = t.indexOf(" ");
             return a > -1 && (n = me(t.slice(a)), t = t.slice(0, a)), _(e) ? (i = e, e = void 0) : e && "object" == typeof e && (r = "POST"), s.length > 0 && T.ajax({
@@ -5260,15 +5275,21 @@ function(t, e) {
                     i.apply(this, o || [t.responseText, e, t])
                 })
             }), this
-        }, T.each(["ajaxStart", "ajaxStop", "ajaxComplete", "ajaxError", "ajaxSuccess", "ajaxSend"], function(t, e) {
+        },
+        // Bind and trigger global AJAX events 
+        T.each(["ajaxStart", "ajaxStop", "ajaxComplete", "ajaxError", "ajaxSuccess", "ajaxSend"], function(t, e) {
             T.fn[e] = function(t) {
                 return this.on(e, t)
             }
-        }), T.expr.pseudos.animated = function(t) {
+        }),
+        // Pseudo-selector for animated elements
+         T.expr.pseudos.animated = function(t) {
             return T.grep(T.timers, function(e) {
                 return t === e.elem
             }).length
-        }, T.offset = {
+        },
+        // Offset handling
+         T.offset = {
             setOffset: function(t, e, i) {
                 var n, r, o, s, a, l, u = T.css(t, "position"),
                     c = T(t),
@@ -5307,6 +5328,20 @@ function(t, e) {
                     }
                 }
             },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             offsetParent: function() {
                 return this.map(function() {
                     for (var t = this.offsetParent; t && "static" === T.css(t, "position");) t = t.offsetParent;
