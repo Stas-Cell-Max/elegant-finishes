@@ -5342,13 +5342,24 @@ function(t, e) {
 
 
 
+
+
+
+
+
+
+          // jQuery extension to get the offset parent of elements
             offsetParent: function() {
                 return this.map(function() {
+                      // Loop through offset parents until a non-static element is found
                     for (var t = this.offsetParent; t && "static" === T.css(t, "position");) t = t.offsetParent;
+                    // Return the offset parent or the document's body if none found
                     return t || wt
                 })
             }
-        }), T.each({
+        }),
+        // jQuery methods to get or set scroll positions
+        T.each({
             scrollLeft: "pageXOffset",
             scrollTop: "pageYOffset"
         }, function(t, e) {
@@ -5356,15 +5367,23 @@ function(t, e) {
             T.fn[t] = function(n) {
                 return X(this, function(t, n, r) {
                     var o;
+                    // Check if the element is a window
                     if (y(t) ? o = t : 9 === t.nodeType && (o = t.defaultView), void 0 === r) return o ? o[e] : t[n];
+                    // Set the scroll position
                     o ? o.scrollTo(i ? o.pageXOffset : r, i ? r : o.pageYOffset) : t[n] = r
                 }, t, n, arguments.length)
             }
-        }), T.each(["top", "left"], function(t, e) {
+        }), 
+        // CSS hooks for top and left properties
+        T.each(["top", "left"], function(t, e) {
             T.cssHooks[e] = Wt(v.pixelPosition, function(t, i) {
-                if (i) return i = qt(t, e), zt.test(i) ? T(t).position()[e] + "px" : i
+                if (i) 
+                    // Calculate the correct position
+                    return i = qt(t, e), zt.test(i) ? T(t).position()[e] + "px" : i
             })
-        }), T.each({
+        }),
+        // jQuery methods to get or set dimensions (height and width)
+        T.each({
             Height: "height",
             Width: "width"
         }, function(t, e) {
@@ -5378,19 +5397,27 @@ function(t, e) {
                         a = i || (!0 === r || !0 === o ? "margin" : "border");
                     return X(this, function(e, i, r) {
                         var o;
+                        // Calculate dimension based on the type of the element
                         return y(e) ? 0 === n.indexOf("outer") ? e["inner" + t] : e.document.documentElement["client" + t] : 9 === e.nodeType ? (o = e.documentElement, Math.max(e.body["scroll" + t], o["scroll" + t], e.body["offset" + t], o["offset" + t], o["client" + t])) : void 0 === r ? T.css(e, i, a) : T.style(e, i, r, a)
                     }, e, s ? r : void 0, s)
                 }
             })
-        }), T.each("blur focus focusin focusout resize scroll click dblclick mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave change select submit keydown keypress keyup contextmenu".split(" "), function(t, e) {
+        }), 
+        // Adding event handlers to jQuery
+        T.each("blur focus focusin focusout resize scroll click dblclick mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave change select submit keydown keypress keyup contextmenu".split(" "), function(t, e) {
             T.fn[e] = function(t, i) {
                 return arguments.length > 0 ? this.on(e, null, t, i) : this.trigger(e)
             }
-        }), T.fn.extend({
+        }),
+        // jQuery hover method
+        T.fn.extend({
             hover: function(t, e) {
                 return this.mouseenter(t).mouseleave(e || t)
             }
-        }), T.fn.extend({
+        }),
+        
+        // jQuery bind, unbind, delegate, and undelegate methods
+        T.fn.extend({
             bind: function(t, e, i) {
                 return this.on(t, null, e, i)
             },
@@ -5403,7 +5430,9 @@ function(t, e) {
             undelegate: function(t, e, i) {
                 return 1 === arguments.length ? this.off(t, "**") : this.off(e, t || "**", i)
             }
-        }), T.proxy = function(t, e) {
+        }),
+        // jQuery proxy method to change the context of a function
+        T.proxy = function(t, e) {
             var i, n, r;
             if ("string" == typeof e && (i = t[e], e = t, t = i), _(t)) return n = l.call(arguments, 2), (r = function() {
                 return t.apply(e || this, n.concat(l.call(arguments)))
