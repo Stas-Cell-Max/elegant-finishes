@@ -5655,60 +5655,93 @@ function(t, e, i) {
         getTransform(t) {
             return "vertical" === this.vars.direction ? `translate3d(0,${t}px,0)` : `translate3d(${t}px,0,0)`
         }
+
+        // Enable scrolling
         on(t = !0) {
             this.isRAFCanceled && (this.isRAFCanceled = !1);
             const e = this.dom.listener === document.body ? window : this.dom.listener;
             this.vars.native ? w.a.on(e, "scroll", this.debounce) : this.vs && this.vs.on(this.calc), t && this.requestAnimationFrame()
         }
+
+        // Disable scrolling
         off(t = !0) {
             const e = this.dom.listener === document.body ? window : this.dom.listener;
             this.vars.native ? w.a.off(e, "scroll", this.debounce) : this.vs && this.vs.off(this.calc), t && this.cancelAnimationFrame()
         }
+
+        // Request animation frame for smoothness
         requestAnimationFrame() {
             this.rAF = requestAnimationFrame(this.run)
         }
+
+         // Cancel animation frame
         cancelAnimationFrame() {
             this.isRAFCanceled = !0, cancelAnimationFrame(this.rAF)
         }
+
+           // Add scroll events
         addEvents() {
             this.on(), w.a.on(window, "resize", this.resize)
         }
+
+        // Remove scroll events
         removeEvents() {
+           
             this.off(), w.a.off(window, "resize", this.resize)
         }
+
+           // Add custom scrollbar
         addFakeScrollBar() {
             this.dom.listener.appendChild(this.dom.scrollbar.el), this.dom.scrollbar.el.appendChild(this.dom.scrollbar.drag.el), w.a.on(this.dom.scrollbar.el, "click", this.calcScroll), w.a.on(this.dom.scrollbar.el, "mousedown", this.mouseDown), w.a.on(document, "mousemove", this.mouseMove), w.a.on(document, "mouseup", this.mouseUp)
         }
+
+        // Remove custom scrollbar
         removeFakeScrollBar() {
             w.a.off(this.dom.scrollbar.el, "click", this.calcScroll), w.a.off(this.dom.scrollbar.el, "mousedown", this.mouseDown), w.a.off(document, "mousemove", this.mouseMove), w.a.off(document, "mouseup", this.mouseUp), this.dom.listener.removeChild(this.dom.scrollbar.el)
         }
+
+         // Handle mouse down for dragging
         mouseDown(t) {
             t.preventDefault(), 1 == t.which && (this.dom.scrollbar.state.clicked = !0)
         }
+
+         // Handle mouse up for dragging
         mouseUp(t) {
             this.dom.scrollbar.state.clicked = !1, p.a.remove(this.dom.listener, "is-dragging")
         }
+
+         // Handle mouse move for dragging
         mouseMove(t) {
             this.dom.scrollbar.state.clicked && this.calcScroll(t)
         }
+
+        // Add fake scroll height for virtual scroll
         addFakeScrollHeight() {
             this.dom.scroll = g()({
                 selector: "div",
                 styles: "vs-scroll-view"
             }), this.dom.listener.appendChild(this.dom.scroll)
         }
+
+        // Remove fake scroll height
         removeFakeScrollHeight() {
             this.dom.listener.removeChild(this.dom.scroll)
         }
+
+        // Calculate scroll position based on click
         calcScroll(t) {
             const e = "vertical" == this.vars.direction ? t.clientY : t.clientX,
                 i = "vertical" == this.vars.direction ? this.vars.height : this.vars.width,
                 n = e * (this.vars.bounding / i);
             p.a.add(this.dom.listener, "is-dragging"), this.vars.target = n, this.clampTarget(), this.dom.scrollbar && (this.dom.scrollbar.drag.delta = this.vars.target)
         }
+
+         // Scroll to a specific position
         scrollTo(t) {
             this.vars.native ? "vertical" == this.vars.direction ? window.scrollTo(0, t) : window.scrollTo(t, 0) : (this.vars.target = t, this.clampTarget())
         }
+
+        // Handle resize events
         resize() {
             const t = "vertical" === this.vars.direction ? "height" : "width";
             if (this.vars.height = window.innerHeight, this.vars.width = window.innerWidth, !this.extends) {
@@ -5717,14 +5750,22 @@ function(t, e, i) {
             }
             this.vars.native || this.options.noscrollbar ? this.vars.native && (this.dom.scroll.style[t] = `${this.vars.bounding}px`) : (this.dom.scrollbar.drag.height = this.vars.height * (this.vars.height / (this.vars.bounding + this.vars.height)), this.dom.scrollbar.drag.el.style[t] = `${this.dom.scrollbar.drag.height}px`), !this.vars.native && this.clampTarget()
         }
+
+        // Clamp the scroll target to boundaries
         clampTarget() {
             this.vars.target = Math.round(Math.max(0, Math.min(this.vars.target, this.vars.bounding)))
         }
+
+        // Destroy the smooth scroll
         destroy() {
             this.vars.native ? (p.a.remove(this.dom.listener, "is-native-scroll"), this.removeFakeScrollHeight()) : (p.a.remove(this.dom.listener, "is-virtual-scroll"), !this.options.noscrollbar && this.removeFakeScrollBar()), "vertical" === this.vars.direction ? p.a.remove(this.dom.listener, "y-scroll") : p.a.remove(this.dom.listener, "x-scroll"), this.vars.current = 0, this.vs && (this.vs.destroy(), this.vs = null), this.removeEvents()
         }
     }
+
+    // Expose Smooth scroll to the global window object
     window.Smooth = T;
+
+    // Main module for scroll handling
     const C = {
         scroll: null,
         initFirstReady() {
@@ -5760,7 +5801,11 @@ function(t, e, i) {
             })
         }
     };
+
+    // Expose the scroll handling module
     var k = C,
+
+    // Additional imports and initialization
         E = i(4),
         P = i(13),
         S = i.n(P),
