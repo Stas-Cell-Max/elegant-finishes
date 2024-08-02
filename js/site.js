@@ -5437,21 +5437,41 @@ function(t, e) {
             if ("string" == typeof e && (i = t[e], e = t, t = i), _(t)) return n = l.call(arguments, 2), (r = function() {
                 return t.apply(e || this, n.concat(l.call(arguments)))
             }).guid = t.guid = t.guid || T.guid++, r
-        }, T.holdReady = function(t) {
+        },
+        // Hold or release the jQuery ready event
+        T.holdReady = function(t) {
             t ? T.readyWait++ : T.ready(!0)
-        }, T.isArray = Array.isArray, T.parseJSON = JSON.parse, T.nodeName = A, T.isFunction = _, T.isWindow = y, T.camelCase = K, T.type = w, T.now = Date.now, T.isNumeric = function(t) {
+        }, 
+        // Utility functions
+          T.isArray = Array.isArray,
+           T.parseJSON = JSON.parse,
+          T.nodeName = A, 
+          T.isFunction = _, 
+          T.isWindow = y, 
+          T.camelCase = K, T.type = w, 
+          T.now = Date.now,
+         // Check if a value is numeric
+           T.isNumeric = function(t) {
             var e = T.type(t);
             return ("number" === e || "string" === e) && !isNaN(t - parseFloat(t))
-        }, void 0 === (n = function() {
+        }, 
+        
+        // jQuery module definition
+        void 0 === (n = function() {
             return T
         }.apply(e, [])) || (t.exports = n);
+        // No conflict handling
         var Ue = i.jQuery,
             Ve = i.$;
         return T.noConflict = function(t) {
             return i.$ === T && (i.$ = Ve), t && i.jQuery === T && (i.jQuery = Ue), T
-        }, r || (i.jQuery = i.$ = T), T
+        },
+        // Set global jQuery object
+        r || (i.jQuery = i.$ = T), T
     })
-}, function(t, e, i) {
+},
+// Other module initialization
+function(t, e, i) {
     "use strict";
     i.r(e);
     i(15), i(16);
@@ -5459,6 +5479,8 @@ function(t, e) {
         r = i.n(n),
         o = i(9),
         s = i.n(o);
+
+        // Lazy loading module
     var a = {
             initLoad() {
                 this.lazyloadImg(), this.lazyloadBg()
@@ -5496,6 +5518,7 @@ function(t, e) {
                 }
             }
         },
+        // Parallax module
         l = i(10),
         u = i.n(l);
     const c = {
@@ -5512,6 +5535,7 @@ function(t, e) {
         }
     };
     var h = c;
+    // Utility module
     var f = {
             is_touch_device() {
                 var t = " -webkit- -moz- -o- -ms- ".split(" ");
@@ -5530,6 +5554,8 @@ function(t, e) {
         b = i.n(y),
         x = i(2),
         w = i.n(x);
+
+        // Smooth scroll implementation
     class T {
         constructor(t = {}) {
             this.createBound(), this.options = t, this.prefix = _()("transform"), this.rAF = void 0, this.isRAFCanceled = !1;
@@ -5576,17 +5602,21 @@ function(t, e) {
                 }
             }
         }
+        // Bind event handlers to the object
         createBound() {
             ["run", "calc", "debounce", "resize", "mouseUp", "mouseDown", "mouseMove", "calcScroll", "scrollTo"].forEach(t => this[t] = this[t].bind(this))
         }
+        // Initialize the smooth scroll
         init() {
             this.addClasses(), this.vars.preload && this.preloadImages(), this.vars.native ? this.addFakeScrollHeight() : !this.options.noscrollbar && this.addFakeScrollBar(), this.addEvents(), this.resize()
         }
+         // Add CSS classes for styling
         addClasses() {
             const t = this.vars.native ? "native" : "virtual",
                 e = "vertical" === this.vars.direction ? "y" : "x";
             p.a.add(this.dom.listener, `is-${t}-scroll`), p.a.add(this.dom.listener, `${e}-scroll`)
         }
+        // Preload images
         preloadImages() {
             const t = Array.prototype.slice.call(this.dom.listener.querySelectorAll("img"), 0);
             t.forEach(e => {
@@ -5596,16 +5626,19 @@ function(t, e) {
                 }), i.src = e.getAttribute("src")
             })
         }
+        // Calculate scroll position
         calc(t) {
             const e = "horizontal" == this.vars.direction ? t.deltaX : t.deltaY;
             this.vars.target += -1 * e, this.clampTarget()
         }
+        // Debounce scroll events
         debounce() {
             const t = this.dom.listener === document.body;
             this.vars.target = "vertical" === this.vars.direction ? t ? window.scrollY || window.pageYOffset : this.dom.listener.scrollTop : t ? window.scrollX || window.pageXOffset : this.dom.listener.scrollLeft, clearTimeout(this.vars.timer), this.vars.ticking || (this.vars.ticking = !0, p.a.add(this.dom.listener, "is-scrolling")), this.vars.timer = setTimeout(() => {
                 this.vars.ticking = !1, p.a.remove(this.dom.listener, "is-scrolling")
             }, 200)
         }
+          // Main scroll logic
         run() {
             if (!this.isRAFCanceled) {
                 if (this.vars.current += (this.vars.target - this.vars.current) * this.vars.ease, this.vars.current < .1 && (this.vars.current = 0), this.requestAnimationFrame(), this.extends || (this.dom.section.style[this.prefix] = this.getTransform(-this.vars.current.toFixed(2))), !this.vars.native && !this.options.noscrollbar) {
@@ -5618,6 +5651,7 @@ function(t, e) {
                 this.callback && this.vars.current !== this.vars.last && this.callback(this.vars.current), this.vars.last = this.vars.current
             }
         }
+        // Get CSS transform for positioning
         getTransform(t) {
             return "vertical" === this.vars.direction ? `translate3d(0,${t}px,0)` : `translate3d(${t}px,0,0)`
         }
