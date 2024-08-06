@@ -5872,6 +5872,7 @@ function(t, e, i) {
         s.updateTo = function(t, e) {
             var i, n = this.ratio,
                 r = this.vars.immediateRender || t.immediateRender;
+                // Adjust start time if necessary
             for (i in e && this._startTime < this._timeline._time && (this._startTime = this._timeline._time, this._uncache(!1), this._gc ? this._enabled(!0, !1) : this._timeline.insert(this, this._startTime - this._delay)), t) this.vars[i] = t[i];
             if (this._initted || r)
                 if (e) this._initted = !1, r && this.render(0, !0, !0);
@@ -5879,9 +5880,14 @@ function(t, e, i) {
                 var o = this._totalTime;
                 this.render(0, !0, !1), this._initted = !1, this.render(o, !0, !1)
             } else if (this._initted = !1, this._init(), this._time > 0 || r)
+                
+                // Calculate start and change values for each property
                 for (var s, a = 1 / (1 - n), l = this._firstPT; l;) s = l.s + l.c, l.c *= a, l.s = s - l.c, l = l._next;
             return this
-        }, s.render = function(t, e, i) {
+        },
+        
+        // Render the tween at a given time
+        s.render = function(t, e, i) {
             this._initted || 0 === this._duration && this.vars.repeat && this.invalidate();
             var r, o, s, a, l, u, c, h, f, d = this._dirty ? this.totalDuration() : this._totalDuration,
                 p = this._time,
@@ -5889,22 +5895,50 @@ function(t, e, i) {
                 g = this._cycle,
                 v = this._duration,
                 _ = this._rawPrevTime;
-            if (t >= d - 1e-7 && t >= 0 ? (this._totalTime = d, this._cycle = this._repeat, this._yoyo && 0 != (1 & this._cycle) ? (this._time = 0, this.ratio = this._ease._calcEnd ? this._ease.getRatio(0) : 0) : (this._time = v, this.ratio = this._ease._calcEnd ? this._ease.getRatio(1) : 1), this._reversed || (r = !0, o = "onComplete", i = i || this._timeline.autoRemoveChildren), 0 === v && (this._initted || !this.vars.lazy || i) && (this._startTime === this._timeline._duration && (t = 0), (_ < 0 || t <= 0 && t >= -1e-7 || 1e-10 === _ && "isPause" !== this.data) && _ !== t && (i = !0, _ > 1e-10 && (o = "onReverseComplete")), this._rawPrevTime = h = !e || t || _ === t ? t : 1e-10)) : t < 1e-7 ? (this._totalTime = this._time = this._cycle = 0, this.ratio = this._ease._calcEnd ? this._ease.getRatio(0) : 0, (0 !== m || 0 === v && _ > 0) && (o = "onReverseComplete", r = this._reversed), t < 0 && (this._active = !1, 0 === v && (this._initted || !this.vars.lazy || i) && (_ >= 0 && (i = !0), this._rawPrevTime = h = !e || t || _ === t ? t : 1e-10)), this._initted || (i = !0)) : (this._totalTime = this._time = t, 0 !== this._repeat && (a = v + this._repeatDelay, this._cycle = this._totalTime / a >> 0, 0 !== this._cycle && this._cycle === this._totalTime / a && m <= t && this._cycle--, this._time = this._totalTime - this._cycle * a, this._yoyo && 0 != (1 & this._cycle) && (this._time = v - this._time, (f = this._yoyoEase || this.vars.yoyoEase) && (this._yoyoEase || (!0 !== f || this._initted ? this._yoyoEase = f = !0 === f ? this._ease : f instanceof O.b ? f : O.b.map[f] : (f = this.vars.ease, this._yoyoEase = f = f ? f instanceof O.b ? f : "function" == typeof f ? new O.b(f, this.vars.easeParams) : O.b.map[f] || O.f.defaultEase : O.f.defaultEase)), this.ratio = f ? 1 - f.getRatio((v - this._time) / v) : 0)), this._time > v ? this._time = v : this._time < 0 && (this._time = 0)), this._easeType && !f ? (l = this._time / v, (1 === (u = this._easeType) || 3 === u && l >= .5) && (l = 1 - l), 3 === u && (l *= 2), 1 === (c = this._easePower) ? l *= l : 2 === c ? l *= l * l : 3 === c ? l *= l * l * l : 4 === c && (l *= l * l * l * l), 1 === u ? this.ratio = 1 - l : 2 === u ? this.ratio = l : this._time / v < .5 ? this.ratio = l / 2 : this.ratio = 1 - l / 2) : f || (this.ratio = this._ease.getRatio(this._time / v))), p !== this._time || i || g !== this._cycle) {
-                if (!this._initted) {
+
+            if (t >= d - 1e-7 && t >= 0 ? (
+                // Check if time is at the end
+                 this._totalTime = d,
+                 this._cycle = this._repeat,
+
+                 // Check yoyo state and adjust time accordingl
+                 this._yoyo && 0 != (1 & this._cycle) ? (this._time = 0,
+                 this.ratio = this._ease._calcEnd ? this._ease.getRatio(0) : 0) : (this._time = v, 
+                 this.ratio = this._ease._calcEnd ? this._ease.getRatio(1) : 1),
+                 this._reversed || (r = !0, o = "onComplete", i = i || this._timeline.autoRemoveChildren), 0 === v && (this._initted || !this.vars.lazy || i) && (this._startTime === this._timeline._duration && (t = 0), (_ < 0 || t <= 0 && t >= -1e-7 || 1e-10 === _ && "isPause" !== this.data) && _ !== t && (i = !0, _ > 1e-10 && (o = "onReverseComplete")), 
+                 this._rawPrevTime = h = !e || t || _ === t ? t : 1e-10)) : t < 1e-7 ? (this._totalTime = this._time = this._cycle = 0, this.ratio = this._ease._calcEnd ? this._ease.getRatio(0) : 0, (0 !== m || 0 === v && _ > 0) && (o = "onReverseComplete", r = this._reversed), t < 0 && (this._active = !1, 0 === v && (this._initted || !this.vars.lazy || i) && (_ >= 0 && (i = !0), this._rawPrevTime = h = !e || t || _ === t ? t : 1e-10)), this._initted || (i = !0)) : (this._totalTime = this._time = t, 0 !== this._repeat && (a = v + this._repeatDelay, this._cycle = this._totalTime / a >> 0, 0 !== this._cycle && this._cycle === this._totalTime / a && m <= t && this._cycle--, this._time = this._totalTime - this._cycle * a, this._yoyo && 0 != (1 & this._cycle) && (this._time = v - this._time, (f = this._yoyoEase || this.vars.yoyoEase) && (this._yoyoEase || (!0 !== f || this._initted ? this._yoyoEase = f = !0 === f ? this._ease : f instanceof O.b ? f : O.b.map[f] : (f = this.vars.ease, this._yoyoEase = f = f ? f instanceof O.b ? f : "function" == typeof f ? new O.b(f, this.vars.easeParams) : O.b.map[f] || O.f.defaultEase : O.f.defaultEase)), this.ratio = f ? 1 - f.getRatio((v - this._time) / v) : 0)), this._time > v ? this._time = v : this._time < 0 && (this._time = 0)), this._easeType && !f ? (l = this._time / v, (1 === (u = this._easeType) || 3 === u && l >= .5) && (l = 1 - l), 3 === u && (l *= 2), 1 === (c = this._easePower) ? l *= l : 2 === c ? l *= l * l : 3 === c ? l *= l * l * l : 4 === c && (l *= l * l * l * l), 1 === u ? this.ratio = 1 - l : 2 === u ? this.ratio = l : this._time / v < .5 ? this.ratio = l / 2 : this.ratio = 1 - l / 2) : f || (this.ratio = this._ease.getRatio(this._time / v))), p !== this._time || i || g !== this._cycle) {
+                
+                    if (!this._initted) {
                     if (this._init(), !this._initted || this._gc) return;
-                    if (!i && this._firstPT && (!1 !== this.vars.lazy && this._duration || this.vars.lazy && !this._duration)) return this._time = p, this._totalTime = m, this._rawPrevTime = _, this._cycle = g, n.lazyTweens.push(this), void(this._lazy = [t, e]);
+
+                    if (!i && this._firstPT && (!1 !== this.vars.lazy && this._duration || this.vars.lazy && !this._duration)) return this._time = p,
+                     this._totalTime = m, 
+                     this._rawPrevTime = _,
+                     this._cycle = g, n.lazyTweens.push(this),
+                      void(this._lazy = [t, e]);
                     !this._time || r || f ? r && this._ease._calcEnd && !f && (this.ratio = this._ease.getRatio(0 === this._time ? 0 : 1)) : this.ratio = this._ease.getRatio(this._time / v)
                 }
                 for (!1 !== this._lazy && (this._lazy = !1), this._active || !this._paused && this._time !== p && t >= 0 && (this._active = !0), 0 === m && (2 === this._initted && t > 0 && this._init(), this._startAt && (t >= 0 ? this._startAt.render(t, !0, i) : o || (o = "_dummyGS")), this.vars.onStart && (0 === this._totalTime && 0 !== v || e || this._callback("onStart"))), s = this._firstPT; s;) s.f ? s.t[s.p](s.c * this.ratio + s.s) : s.t[s.p] = s.c * this.ratio + s.s, s = s._next;
+                // Handle onUpdate callback
                 this._onUpdate && (t < 0 && this._startAt && this._startTime && this._startAt.render(t, !0, i), e || (this._totalTime !== m || o) && this._callback("onUpdate")), this._cycle !== g && (e || this._gc || this.vars.onRepeat && this._callback("onRepeat")), o && (this._gc && !i || (t < 0 && this._startAt && !this._onUpdate && this._startTime && this._startAt.render(t, !0, i), r && (this._timeline.autoRemoveChildren && this._enabled(!1, !1), this._active = !1), !e && this.vars[o] && this._callback(o), 0 === v && 1e-10 === this._rawPrevTime && 1e-10 !== h && (this._rawPrevTime = 0)))
             } else m !== this._totalTime && this._onUpdate && (e || this._callback("onUpdate"))
-        }, i.to = function(t, e, n) {
+        },
+         // Create a tween from a given start and end state
+         i.to = function(t, e, n) {
             return new i(t, e, n)
-        }, i.from = function(t, e, n) {
+        },
+        // Create a tween from an initial state
+         i.from = function(t, e, n) {
             return n.runBackwards = !0, n.immediateRender = 0 != n.immediateRender, new i(t, e, n)
-        }, i.fromTo = function(t, e, n, r) {
-            return r.startAt = n, r.immediateRender = 0 != r.immediateRender && 0 != n.immediateRender, new i(t, e, r)
-        }, i.staggerTo = i.allTo = function(n, s, l, u, c, h, f) {
+        }, 
+        // Create a tween from a start and end state
+        i.fromTo = function(t, e, n, r) {
+            return r.startAt = n,
+             r.immediateRender = 0 != r.immediateRender && 0 != n.immediateRender,
+              new i(t, e, r)
+        }, 
+         // Create a staggered tween animation
+        i.staggerTo = i.allTo = function(n, s, l, u, c, h, f) {
             u = u || 0;
             var d, p, m, g, v = 0,
                 _ = [],
@@ -5913,20 +5947,30 @@ function(t, e, i) {
                 },
                 b = l.cycle,
                 x = l.startAt && l.startAt.cycle;
+                 // Convert n to an array if it's a string or selector
             for (o(n) || ("string" == typeof n && (n = O.f.selector(n) || n), r(n) && (n = t(n))), n = n || [], u < 0 && ((n = t(n)).reverse(), u *= -1), d = n.length - 1, m = 0; m <= d; m++) {
                 for (g in p = {}, l) p[g] = l[g];
+
+               // Handle cycle and startAt cycle 
                 if (b && (e(p, n, m), null != p.duration && (s = p.duration, delete p.duration)), x) {
                     for (g in x = p.startAt = {}, l.startAt) x[g] = l.startAt[g];
                     e(p.startAt, n, m)
                 }
+                // Create tweens for each element with staggered delay
                 p.delay = v + (p.delay || 0), m === d && c && (p.onComplete = y), _[m] = new i(n[m], s, p), v += u
             }
             return _
-        }, i.staggerFrom = i.allFrom = function(t, e, n, r, o, s, a) {
+        }, 
+         // Create a staggered tween from a start state
+        i.staggerFrom = i.allFrom = function(t, e, n, r, o, s, a) {
             return n.runBackwards = !0, n.immediateRender = 0 != n.immediateRender, i.staggerTo(t, e, n, r, o, s, a)
-        }, i.staggerFromTo = i.allFromTo = function(t, e, n, r, o, s, a, l) {
+        }, 
+         // Create a staggered tween from a start and end state
+        i.staggerFromTo = i.allFromTo = function(t, e, n, r, o, s, a, l) {
             return r.startAt = n, r.immediateRender = 0 != r.immediateRender && 0 != n.immediateRender, i.staggerTo(t, e, r, o, s, a, l)
-        }, i.delayedCall = function(t, e, n, r, o) {
+        },
+         // Create a delayed call tween
+        i.delayedCall = function(t, e, n, r, o) {
             return new i(e, 0, {
                 delay: t,
                 onComplete: e,
@@ -5938,36 +5982,51 @@ function(t, e, i) {
                 useFrames: o,
                 overwrite: 0
             })
-        }, i.set = function(t, e) {
+        },
+        // Create a tween that sets properties immediately
+        i.set = function(t, e) {
             return new i(t, 0, e)
-        }, i.isTweening = function(t) {
+        }, 
+        // Check if any tweens are currently animating
+        i.isTweening = function(t) {
             return O.f.getTweensOf(t, !0).length > 0
         };
+        // Helper function to recursively get all tweens
         var l = function(t, e) {
                 for (var i = [], n = 0, r = t._first; r;) r instanceof O.f ? i[n++] = r : (e && (i[n++] = r), n = (i = i.concat(l(r, e))).length), r = r._next;
                 return i
             },
+             // Get all active tweens
             u = i.getAllTweens = function(t) {
                 return l(O.a._rootTimeline, t).concat(l(O.a._rootFramesTimeline, t))
             };
+             // Kill all tweens and child tweens
         i.killAll = function(t, e, i, n) {
             null == e && (e = !0), null == i && (i = !0);
             var r, o, s, a = u(0 != n),
                 l = a.length,
                 c = e && i && n;
+
+                // Loop through and kill each tween based on the criteria
             for (s = 0; s < l; s++) o = a[s], (c || o instanceof O.c || (r = o.target === o.vars.onComplete) && i || e && !r) && (t ? o.totalTime(o._reversed ? 0 : o.totalDuration()) : o._enabled(!1, !1))
-        }, i.killChildTweensOf = function(e, s) {
+        }, 
+           // Kill all child tweens of a given element
+        i.killChildTweensOf = function(e, s) {
             if (null != e) {
                 var a, l, u, c, h, f = n.tweenLookup;
                 if ("string" == typeof e && (e = O.f.selector(e) || e), r(e) && (e = t(e)), o(e))
                     for (c = e.length; --c > -1;) i.killChildTweensOf(e[c], s);
                 else {
+                     // Search for tweens with a parent matching e
                     for (u in a = [], f)
                         for (l = f[u].target.parentNode; l;) l === e && (a = a.concat(f[u].tweens)), l = l.parentNode;
+                     // Kill each matching tween
                     for (h = a.length, c = 0; c < h; c++) s && a[c].totalTime(a[c].totalDuration()), a[c]._enabled(!1, !1)
                 }
             }
         };
+
+        // Helper function to pause or resume all tweens
         var c = function(t, e, i, n) {
             e = !1 !== e, i = !1 !== i;
             for (var r, o, s = u(n = !1 !== n), a = e && i && n, l = s.length; --l > -1;) o = s[l], (a || o instanceof O.c || (r = o.target === o.vars.onComplete) && i || e && !r) && o.paused(t)
