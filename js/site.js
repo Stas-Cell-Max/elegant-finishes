@@ -5815,60 +5815,61 @@ function(t, e, i) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /*!
-     * VERSION: 2.0.2
-     * DATE: 2018-08-27
-     * UPDATES AND DOCS AT: http://greensock.com
-     *
-     * @license Copyright (c) 2008-2018, GreenSock. All rights reserved.
-     * This work is subject to the terms at http://greensock.com/standard-license or for
-     * Club GreenSock members, the software agreement that was issued with your membership.
-     *
-     * @author: Jack Doyle, jack@greensock.com
-     **/
+// Define a new module "TweenMax" using _gsDefine from O.e
     O.e._gsDefine("TweenMax", ["core.Animation", "core.SimpleTimeline", "TweenLite"], function() {
+        
+        // Helper function to convert an array-like object into a true array
         var t = function(t) {
                 var e, i = [],
                     n = t.length;
                 for (e = 0; e !== n; i.push(t[e++]));
                 return i
             },
+            // Function to handle cycle-related properties in the tween vars
             e = function(t, e, i) {
                 var n, r, o = t.cycle;
-                for (n in o) r = o[n], t[n] = "function" == typeof r ? r(i, e[i]) : r[i % r.length];
+                for (n in o) r = o[n],
+                 // Set the property based on whether it's a function or array
+                t[n] = "function" == typeof r ? r(i, e[i]) : r[i % r.length];
                 delete t.cycle
             },
+
+            // Main constructor function for TweenMax
             i = function(t, e, n) {
                 O.f.call(this, t, e, n), this._cycle = 0, this._yoyo = !0 === this.vars.yoyo || !!this.vars.yoyoEase, this._repeat = this.vars.repeat || 0, this._repeatDelay = this.vars.repeatDelay || 0, this._repeat && this._uncache(!0), this.render = i.prototype.render
             },
+
+             // Internal utilities and helpers
             n = O.f._internals,
             r = n.isSelector,
             o = n.isArray,
             s = i.prototype = O.f.to({}, .1, {}),
             a = [];
-        i.version = "2.0.2", s.constructor = i, s.kill()._gc = !1, i.killTweensOf = i.killDelayedCallsTo = O.f.killTweensOf, i.getTweensOf = O.f.getTweensOf, i.lagSmoothing = O.f.lagSmoothing, i.ticker = O.f.ticker, i.render = O.f.render, s.invalidate = function() {
-            return this._yoyo = !0 === this.vars.yoyo || !!this.vars.yoyoEase, this._repeat = this.vars.repeat || 0, this._repeatDelay = this.vars.repeatDelay || 0, this._yoyoEase = null, this._uncache(!0), O.f.prototype.invalidate.call(this)
-        }, s.updateTo = function(t, e) {
+
+            // Set the version of TweenMax
+        i.version = "2.0.2", 
+          // Set the constructor to point back to TweenMax
+        s.constructor = i, 
+         // Reset the tween and mark it as not garbage collected
+        s.kill()._gc = !1, 
+        
+         // Reference various methods from TweenLite
+        i.killTweensOf = i.killDelayedCallsTo = O.f.killTweensOf,
+         i.getTweensOf = O.f.getTweensOf, 
+         i.lagSmoothing = O.f.lagSmoothing,
+          i.ticker = O.f.ticker,
+           i.render = O.f.render,
+           
+           // Method to initialize and set properties on the tween
+           s.invalidate = function() {
+            return this._yoyo = !0 === this.vars.yoyo || !!this.vars.yoyoEase, 
+            this._repeat = this.vars.repeat || 0, 
+            this._repeatDelay = this.vars.repeatDelay || 0,
+             this._yoyoEase = null, this._uncache(!0), O.f.prototype.invalidate.call(this)
+        }, 
+        
+           // Update properties of the tween
+        s.updateTo = function(t, e) {
             var i, n = this.ratio,
                 r = this.vars.immediateRender || t.immediateRender;
             for (i in e && this._startTime < this._timeline._time && (this._startTime = this._timeline._time, this._uncache(!1), this._gc ? this._enabled(!0, !1) : this._timeline.insert(this, this._startTime - this._delay)), t) this.vars[i] = t[i];
