@@ -6054,20 +6054,34 @@ function(t, e, i) {
         // Update the total progress of the tween
         s.totalProgress = function(t, e) {
             return arguments.length ? this.totalTime(this.totalDuration() * t, e) : this._totalTime / this.totalDuration()
-        }, s.time = function(t, e) {
+        },
+        // Update the current time of the tween
+        s.time = function(t, e) {
             return arguments.length ? (this._dirty && this.totalDuration(), t > this._duration && (t = this._duration), this._yoyo && 0 != (1 & this._cycle) ? t = this._duration - t + this._cycle * (this._duration + this._repeatDelay) : 0 !== this._repeat && (t += this._cycle * (this._duration + this._repeatDelay)), this.totalTime(t, e)) : this._time
-        }, s.duration = function(t) {
+        },
+        // Update the duration of the tween
+        s.duration = function(t) {
             return arguments.length ? O.a.prototype.duration.call(this, t) : this._duration
-        }, s.totalDuration = function(t) {
+        },
+        // Update the total duration of the tween
+        s.totalDuration = function(t) {
             return arguments.length ? -1 === this._repeat ? this : this.duration((t - this._repeat * this._repeatDelay) / (this._repeat + 1)) : (this._dirty && (this._totalDuration = -1 === this._repeat ? 999999999999 : this._duration * (this._repeat + 1) + this._repeatDelay * this._repeat, this._dirty = !1), this._totalDuration)
-        }, s.repeat = function(t) {
+        }, 
+        // Set or get the repeat count of the tween
+        s.repeat = function(t) {
             return arguments.length ? (this._repeat = t, this._uncache(!0)) : this._repeat
-        }, s.repeatDelay = function(t) {
+        }, 
+        // Set or get the repeat delay of the tween
+        s.repeatDelay = function(t) {
             return arguments.length ? (this._repeatDelay = t, this._uncache(!0)) : this._repeatDelay
-        }, s.yoyo = function(t) {
+        }, 
+        // Set or get the yoyo effect of the tween
+        s.yoyo = function(t) {
             return arguments.length ? (this._yoyo = t, this) : this._yoyo
         }, i
     }, !0);
+// Alias for TweenMax in O.g
+
     var A = O.g.TweenMax;
 
 
