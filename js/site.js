@@ -6031,17 +6031,28 @@ function(t, e, i) {
             e = !1 !== e, i = !1 !== i;
             for (var r, o, s = u(n = !1 !== n), a = e && i && n, l = s.length; --l > -1;) o = s[l], (a || o instanceof O.c || (r = o.target === o.vars.onComplete) && i || e && !r) && o.paused(t)
         };
+
+        // Pause all tweens
         return i.pauseAll = function(t, e, i) {
             c(!0, t, e, i)
-        }, i.resumeAll = function(t, e, i) {
+        },
+         // Resume all tweens
+         i.resumeAll = function(t, e, i) {
             c(!1, t, e, i)
-        }, i.globalTimeScale = function(t) {
+        }, 
+        // Set the global time scale for all tweens
+        i.globalTimeScale = function(t) {
             var e = O.a._rootTimeline,
                 i = O.f.ticker.time;
+                 // If a new time scale is specified, update the start time
             return arguments.length ? (t = t || 1e-10, e._startTime = i - (i - e._startTime) * e._timeScale / t, e = O.a._rootFramesTimeline, i = O.f.ticker.frame, e._startTime = i - (i - e._startTime) * e._timeScale / t, e._timeScale = O.a._rootTimeline._timeScale = t, t) : e._timeScale
-        }, s.progress = function(t, e) {
+        },
+          // Update the progress of the tween
+        s.progress = function(t, e) {
             return arguments.length ? this.totalTime(this.duration() * (this._yoyo && 0 != (1 & this._cycle) ? 1 - t : t) + this._cycle * (this._duration + this._repeatDelay), e) : this._time / this.duration()
-        }, s.totalProgress = function(t, e) {
+        }, 
+        // Update the total progress of the tween
+        s.totalProgress = function(t, e) {
             return arguments.length ? this.totalTime(this.totalDuration() * t, e) : this._totalTime / this.totalDuration()
         }, s.time = function(t, e) {
             return arguments.length ? (this._dirty && this.totalDuration(), t > this._duration && (t = this._duration), this._yoyo && 0 != (1 & this._cycle) ? t = this._duration - t + this._cycle * (this._duration + this._repeatDelay) : 0 !== this._repeat && (t += this._cycle * (this._duration + this._repeatDelay)), this.totalTime(t, e)) : this._time
