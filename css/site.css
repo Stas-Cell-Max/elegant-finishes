@@ -677,7 +677,8 @@ a:hover{
 /* In-view state for titles in generic sections */
 .in-view .section__generic__title{
     opacity:1;
-    transform:translateY(0)
+    transform:translateY(0);
+    color: #f9a549;
 }
 
 /* Text settings for generic sections */
