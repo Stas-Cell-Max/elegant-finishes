@@ -6084,31 +6084,6 @@ function(t, e, i) {
 
     var A = O.g.TweenMax;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-   
-   
-   
-   
-   
-   
-   
-   
-   
    
    // Define the CSSPlugin, extending from TweenPlugin
     O.e._gsDefine("plugins.CSSPlugin", ["plugins.TweenPlugin", "TweenLite"], function() {
@@ -6310,15 +6285,18 @@ function(t, e, i) {
             at = function(t, e) {
                 return "function" == typeof t && (t = t(m, p)), "string" == typeof t && "=" === t.charAt(1) ? parseInt(t.charAt(0) + "1", 10) * parseFloat(t.substr(2)) : parseFloat(t) - parseFloat(e) || 0
             },
+            // Function to parse viewport-relative values (e.g., "50vh")
             lt = function(t, e) {
                 "function" == typeof t && (t = t(m, p));
                 var i = "string" == typeof t && "=" === t.charAt(1);
                 return "string" == typeof t && "v" === t.charAt(t.length - 2) && (t = (i ? t.substr(0, 2) : 0) + window["inner" + ("vh" === t.substr(-2) ? "Height" : "Width")] * (parseFloat(i ? t.substr(2) : t) / 100)), null == t ? e : i ? parseInt(t.charAt(0) + "1", 10) * parseFloat(t.substr(2)) + e : parseFloat(t) || 0
             },
+            // Function to handle unit conversion and transformation for complex properties
             ut = function(t, e, i, n) {
                 var r, o, s, a;
                 return "function" == typeof t && (t = t(m, p)), null == t ? s = e : "number" == typeof t ? s = t : (360, r = t.split("_"), o = ((a = "=" === t.charAt(1)) ? parseInt(t.charAt(0) + "1", 10) * parseFloat(r[0].substr(2)) : parseFloat(r[0])) * (-1 === t.indexOf("rad") ? 1 : N) - (a ? 0 : e), r.length && (n && (n[i] = e + o), -1 !== t.indexOf("short") && (o %= 360) !== o % 180 && (o = o < 0 ? o + 360 : o - 360), -1 !== t.indexOf("_cw") && o < 0 ? o = (o + 3599999999640) % 360 - 360 * (o / 360 | 0) : -1 !== t.indexOf("ccw") && o > 0 && (o = (o - 3599999999640) % 360 - 360 * (o / 360 | 0))), s = e + o), s < 1e-6 && s > -1e-6 && (s = 0), s
             },
+               // Define a color map for parsing named colors
             ct = {
                 aqua: [0, 255, 255],
                 lime: [0, 255, 0],
@@ -6341,9 +6319,11 @@ function(t, e, i) {
                 cyan: [0, 255, 255],
                 transparent: [255, 255, 255, 0]
             },
+            // Function to convert HSL to RGB
             ht = function(t, e, i) {
                 return 255 * (6 * (t = t < 0 ? t + 1 : t > 1 ? t - 1 : t) < 1 ? e + (i - e) * t * 6 : t < .5 ? i : 3 * t < 2 ? e + (i - e) * (2 / 3 - t) * 6 : e) + .5 | 0
             },
+              // Function to convert color strings to RGBA format
             ft = r.parseColor = function(t, e) {
                 var i, n, r, o, s, a, l, u, c, h, f;
                 if (t)
