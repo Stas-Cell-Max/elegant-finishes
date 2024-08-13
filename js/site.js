@@ -6147,6 +6147,7 @@ function(t, e, i) {
             perspective: a,
             lineHeight: ""
         };
+       // Define regular expressions for various CSS-related operations
         var l, u, c, h, f, d, p, m, g = /(?:\-|\.|\b)(\d|\.|e\-)+/g,
             v = /(?:\d|\-\d|\.\d|\-\.\d|\+=\d|\-=\d|\+=.\d|\-=\.\d)+/g,
             _ = /(?:\+=|\-=|\-|\b)[\d\-\.]+[a-zA-Z0-9]*(?:%|\b)/gi,
@@ -6173,11 +6174,15 @@ function(t, e, i) {
             F = {
                 style: {}
             },
+
+            // Function to create a new element
             B = O.e.document || {
                 createElement: function() {
                     return F
                 }
             },
+
+            // Function to create an element, with support for namespaces
             z = function(t, e) {
                 return B.createElementNS ? B.createElementNS(e || "http://www.w3.org/1999/xhtml", t) : B.createElement(t)
             },
@@ -6187,14 +6192,18 @@ function(t, e, i) {
                 _specialProps: s
             },
             W = (O.e.navigator || {}).userAgent || "",
+
+            // Check for browser-specific features
             X = function() {
                 var t = W.indexOf("Android"),
                     e = z("a");
                 return c = -1 !== W.indexOf("Safari") && -1 === W.indexOf("Chrome") && (-1 === t || parseFloat(W.substr(t + 8, 2)) > 3), f = c && parseFloat(W.substr(W.indexOf("Version/") + 8, 2)) < 6, h = -1 !== W.indexOf("Firefox"), (/MSIE ([0-9]{1,}[\.0-9]{0,})/.exec(W) || /Trident\/.*rv:([0-9]{1,}[\.0-9]{0,})/.exec(W)) && (d = parseFloat(RegExp.$1)), !!e && (e.style.cssText = "top:1px;opacity:.55;", /^0.55/.test(e.style.opacity))
             }(),
+            // Function to extract opacity from a style string
             Y = function(t) {
                 return x.test("string" == typeof t ? t : (t.currentStyle ? t.currentStyle.filter : t.style.filter) || "") ? parseFloat(RegExp.$1) / 100 : 1
             },
+               // Function to log messages to the console (if available)
             U = function(t) {
                 O.e.console && console.log(t)
             },
@@ -6209,10 +6218,13 @@ function(t, e, i) {
             Q = ("undefined" != typeof window ? window : B.defaultView || {
                 getComputedStyle: function() {}
             }).getComputedStyle,
+
+            // Function to get the style property of an element
             Z = r.getStyle = function(t, e, i, n, r) {
                 var o;
                 return X || "opacity" !== e ? (!n && t.style[e] ? o = t.style[e] : (i = i || Q(t)) ? o = i[e] || i.getPropertyValue(e) || i.getPropertyValue(e.replace(k, "-$1").toLowerCase()) : t.currentStyle && (o = t.currentStyle[e]), null == r || o && "none" !== o && "auto" !== o && "auto auto" !== o ? o : r) : Y(t)
             },
+             // Function to convert a value to pixels
             J = q.convertToPixels = function(t, e, i, n, o) {
                 if ("px" === n || !n && "lineHeight" !== e) return i;
                 if ("auto" === n || !i) return 0;
@@ -6234,12 +6246,14 @@ function(t, e, i) {
                 else a = Q(t).lineHeight, t.style.lineHeight = i, s = parseFloat(Q(t).lineHeight), t.style.lineHeight = a;
                 return d && (s /= 100), f ? -s : s
             },
+            // Function to calculate offsets for absolute positioning
             tt = q.calculateOffset = function(t, e, i) {
                 if ("absolute" !== Z(t, "position", i)) return 0;
                 var n = "left" === e ? "Left" : "Top",
                     r = Z(t, "margin" + n, i);
                 return t["offset" + n] - (J(t, e, parseFloat(r), r.replace(b, "")) || 0)
             },
+            // Function to get the current styles of an element
             et = function(t, e) {
                 var i, n, r, o = {};
                 if (e = e || Q(t, null))
@@ -6251,6 +6265,7 @@ function(t, e, i) {
                     for (i in e) "string" == typeof i && void 0 === o[i] && (o[i.replace(E, S)] = e[i]);
                 return X || (o.opacity = Y(t)), n = Xt(t, e, !1), o.rotation = n.rotation, o.skewX = n.skewX, o.scaleX = n.scaleX, o.scaleY = n.scaleY, o.x = n.x, o.y = n.y, Lt && (o.z = n.z, o.rotationX = n.rotationX, o.rotationY = n.rotationY, o.scaleZ = n.scaleZ), o.filters && delete o.filters, o
             },
+            // Function to apply new styles to an element, tracking differences
             it = function(t, e, i, n, r) {
                 var o, s, a, l = {},
                     u = t.style;
@@ -6262,11 +6277,13 @@ function(t, e, i) {
                     firstMPT: a
                 }
             },
+            // Define the dimensions to consider for various CSS properties
             nt = {
                 width: ["Left", "Right"],
                 height: ["Top", "Bottom"]
             },
             rt = ["marginLeft", "marginRight", "marginTop", "marginBottom"],
+            // Function to calculate dimensions for an element
             ot = function(t, e, i) {
                 if ("svg" === (t.nodeName + "").toLowerCase()) return (i || Q(t))[e] || 0;
                 if (t.getCTM && Ht(t)) return t.getBBox()[e] || 0;
@@ -6276,6 +6293,7 @@ function(t, e, i) {
                 for (i = i || Q(t, null); --o > -1;) n -= parseFloat(Z(t, "padding" + r[o], i, !0)) || 0, n -= parseFloat(Z(t, "border" + r[o] + "Width", i, !0)) || 0;
                 return n
             },
+            // Function to parse and format background-position strings
             st = function(t, e) {
                 if ("contain" === t || "auto" === t || "auto auto" === t) return t + " ";
                 null != t && "" !== t || (t = "0 0");
@@ -6288,6 +6306,7 @@ function(t, e, i) {
                 }
                 return null == o ? o = "center" === r ? "50%" : "0" : "center" === o && (o = "50%"), ("center" === r || isNaN(parseFloat(r)) && -1 === (r + "").indexOf("=")) && (r = "50%"), t = r + " " + o + (n.length > 2 ? " " + n[2] : ""), e && (e.oxp = -1 !== r.indexOf("%"), e.oyp = -1 !== o.indexOf("%"), e.oxr = "=" === r.charAt(1), e.oyr = "=" === o.charAt(1), e.ox = parseFloat(r.replace(y, "")), e.oy = parseFloat(o.replace(y, "")), e.v = t), e || t
             },
+            // Function to parse relative values (e.g., "+=10px")
             at = function(t, e) {
                 return "function" == typeof t && (t = t(m, p)), "string" == typeof t && "=" === t.charAt(1) ? parseInt(t.charAt(0) + "1", 10) * parseFloat(t.substr(2)) : parseFloat(t) - parseFloat(e) || 0
             },
@@ -6342,6 +6361,9 @@ function(t, e, i) {
                 else i = ct.black;
                 return e && !f && (n = i[0] / 255, r = i[1] / 255, o = i[2] / 255, l = ((u = Math.max(n, r, o)) + (c = Math.min(n, r, o))) / 2, u === c ? s = a = 0 : (h = u - c, a = l > .5 ? h / (2 - u - c) : h / (u + c), s = u === n ? (r - o) / h + (r < o ? 6 : 0) : u === r ? (o - n) / h + 2 : (n - r) / h + 4, s *= 60), i[0] = s + .5 | 0, i[1] = 100 * a + .5 | 0, i[2] = 100 * l + .5 | 0), i
             },
+
+
+            // Function to parse and convert color strings with potential HSL or RGB values
             dt = function(t, e) {
                 var i, n, r, o = t.match(pt) || [],
                     s = 0,
@@ -6352,10 +6374,16 @@ function(t, e, i) {
             },
             pt = "(?:\\b(?:(?:rgb|rgba|hsl|hsla)\\(.+?\\))|\\B#(?:[0-9a-f]{3}){1,2}\\b";
         for (a in ct) pt += "|" + a + "\\b";
-        pt = new RegExp(pt + ")", "gi"), r.colorStringFilter = function(t) {
+        pt = new RegExp(pt + ")", "gi"),
+          // Default filter to handle color strings in TweenLite animations
+        r.colorStringFilter = function(t) {
             var e, i = t[0] + " " + t[1];
-            pt.test(i) && (e = -1 !== i.indexOf("hsl(") || -1 !== i.indexOf("hsla("), t[0] = dt(t[0], e), t[1] = dt(t[1], e)), pt.lastIndex = 0
-        }, O.f.defaultStringFilter || (O.f.defaultStringFilter = r.colorStringFilter);
+            pt.test(i) && (e = -1 !== i.indexOf("hsl(") || -1 !== i.indexOf("hsla("),
+             t[0] = dt(t[0], e), t[1] = dt(t[1], e)),
+             pt.lastIndex = 0
+        },
+         // Assign the default string filter if none exists
+        O.f.defaultStringFilter || (O.f.defaultStringFilter = r.colorStringFilter);
         var mt = function(t, e, i, n) {
                 if (null == t) return function(t) {
                     return t
