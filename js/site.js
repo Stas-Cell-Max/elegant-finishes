@@ -6100,25 +6100,41 @@ function(t, e, i) {
 
 
 
-    /*!
-     * VERSION: 2.0.2
-     * DATE: 2018-08-27
-     * UPDATES AND DOCS AT: http://greensock.com
-     *
-     * @license Copyright (c) 2008-2018, GreenSock. All rights reserved.
-     * This work is subject to the terms at http://greensock.com/standard-license or for
-     * Club GreenSock members, the software agreement that was issued with your membership.
-     *
-     * @author: Jack Doyle, jack@greensock.com
-     */
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   // Define the CSSPlugin, extending from TweenPlugin
     O.e._gsDefine("plugins.CSSPlugin", ["plugins.TweenPlugin", "TweenLite"], function() {
+       
+       // Constructor function for the CSSPlugin
         var t, e, i, n, r = function() {
-                O.d.call(this, "css"), this._overwriteProps.length = 0, this.setRatio = r.prototype.setRatio
+                O.d.call(this, "css"),  // Call the parent constructor with "css" as the plugin type
+                 this._overwriteProps.length = 0,
+                 this.setRatio = r.prototype.setRatio
             },
+
+            // Define variables for internal usage
             o = O.e._gsDefine.globals,
             s = {},
             a = r.prototype = new O.d("css");
-        a.constructor = r, r.version = "2.0.2", r.API = 2, r.defaultTransformPerspective = 0, r.defaultSkewType = "compensated", r.defaultSmoothOrigin = !0, a = "px", r.suffixMap = {
+        a.constructor = r,
+         r.version = "2.0.2", 
+         r.API = 2, 
+
+         // Set default CSS-related properties
+         r.defaultTransformPerspective = 0, 
+         r.defaultSkewType = "compensated", 
+         r.defaultSmoothOrigin = !0,
+          a = "px", 
+          // Some commonly used properties
+         r.suffixMap = {
             top: a,
             right: a,
             bottom: a,
@@ -6344,6 +6360,23 @@ function(t, e, i) {
                 if (null == t) return function(t) {
                     return t
                 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 var r, o = e ? (t.match(pt) || [""])[0] : "",
                     s = t.split(o).join("").match(_) || [],
                     a = t.substr(0, t.indexOf(s[0])),
