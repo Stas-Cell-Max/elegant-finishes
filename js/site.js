@@ -6442,16 +6442,22 @@ function(t, e, i) {
                         } else i[o] = i.s + i.xs0;
                         l = l._next
                     }
-            }, function(t, e, i, n, r) {
+            }, 
+            // Initialize variables for the transformation process
+            function(t, e, i, n, r) {
                 this.t = t, this.p = e, this.v = i, this.r = r, n && (n._prev = this, this._next = n)
             }),
             _t = (q._parseToProxy = function(t, e, i, n, r, o) {
+                // Parse the input to create a proxy object
                 var s, a, l, u, c, h = n,
                     f = {},
                     d = {},
                     p = i._transform,
                     m = j;
+
+                // Handle parsing and transformation recursively
                 for (i._transform = null, j = e, n = c = i.parse(t, e, n, r), j = m, o && (i._transform = p, h && (h._prev = null, h._prev && (h._prev._next = null))); n && n !== h;) {
+                    
                     if (n.type <= 1 && (d[a = n.p] = n.s + n.c, f[a] = n.s, o || (u = new vt(n, "s", a, u, n.r), n.c = 0), 1 === n.type))
                         for (s = n.l; --s > 0;) l = "xn" + s, d[a = n.p + "_" + l] = n.data[l], f[a] = n[l], o || (u = new vt(n, l, a, u, n.rxp[l]));
                     n = n._next
@@ -6463,12 +6469,15 @@ function(t, e, i) {
                     pt: c
                 }
             }, q.CSSPropTween = function(e, i, r, o, s, a, l, u, c, h, f) {
+                // CSS Property Tween Constructor
                 this.t = e, this.p = i, this.s = r, this.c = o, this.n = l || i, e instanceof _t || n.push(this.n), this.r = u ? "function" == typeof u ? u : Math.round : u, this.type = a || 0, c && (this.pr = c, t = !0), this.b = void 0 === h ? r : h, this.e = void 0 === f ? r + o : f, s && (this._next = s, s._prev = this)
             }),
+            // Function to create a tween for a CSS property
             yt = function(t, e, i, n, r, o) {
                 var s = new _t(t, e, i, n - i, r, -1, o);
                 return s.b = i, s.e = s.xs0 = n, s
             },
+            // Function to parse complex CSS values like gradients
             bt = r.parseComplex = function(t, e, i, n, o, s, a, u, c, h) {
                 i = i || s || "", "function" == typeof n && (n = n(m, p)), a = new _t(t, e, 0, 0, a, h ? 2 : 1, null, !1, u, i, n), n += "", o && pt.test(n + i) && (n = [i, n], r.colorStringFilter(n), i = n[0], n = n[1]);
                 var f, d, _, y, b, x, w, T, C, k, E, P, S, O = i.split(", ").join(",").split(" "),
