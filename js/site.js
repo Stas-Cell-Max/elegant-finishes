@@ -6384,7 +6384,7 @@ function(t, e, i) {
 
 
 
-
+              // Define a variable for various regex patterns used in parsing
                 var r, o = e ? (t.match(pt) || [""])[0] : "",
                     s = t.split(o).join("").match(_) || [],
                     a = t.substr(0, t.indexOf(s[0])),
@@ -6392,6 +6392,7 @@ function(t, e, i) {
                     u = -1 !== t.indexOf(" ") ? " " : ",",
                     c = s.length,
                     h = c > 0 ? s[0].replace(g, "") : "";
+                    // Return the appropriate function based on the value of `e`
                 return c ? r = e ? function(t) {
                     var e, f, d, p;
                     if ("number" == typeof t) t += h;
@@ -6399,11 +6400,13 @@ function(t, e, i) {
                         for (p = t.replace(R, "|").split("|"), d = 0; d < p.length; d++) p[d] = r(p[d]);
                         return p.join(",")
                     }
+                    // Further processing if regex matches are found
                     if (e = (t.match(pt) || [o])[0], d = (f = t.split(e).join("").match(_) || []).length, c > d--)
                         for (; ++d < c;) f[d] = i ? f[(d - 1) / 2 | 0] : s[d];
                     return a + f.join(u) + u + e + l + (-1 !== t.indexOf("inset") ? " inset" : "")
                 } : function(t) {
                     var e, o, f;
+                    // Handle numbers and strings similarly as above
                     if ("number" == typeof t) t += h;
                     else if (n && R.test(t)) {
                         for (o = t.replace(R, "|").split("|"), f = 0; f < o.length; f++) o[f] = r(o[f]);
@@ -6418,12 +6421,14 @@ function(t, e, i) {
             },
             gt = function(t) {
                 return t = t.split(","),
+                // Return a function to parse and handle multiple parts of a value
                     function(e, i, n, r, o, s, a) {
                         var l, u = (i + "").split(" ");
                         for (a = {}, l = 0; l < 4; l++) a[t[l]] = u[l] = u[l] || u[(l - 1) / 2 >> 0];
                         return r.parse(e, a, o, s)
                     }
             },
+             // Set the ratio for the plugin and apply transformations
             vt = (q._setPluginRatio = function(t) {
                 this.plugin.setRatio(t);
                 for (var e, i, n, r, o, s = this.data, a = s.proxy, l = s.firstMPT; l;) e = a[l.v], l.r ? e = l.r(e) : e < 1e-6 && e > -1e-6 && (e = 0), l.t[l.p] = e, l = l._next;
@@ -6583,6 +6588,23 @@ function(t, e, i) {
                     }
                 }(t))
             },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             qt = [1, 0, 0, 1, 0, 0],
             Wt = function(t, e) {
                 var i, n, r, o, s, a, l = t._gsTransform || new It,
