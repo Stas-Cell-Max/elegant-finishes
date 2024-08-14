@@ -6498,19 +6498,25 @@ function(t, e, i) {
                 }
                 return a.l || (a.type = -1, a.xs0 = a.e), a.xfirst || a
             },
+            // Initialize a counter for loop iterations
             xt = 9;
         for ((a = _t.prototype).l = a.pr = 0; --xt > 0;) a["xn" + xt] = 0, a["xs" + xt] = "";
         a.xs0 = "", a._next = a._prev = a.xfirst = a.data = a.plugin = a.setRatio = a.rxp = null, a.appendXtra = function(t, e, i, n, r, o) {
+            
+             // Function to append extra data for tween properties
             var s = this,
                 a = s.l;
             return s["xs" + a] += o && (a || s["xs" + a]) ? " " + t : t || "", i || 0 === a || s.plugin ? (s.l++, s.type = s.setRatio ? 2 : 1, s["xs" + s.l] = n || "", a > 0 ? (s.data["xn" + a] = e + i, s.rxp["xn" + a] = r, s["xn" + a] = e, s.plugin || (s.xfirst = new _t(s, "xn" + a, e, i, s.xfirst || s, 0, s.n, r, s.pr), s.xfirst.xs0 = 0), s) : (s.data = {
                 s: e + i
             }, s.rxp = {}, s.s = e, s.c = i, s.r = r, s)) : (s["xs" + a] += e + (n || ""), s)
         };
+ 
+          // Constructor for creating a new CSS property tween object
         var wt = function(t, e) {
                 e = e || {}, this.p = e.prefix && G(t) || t, s[t] = s[this.p] = this, this.format = e.formatter || mt(e.defaultValue, e.color, e.collapsible, e.multi), e.parser && (this.parse = e.parser), this.clrs = e.color, this.multi = e.multi, this.keyword = e.keyword, this.dflt = e.defaultValue, this.pr = e.priority || 0
             },
             Tt = q._registerComplexSpecialProp = function(t, e, i) {
+                // Function to register complex special properties for CSS tweens
                 "object" != typeof e && (e = {
                     parser: i
                 });
@@ -6518,6 +6524,7 @@ function(t, e, i) {
                     o = e.defaultValue;
                 for (i = i || [o], n = 0; n < r.length; n++) e.prefix = 0 === n && e.prefix, e.defaultValue = i[n] || o, new wt(r[n], e)
             },
+            // Function to register plugin properties for CSS tweens
             Ct = q._registerPluginProp = function(t) {
                 if (!s[t]) {
                     var e = t.charAt(0).toUpperCase() + t.substr(1) + "Plugin";
@@ -6529,6 +6536,8 @@ function(t, e, i) {
                     })
                 }
             };
+
+            // Additional methods and properties for the CSSPropTween prototype
         (a = wt.prototype).parseComplex = function(t, e, i, n, r, o) {
             var s, a, l, u, c, h, f = this.keyword;
             if (this.multi && (R.test(i) || R.test(e) ? (a = e.replace(R, "|").split("|"), l = i.replace(R, "|").split("|")) : f && (a = [e], l = [i])), l) {
@@ -6536,9 +6545,13 @@ function(t, e, i) {
                 e = a.join(", "), i = l.join(", ")
             }
             return bt(t, this.p, e, i, this.clrs, this.dflt, n, this.pr, r, o)
-        }, a.parse = function(t, e, n, r, o, s, a) {
+        },
+        // Function to parse and set up properties for a CSS tween
+        a.parse = function(t, e, n, r, o, s, a) {
             return this.parseComplex(t.style, this.format(Z(t, this.p, i, !1, this.dflt)), this.format(e), o, s)
-        }, r.registerSpecialProp = function(t, e, i) {
+        },
+        // Function to register special properties for CSS tweens
+        r.registerSpecialProp = function(t, e, i) {
             Tt(t, {
                 parser: function(t, n, r, o, s, a, l) {
                     var u = new _t(t, r, 0, 0, s, 2, r, !1, i);
@@ -6547,6 +6560,8 @@ function(t, e, i) {
                 priority: i
             })
         }, r.useSVGTransformAttr = !0;
+         // Additional setup for handling transformations and SVG elements
+
         var kt, Et, Pt, St, Ot, At = "scaleX,scaleY,scaleZ,x,y,z,skewX,skewY,rotation,rotationX,rotationY,perspective,xPercent,yPercent".split(","),
             Mt = G("transform"),
             Dt = V + "transform",
@@ -6556,6 +6571,7 @@ function(t, e, i) {
                 this.perspective = parseFloat(r.defaultTransformPerspective) || 0, this.force3D = !(!1 === r.defaultForce3D || !Lt) && (r.defaultForce3D || "auto")
             },
             Nt = O.e.SVGElement,
+             // Function to create an SVG element and set its attributes
             jt = function(t, e, i) {
                 var n, r = B.createElementNS("http://www.w3.org/2000/svg", t),
                     o = /([a-z])([A-Z])/g;
@@ -6568,6 +6584,7 @@ function(t, e, i) {
                 height: 50,
                 x: 100
             })).getBoundingClientRect().width, Pt.style[Rt] = "50% 50%", Pt.style[Mt] = "scaleX(0.5)", Ot = St === Pt.getBoundingClientRect().width && !(h && Lt), Ft.removeChild(Et)), Ot),
+            // Function to apply transformations to an SVG element, calculating the origin and other properties
             zt = function(t, e, i, n, o, s) {
                 var a, l, u, c, h, f, d, p, m, g, v, _, y, b, x = t._gsTransform,
                     w = Wt(t, !0);
@@ -6588,6 +6605,8 @@ function(t, e, i) {
                 } catch (t) {} else this._originalGetBBox && (e = this._originalGetBBox());
                 return r ? n.insertBefore(this, r) : n.appendChild(this), Ft.removeChild(i), this.style.cssText = o, e
             },
+
+            // Function to check if an element is an SVG element
             Ht = function(t) {
                 return !(!Nt || !t.getCTM || t.parentNode && !t.ownerSVGElement || ! function(t) {
                     try {
