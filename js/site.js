@@ -6632,22 +6632,30 @@ function(t, e, i) {
 
 
 
-
+            // Default identity matrix for 2D transforms
             qt = [1, 0, 0, 1, 0, 0],
+            // Function to extract and process the transform matrix of an element
             Wt = function(t, e) {
                 var i, n, r, o, s, a, l = t._gsTransform || new It,
                     u = t.style;
+                    // Check if modern or legacy transform is available
                 if (Mt ? n = Z(t, Dt, null, !0) : t.currentStyle && (n = (n = t.currentStyle.filter.match(M)) && 4 === n.length ? [n[0].substr(4), Number(n[2].substr(4)), Number(n[1].substr(4)), n[3].substr(4), l.x || 0, l.y || 0].join(",") : ""), i = !n || "none" === n || "matrix(1, 0, 0, 1, 0, 0)" === n, !Mt || !(a = !Q(t) || "none" === Q(t).display) && t.parentNode || (a && (o = u.display, u.display = "block"), t.parentNode || (s = 1, Ft.appendChild(t)), i = !(n = Z(t, Dt, null, !0)) || "none" === n || "matrix(1, 0, 0, 1, 0, 0)" === n, o ? u.display = o : a && Kt(u, "display"), s && Ft.removeChild(t)), (l.svg || t.getCTM && Ht(t)) && (i && -1 !== (u[Mt] + "").indexOf("matrix") && (n = u[Mt], i = 0), r = t.getAttribute("transform"), i && r && (n = "matrix(" + (r = t.transform.baseVal.consolidate().matrix).a + "," + r.b + "," + r.c + "," + r.d + "," + r.e + "," + r.f + ")", i = 0)), i) return qt;
+                // Process the matrix values to ensure precision
                 for (r = (n || "").match(g) || [], xt = r.length; --xt > -1;) o = Number(r[xt]), r[xt] = (s = o - (o |= 0)) ? (1e5 * s + (s < 0 ? -.5 : .5) | 0) / 1e5 + o : o;
+               
+               // Return the transform matrix, either as 2D or 3D based on the number of values
                 return e && r.length > 6 ? [r[0], r[1], r[4], r[5], r[12], r[13]] : r
             },
+            // Function to get or calculate the transformation details of an element
             Xt = q.getTransform = function(t, e, i, n) {
                 if (t._gsTransform && i && !n) return t._gsTransform;
                 var o, s, a, l, u, c, h = i && t._gsTransform || new It,
                     f = h.scaleX < 0,
                     d = Lt && (parseFloat(Z(t, Rt, e, !1, "0 0 0").split(" ")[2]) || h.zOrigin) || 0,
                     p = parseFloat(r.defaultTransformPerspective) || 0;
-                if (h.svg = !(!t.getCTM || !Ht(t)), h.svg && (zt(t, Z(t, Rt, e, !1, "50% 50%") + "", h, t.getAttribute("data-svg-origin")), kt = r.useSVGTransformAttr || Bt), (o = Wt(t)) !== qt) {
+                
+                    // Handle SVG-specific transformations
+                    if (h.svg = !(!t.getCTM || !Ht(t)), h.svg && (zt(t, Z(t, Rt, e, !1, "50% 50%") + "", h, t.getAttribute("data-svg-origin")), kt = r.useSVGTransformAttr || Bt), (o = Wt(t)) !== qt) {
                     if (16 === o.length) {
                         var m, g, v, _, y, b = o[0],
                             x = o[1],
@@ -6665,6 +6673,8 @@ function(t, e, i) {
                             L = o[14],
                             I = o[11],
                             j = Math.atan2(E, M);
+
+                            // If Z origin is involved, adjust the transformation matrix
                         h.zOrigin && (D = S * (L = -h.zOrigin) - o[12], R = A * L - o[13], L = M * L + h.zOrigin - o[14]), h.rotationX = j * N, j && (m = C * (_ = Math.cos(-j)) + S * (y = Math.sin(-j)), g = k * _ + A * y, v = E * _ + M * y, S = C * -y + S * _, A = k * -y + A * _, M = E * -y + M * _, I = P * -y + I * _, C = m, k = g, E = v), j = Math.atan2(-w, M), h.rotationY = j * N, j && (g = x * (_ = Math.cos(-j)) - A * (y = Math.sin(-j)), v = w * _ - M * y, A = x * y + A * _, M = w * y + M * _, I = T * y + I * _, b = m = b * _ - S * y, x = g, w = v), j = Math.atan2(x, b), h.rotation = j * N, j && (m = b * (_ = Math.cos(j)) + x * (y = Math.sin(j)), g = C * _ + k * y, v = S * _ + A * y, x = x * _ - b * y, k = k * _ - C * y, A = A * _ - S * y, b = m, C = g, S = v), h.rotationX && Math.abs(h.rotationX) + Math.abs(h.rotation) > 359.9 && (h.rotationX = h.rotation = 0, h.rotationY = 180 - h.rotationY), j = Math.atan2(C, k), h.scaleX = (1e5 * Math.sqrt(b * b + x * x + w * w) + .5 | 0) / 1e5, h.scaleY = (1e5 * Math.sqrt(k * k + E * E) + .5 | 0) / 1e5, h.scaleZ = (1e5 * Math.sqrt(S * S + A * A + M * M) + .5 | 0) / 1e5, b /= h.scaleX, C /= h.scaleY, x /= h.scaleX, k /= h.scaleY, Math.abs(j) > 2e-5 ? (h.skewX = j * N, C = 0, "simple" !== h.skewType && (h.scaleY *= 1 / Math.cos(j))) : h.skewX = 0, h.perspective = I ? 1 / (I < 0 ? -I : I) : 0, h.x = D, h.y = R, h.z = L, h.svg && (h.x -= h.xOrigin - (h.xOrigin * b - h.yOrigin * C), h.y -= h.yOrigin - (h.yOrigin * x - h.xOrigin * k))
                     } else if (!Lt || n || !o.length || h.x !== o[4] || h.y !== o[5] || !h.rotationX && !h.rotationY) {
                         var F = o.length >= 6,
@@ -6899,6 +6909,24 @@ function(t, e, i) {
                 return e._gsClassPT = s, s.e = "=" !== n.charAt(1) ? n : p.replace(new RegExp("(?:\\s|^)" + n.substr(2) + "(?![\\w-])"), "") + ("+" === n.charAt(0) ? " " + n.substr(2) : ""), e.setAttribute("class", s.e), u = it(e, c, et(e), l, f), e.setAttribute("class", p), s.data = u.firstMPT, e.style.cssText = m, s = s.xfirst = o.parse(e, u.difs, s, a)
             }
         });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         var Qt = function(t) {
             if ((1 === t || 0 === t) && this.data._totalTime === this.data._totalDuration && "isFromStart" !== this.data.data) {
                 var e, i, n, r, o, a = this.t.style,
