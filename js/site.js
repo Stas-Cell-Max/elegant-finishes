@@ -6684,14 +6684,17 @@ function(t, e, i) {
                             H = F ? o[3] : 1;
                         h.x = o[4] || 0, h.y = o[5] || 0, a = Math.sqrt(B * B + z * z), l = Math.sqrt(H * H + $ * $), u = B || z ? Math.atan2(z, B) * N : h.rotation || 0, c = $ || H ? Math.atan2($, H) * N + u : h.skewX || 0, h.scaleX = a, h.scaleY = l, h.rotation = u, h.skewX = c, Lt && (h.rotationX = h.rotationY = h.z = 0, h.perspective = p, h.scaleZ = 1), h.svg && (h.x -= h.xOrigin - (h.xOrigin * B + h.yOrigin * $), h.y -= h.yOrigin - (h.xOrigin * z + h.yOrigin * H))
                     }
+                     // Adjust skew and rotation based on calculated values
                     for (s in Math.abs(h.skewX) > 90 && Math.abs(h.skewX) < 270 && (f ? (h.scaleX *= -1, h.skewX += h.rotation <= 0 ? 180 : -180, h.rotation += h.rotation <= 0 ? 180 : -180) : (h.scaleY *= -1, h.skewX += h.skewX <= 0 ? 180 : -180)), h.zOrigin = d, h) h[s] < 2e-5 && h[s] > -2e-5 && (h[s] = 0)
                 }
+            // Cache and return the transformation
                 return i && (t._gsTransform = h, h.svg && (kt && t.style[Mt] ? O.f.delayedCall(.001, function() {
                     Kt(t.style, Mt)
                 }) : !kt && t.getAttribute("transform") && O.f.delayedCall(.001, function() {
                     t.removeAttribute("transform")
                 }))), h
             },
+            // Function to apply 2D transformations to an element (IE-specific)
             Yt = function(t) {
                 var e, i, n = this.data,
                     r = -n.rotation * I,
@@ -6702,6 +6705,7 @@ function(t, e, i) {
                     u = (Math.cos(o) * n.scaleY * 1e5 | 0) / 1e5,
                     c = this.t.style,
                     h = this.t.currentStyle;
+                    // Adjust the filter property for IE transforms
                 if (h) {
                     i = a, a = -l, l = -i, e = h.filter, c.filter = "";
                     var f, p, m = this.t.offsetWidth,
@@ -6716,6 +6720,7 @@ function(t, e, i) {
                     }
                 }
             },
+            // Function to apply 3D or 2D transforms based on the context
             Ut = q.set3DTransformRatio = q.setTransformRatio = function(t) {
                 var e, i, n, r, o, s, a, l, u, c, f, d, p, m, g, v, _, y, b, x, w = this.data,
                     T = this.t.style,
@@ -6733,6 +6738,7 @@ function(t, e, i) {
                     N = w.force3D,
                     j = w.skewY,
                     F = w.skewX;
+                     // Adjust skew and rotation based on additional parameters
                 if (j && (F += j, C += j), !((1 !== t && 0 !== t || "auto" !== N || this.tween._totalTime !== this.tween._totalDuration && this.tween._totalTime) && N || D || L || E || k || 1 !== O) || kt && R || !Lt) C || F || R ? (C *= I, x = F * I, 1e5, i = Math.cos(C) * P, o = Math.sin(C) * P, n = Math.sin(C - x) * -S, s = Math.cos(C - x) * S, x && "simple" === w.skewType && (e = Math.tan(x - j * I), n *= e = Math.sqrt(1 + e * e), s *= e, j && (e = Math.tan(j * I), i *= e = Math.sqrt(1 + e * e), o *= e)), R && (A += w.xOrigin - (w.xOrigin * i + w.yOrigin * n) + w.xOffset, M += w.yOrigin - (w.xOrigin * o + w.yOrigin * s) + w.yOffset, kt && (w.xPercent || w.yPercent) && (g = this.t.getBBox(), A += .01 * w.xPercent * g.width, M += .01 * w.yPercent * g.height), A < (g = 1e-6) && A > -g && (A = 0), M < g && M > -g && (M = 0)), b = (1e5 * i | 0) / 1e5 + "," + (1e5 * o | 0) / 1e5 + "," + (1e5 * n | 0) / 1e5 + "," + (1e5 * s | 0) / 1e5 + "," + A + "," + M + ")", R && kt ? this.t.setAttribute("transform", "matrix(" + b) : T[Mt] = (w.xPercent || w.yPercent ? "translate(" + w.xPercent + "%," + w.yPercent + "%) matrix(" : "matrix(") + b) : T[Mt] = (w.xPercent || w.yPercent ? "translate(" + w.xPercent + "%," + w.yPercent + "%) matrix(" : "matrix(") + P + ",0,0," + S + "," + A + "," + M + ")";
                 else {
                     if (h && (P < (g = 1e-4) && P > -g && (P = O = 2e-5), S < g && S > -g && (S = O = 2e-5), !L || w.z || w.rotationX || w.rotationY || (L = 0)), C || F) C *= I, v = i = Math.cos(C), _ = o = Math.sin(C), F && (C -= F * I, v = Math.cos(C), _ = Math.sin(C), "simple" === w.skewType && (e = Math.tan((F - j) * I), v *= e = Math.sqrt(1 + e * e), _ *= e, w.skewY && (e = Math.tan(j * I), i *= e = Math.sqrt(1 + e * e), o *= e))), n = -_, s = v;
@@ -6743,6 +6749,7 @@ function(t, e, i) {
                     c = 1, r = a = l = u = f = d = 0, p = L ? -1 / L : 0, m = w.zOrigin, g = 1e-6, ",", "0", (C = E * I) && (v = Math.cos(C), l = -(_ = Math.sin(C)), f = p * -_, r = i * _, a = o * _, c = v, p *= v, i *= v, o *= v), (C = k * I) && (e = n * (v = Math.cos(C)) + r * (_ = Math.sin(C)), y = s * v + a * _, u = c * _, d = p * _, r = n * -_ + r * v, a = s * -_ + a * v, c *= v, p *= v, n = e, s = y), 1 !== O && (r *= O, a *= O, c *= O, p *= O), 1 !== S && (n *= S, s *= S, u *= S, d *= S), 1 !== P && (i *= P, o *= P, l *= P, f *= P), (m || R) && (m && (A += r * -m, M += a * -m, D += c * -m + m), R && (A += w.xOrigin - (w.xOrigin * i + w.yOrigin * n) + w.xOffset, M += w.yOrigin - (w.xOrigin * o + w.yOrigin * s) + w.yOffset), A < g && A > -g && (A = "0"), M < g && M > -g && (M = "0"), D < g && D > -g && (D = 0)), b = w.xPercent || w.yPercent ? "translate(" + w.xPercent + "%," + w.yPercent + "%) matrix3d(" : "matrix3d(", b += (i < g && i > -g ? "0" : i) + "," + (o < g && o > -g ? "0" : o) + "," + (l < g && l > -g ? "0" : l), b += "," + (f < g && f > -g ? "0" : f) + "," + (n < g && n > -g ? "0" : n) + "," + (s < g && s > -g ? "0" : s), k || E || 1 !== O ? (b += "," + (u < g && u > -g ? "0" : u) + "," + (d < g && d > -g ? "0" : d) + "," + (r < g && r > -g ? "0" : r), b += "," + (a < g && a > -g ? "0" : a) + "," + (c < g && c > -g ? "0" : c) + "," + (p < g && p > -g ? "0" : p) + ",") : b += ",0,0,0,0,1,0,", b += A + "," + M + "," + D + "," + (L ? 1 + -D / L : 1) + ")", T[Mt] = b
                 }
             };
+            // Initial properties for the transform object prototype
         (a = It.prototype).x = a.y = a.z = a.skewX = a.skewY = a.rotation = a.rotationX = a.rotationY = a.zOrigin = a.xPercent = a.yPercent = a.xOffset = a.yOffset = 0, a.scaleX = a.scaleY = a.scaleZ = 1, Tt("transform,scale,scaleX,scaleY,scaleZ,x,y,z,rotation,rotationX,rotationY,rotationZ,skewX,skewY,shortRotation,shortRotationX,shortRotationY,shortRotationZ,transformOrigin,svgOrigin,transformPerspective,directionalRotation,parseTransform,force3D,skewType,xPercent,yPercent,smoothOrigin", {
             parser: function(t, e, n, o, s, a, l) {
                 if (o._lastParsedTransform === l) return s;
@@ -6778,7 +6785,10 @@ function(t, e, i) {
                 return S = k.transformOrigin, P.svg && (S || k.svgOrigin) && (_ = P.xOffset, y = P.yOffset, zt(t, st(S), h, k.svgOrigin, k.smoothOrigin), s = yt(P, "xOrigin", (w ? P : h).xOrigin, h.xOrigin, s, "transformOrigin"), s = yt(P, "yOrigin", (w ? P : h).yOrigin, h.yOrigin, s, "transformOrigin"), _ === P.xOffset && y === P.yOffset || (s = yt(P, "xOffset", w ? _ : P.xOffset, P.xOffset, s, "transformOrigin"), s = yt(P, "yOffset", w ? y : P.yOffset, P.yOffset, s, "transformOrigin")), S = "0px 0px"), (S || Lt && d && P.zOrigin) && (Mt ? (g = !0, x = Rt, S = (S || Z(t, x, i, !1, "50% 50%")) + "", (s = new _t(T, x, 0, 0, s, -1, "transformOrigin")).b = T[x], s.plugin = a, Lt ? (f = P.zOrigin, S = S.split(" "), P.zOrigin = (S.length > 2 && (0 === f || "0px" !== S[2]) ? parseFloat(S[2]) : f) || 0, s.xs0 = s.e = S[0] + " " + (S[1] || "50%") + " 0px", (s = new _t(P, "zOrigin", 0, 0, s, -1, s.n)).b = f, s.xs0 = s.e = P.zOrigin) : s.xs0 = s.e = S) : st(S + "", P)), g && (o._transformType = P.svg && kt || !d && 3 !== this._transformType ? 2 : 3), u && (l[n] = u), c && (l.scale = c), s
             },
             prefix: !0
-        }), Tt("boxShadow", {
+        }), 
+        
+        // Registering various complex properties for tweening with their parsers
+        Tt("boxShadow", {
             defaultValue: "0px 0px 0px 0px #999",
             prefix: !0,
             color: !0,
@@ -6873,12 +6883,15 @@ function(t, e, i) {
                 return new _t(s, a, 0, 0, r, -1, i, !1, 0, s[a], e)
             }
         });
+
+        // Function to handle opacity, autoAlpha, and related properties
         var Vt = function(t) {
             var e, i = this.t,
                 n = i.filter || Z(this.data, "filter") || "",
                 r = this.s + this.c * t | 0;
             100 === r && (-1 === n.indexOf("atrix(") && -1 === n.indexOf("radient(") && -1 === n.indexOf("oader(") ? (i.removeAttribute("filter"), e = !Z(this.data, "filter")) : (i.filter = n.replace(T, ""), e = !0)), e || (this.xn1 && (i.filter = n = n || "alpha(opacity=" + r + ")"), -1 === n.indexOf("pacity") ? 0 === r && this.xn1 || (i.filter = n + " alpha(opacity=" + r + ")") : i.filter = n.replace(x, "opacity=" + r))
         };
+        // Register opacity-related properties for tweening
         Tt("opacity,alpha,autoAlpha", {
             defaultValue: "1",
             parser: function(t, e, n, r, o, s) {
