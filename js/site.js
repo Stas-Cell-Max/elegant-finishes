@@ -6617,21 +6617,6 @@ function(t, e, i) {
                 }(t))
             },
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             // Default identity matrix for 2D transforms
             qt = [1, 0, 0, 1, 0, 0],
             // Function to extract and process the transform matrix of an element
@@ -6939,7 +6924,7 @@ function(t, e, i) {
 
 
 
-
+      // Function to clear specified CSS properties
         var Qt = function(t) {
             if ((1 === t || 0 === t) && this.data._totalTime === this.data._totalDuration && "isFromStart" !== this.data.data) {
                 var e, i, n, r, o, a = this.t.style,
@@ -6950,12 +6935,20 @@ function(t, e, i) {
                 r && (Kt(a, Mt), (o = this.t._gsTransform) && (o.svg && (this.t.removeAttribute("data-svg-origin"), this.t.removeAttribute("transform")), delete this.t._gsTransform))
             }
         };
+
+
+        // Register the "clearProps" plugin
         for (Tt("clearProps", {
                 parser: function(e, i, n, r, o) {
                     return (o = new _t(e, n, 0, 0, o, 2)).setRatio = Qt, o.e = i, o.pr = -10, o.data = r._tween, t = !0, o
                 }
-            }), a = "bezier,throwProps,physicsProps,physics2D".split(","), xt = a.length; xt--;) Ct(a[xt]);
-        (a = r.prototype)._firstPT = a._lastParsedTransform = a._transform = null, a._onInitTween = function(o, a, h, d) {
+            }),
+            // Process additional plugins
+            a = "bezier,throwProps,physicsProps,physics2D".split(","), xt = a.length; xt--;) Ct(a[xt]);
+            // Prototype extensions
+            (a = r.prototype)._firstPT = a._lastParsedTransform = a._transform = null,
+            // Initialize the tween for the target element
+            a._onInitTween = function(o, a, h, d) {
             if (!o.nodeType) return !1;
             this._target = p = o, this._tween = h, this._vars = a, m = d, l = a.autoRound, t = !1, e = a.suffixMap || r.suffixMap, i = Q(o, ""), n = this._overwriteProps;
             var g, v, _, y, b, x, T, C, k, E = o.style;
@@ -6971,7 +6964,9 @@ function(t, e, i) {
                 this._firstPT = y
             }
             return !0
-        }, a.parse = function(t, n, r, o) {
+        }, 
+        // Parsing CSS properties and values
+        a.parse = function(t, n, r, o) {
             var a, u, c, h, f, d, g, v, _, y, x = t.style;
             for (a in n) {
                 if ("function" == typeof(d = n[a]) && (d = d(m, p)), u = s[a]) r = u.parse(t, d, a, this, r, o, n);
@@ -6985,7 +6980,9 @@ function(t, e, i) {
                 o && r && !r.plugin && (r.plugin = o)
             }
             return r
-        }, a.setRatio = function(t) {
+        },
+        // Set the ratio for CSS property transitions
+        a.setRatio = function(t) {
             var e, i, n, r = this._firstPT;
             if (1 !== t || this._tween._time !== this._tween._duration && 0 !== this._tween._time)
                 if (t || this._tween._time !== this._tween._duration && 0 !== this._tween._time || -1e-6 === this._tween._rawPrevTime)
@@ -7150,6 +7147,31 @@ function(t, e, i) {
         }
     });
     j._autoCSS = !0,
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         /*!
          * VERSION: 2.0.2
          * DATE: 2018-08-27
