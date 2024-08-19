@@ -7015,20 +7015,30 @@ function(t, e, i) {
                         else r.setRatio(t);
                         r = r._next
                     }
-        }, a._enableTransforms = function(t) {
+        }, 
+        // Enable CSS transforms for the element
+        a._enableTransforms = function(t) {
             this._transform = this._transform || Xt(this._target, i, !0), this._transformType = this._transform.svg && kt || !t && 3 !== this._transformType ? 2 : 3
         };
+        // Function to set a lazy property
         var Zt = function(t) {
             this.t[this.p] = this.e, this.data._linkCSSP(this, this._next, null, !0)
         };
+        // Add a lazy property to the tween
         a._addLazySet = function(t, e, i) {
             var n = this._firstPT = new _t(t, e, 0, 0, this._firstPT, 2);
             n.e = i, n.setRatio = Zt, n.data = this
-        }, a._linkCSSP = function(t, e, i, n) {
+        }, 
+        // Link CSS property tween chains
+        a._linkCSSP = function(t, e, i, n) {
             return t && (e && (e._prev = t), t._next && (t._next._prev = t._prev), t._prev ? t._prev._next = t._next : this._firstPT === t && (this._firstPT = t._next, n = !0), i ? i._next = t : n || null !== this._firstPT || (this._firstPT = t), t._next = e, t._prev = i), t
-        }, a._mod = function(t) {
+        },
+        // Modify specific properties in the tween
+        a._mod = function(t) {
             for (var e = this._firstPT; e;) "function" == typeof t[e.p] && (e.r = t[e.p]), e = e._next
-        }, a._kill = function(t) {
+        },
+        // Kill specific properties in the tween
+        a._kill = function(t) {
             var e, i, n, r = t;
             if (t.autoAlpha || t.alpha) {
                 for (i in r = {}, t) r[i] = t[i];
@@ -7037,6 +7047,8 @@ function(t, e, i) {
             for (t.className && (e = this._classNamePT) && ((n = e.xfirst) && n._prev ? this._linkCSSP(n._prev, e._next, n._prev._prev) : n === this._firstPT && (this._firstPT = e._next), e._next && this._linkCSSP(e._next, e._next._next, n._prev), this._classNamePT = null), e = this._firstPT; e;) e.plugin && e.plugin !== i && e.plugin._kill && (e.plugin._kill(t), i = e.plugin), e = e._next;
             return O.d.prototype._kill.call(this, r)
         };
+
+        // Recursively gather all child nodes and their styles
         var Jt = function(t, e, i) {
             var n, r, o, s;
             if (t.slice)
@@ -7044,6 +7056,8 @@ function(t, e, i) {
             else
                 for (r = (n = t.childNodes).length; --r > -1;) s = (o = n[r]).type, o.style && (e.push(et(o)), i && i.push(o)), 1 !== s && 9 !== s && 11 !== s || !o.childNodes.length || Jt(o, e, i)
         };
+
+        // Cascade tweens across elements
         return r.cascadeTo = function(t, e, i) {
             var n, r, o, s, a = O.f.to(t, e, i),
                 l = [a],
@@ -7057,9 +7071,15 @@ function(t, e, i) {
                     for (o in s = {}, r) s[o] = u[n][o];
                     l.push(O.f.fromTo(h[n], e, s, r))
                 } return l
-        }, O.d.activate([r]), r
-    }, !0);
+        }, O.d.activate([r]),
+        
+        r
+    }, 
+    !0);
+
+    // Main entry point for CSSPlugin
     var M = O.g.CSSPlugin,
+    // Plugin definition for handling HTML attributes
         D = O.e._gsDefine.plugin({
             propName: "attr",
             API: 2,
@@ -7071,6 +7091,7 @@ function(t, e, i) {
                 return !0
             }
         }),
+         // Plugin for rounding property values
         R = O.e._gsDefine.plugin({
             propName: "roundProps",
             version: "1.7.0",
@@ -7080,15 +7101,18 @@ function(t, e, i) {
                 return this._tween = i, !0
             }
         }),
+         // Function to create rounding logic for property values
         L = function(t) {
             var e = t < 1 ? Math.pow(10, (t + "").length - 2) : 1;
             return function(i) {
                 return (Math.round(i / t) * t * e | 0) / e
             }
         },
+           // Function to apply rounding to properties
         I = function(t, e) {
             for (; t;) t.f || t.blob || (t.m = e || Math.round), t = t._next
         },
+        // Prototype reference for roundProps plugin
         N = R.prototype;
     /*!
      * VERSION: 0.6.1
@@ -7101,6 +7125,8 @@ function(t, e, i) {
      *
      * @author: Jack Doyle, jack@greensock.com
      */
+
+    // Initialize all properties for rounding
     N._onInitAllProps = function() {
         var t, e, i, n, r = this._tween,
             o = r.vars.roundProps,
@@ -7113,7 +7139,10 @@ function(t, e, i) {
         for (n in s)
             for (t = r._firstPT; t;) e = t._next, t.pg ? t.t._mod(s) : t.n === n && (2 === t.f && t.t ? I(t.t._firstPT, s[n]) : (this._add(t.t, n, t.s, t.c, s[n]), e && (e._prev = t._prev), t._prev ? t._prev._next = e : r._firstPT === t && (r._firstPT = e), t._next = t._prev = null, r._propLookup[n] = a)), t = e;
         return !1
-    }, N._add = function(t, e, i, n, r) {
+    },
+    
+    // Add a tween to round properties
+    N._add = function(t, e, i, n, r) {
         this._addTween(t, e, i, i + n, e, r || Math.round), this._overwriteProps.push(e)
     };
     /*!
@@ -7127,6 +7156,8 @@ function(t, e, i) {
      *
      * @author: Jack Doyle, jack@greensock.com
      **/
+
+    // Plugin definition for directional rotation
     var j = O.e._gsDefine.plugin({
         propName: "directionalRotation",
         version: "0.3.1",
@@ -7139,6 +7170,7 @@ function(t, e, i) {
             for (r in e) "useRadians" !== r && ("function" == typeof(a = e[r]) && (a = a(n, t)), o = (u = (a + "").split("_"))[0], s = parseFloat("function" != typeof t[r] ? t[r] : t[r.indexOf("set") || "function" != typeof t["get" + r.substr(3)] ? r : "get" + r.substr(3)]()), l = (a = this.finals[r] = "string" == typeof o && "=" === o.charAt(1) ? s + parseInt(o.charAt(0) + "1", 10) * Number(o.substr(2)) : Number(o) || 0) - s, u.length && (-1 !== (o = u.join("_")).indexOf("short") && (l %= c) !== l % (c / 2) && (l = l < 0 ? l + c : l - c), -1 !== o.indexOf("_cw") && l < 0 ? l = (l + 9999999999 * c) % c - (l / c | 0) * c : -1 !== o.indexOf("ccw") && l > 0 && (l = (l - 9999999999 * c) % c - (l / c | 0) * c)), (l > 1e-6 || l < -1e-6) && (this._addTween(t, r, s, s + l, r), this._overwriteProps.push(r)));
             return !0
         },
+         // Set the final rotation value
         set: function(t) {
             var e;
             if (1 !== t) this._super.setRatio.call(this, t);
@@ -7146,6 +7178,7 @@ function(t, e, i) {
                 for (e = this._firstPT; e;) e.f ? e.t[e.p](this.finals[e.p]) : e.t[e.p] = this.finals[e.p], e = e._next
         }
     });
+    // Automatically apply CSS properties
     j._autoCSS = !0,
 
 
@@ -7183,13 +7216,20 @@ function(t, e, i) {
          *
          * @author: Jack Doyle, jack@greensock.com
          */
+
+        // Define the "TimelineLite" class, extending from "core.Animation" and "core.SimpleTimeline"
         O.e._gsDefine("TimelineLite", ["core.Animation", "core.SimpleTimeline", "TweenLite"], function() {
+           
+            // Constructor function for TimelineLite
             var t = function(t) {
                     O.c.call(this, t), this._labels = {}, this.autoRemoveChildren = !0 === this.vars.autoRemoveChildren, this.smoothChildTiming = !0 === this.vars.smoothChildTiming, this._sortChildren = !0, this._onUpdate = this.vars.onUpdate;
+                   // Handle variable substitutions
                     var e, i, n = this.vars;
                     for (i in n) e = n[i], r(e) && -1 !== e.join("").indexOf("{self}") && (n[i] = this._swapSelfInParams(e));
+                    // Add initial tweens if provided
                     r(n.tweens) && this.add(n.tweens, 0, n.align, n.stagger)
                 },
+                /// Internal references
                 e = O.f._internals,
                 i = t._internals = {},
                 n = e.isSelector,
@@ -7197,6 +7237,8 @@ function(t, e, i) {
                 o = e.lazyTweens,
                 s = e.lazyRender,
                 a = O.e._gsDefine.globals,
+
+                // Utility functions
                 l = function(t) {
                     var e, i = {};
                     for (e in t) i[e] = t[e];
@@ -7207,23 +7249,37 @@ function(t, e, i) {
                     for (n in o) r = o[n], t[n] = "function" == typeof r ? r(i, e[i]) : r[i % r.length];
                     delete t.cycle
                 },
+
+                 // Empty pause callback
                 c = i.pauseCallback = function() {},
+                // Convert an array-like object to an array
                 h = function(t) {
                     var e, i = [],
                         n = t.length;
                     for (e = 0; e !== n; i.push(t[e++]));
                     return i
                 },
+                // Inherit from core.Animation
                 f = t.prototype = new O.c;
-            return t.version = "2.0.2", f.constructor = t, f.kill()._gc = f._forcingPlayhead = f._hasPause = !1, f.to = function(t, e, i, n) {
+                // Set version number
+            return t.version = "2.0.2",
+            // Constructor setup
+            f.constructor = t,
+             f.kill()._gc = f._forcingPlayhead = f._hasPause = !1,
+             // Add tween methods
+             f.to = function(t, e, i, n) {
                 var r = i.repeat && a.TweenMax || O.f;
                 return e ? this.add(new r(t, e, i), n) : this.set(t, i, n)
-            }, f.from = function(t, e, i, n) {
+            },
+             f.from = function(t, e, i, n) {
                 return this.add((i.repeat && a.TweenMax || O.f).from(t, e, i), n)
-            }, f.fromTo = function(t, e, i, n, r) {
+            },
+             f.fromTo = function(t, e, i, n, r) {
                 var o = n.repeat && a.TweenMax || O.f;
                 return e ? this.add(o.fromTo(t, e, i, n), r) : this.set(t, n, r)
-            }, f.staggerTo = function(e, i, r, o, s, a, c, f) {
+            },
+            // Stagger methods for tweens
+            f.staggerTo = function(e, i, r, o, s, a, c, f) {
                 var d, p, m = new t({
                         onComplete: a,
                         onCompleteParams: c,
@@ -7425,6 +7481,32 @@ function(t, e, i) {
             }, t
         }, !0);
     var F = O.g.TimelineLite;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /*!
      * VERSION: 2.0.2
      * DATE: 2018-08-27
