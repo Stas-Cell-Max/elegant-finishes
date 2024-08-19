@@ -7289,21 +7289,31 @@ function(t, e, i) {
                     g = r.cycle;
                 for ("string" == typeof e && (e = O.f.selector(e) || e), n(e = e || []) && (e = h(e)), (o = o || 0) < 0 && ((e = h(e)).reverse(), o *= -1), p = 0; p < e.length; p++)(d = l(r)).startAt && (d.startAt = l(d.startAt), d.startAt.cycle && u(d.startAt, e, p)), g && (u(d, e, p), null != d.duration && (i = d.duration, delete d.duration)), m.to(e[p], i, d, p * o);
                 return this.add(m, s)
-            }, f.staggerFrom = function(t, e, i, n, r, o, s, a) {
+            }, 
+            f.staggerFrom = function(t, e, i, n, r, o, s, a) {
                 return i.immediateRender = 0 != i.immediateRender, i.runBackwards = !0, this.staggerTo(t, e, i, n, r, o, s, a)
-            }, f.staggerFromTo = function(t, e, i, n, r, o, s, a, l) {
+            },
+             f.staggerFromTo = function(t, e, i, n, r, o, s, a, l) {
                 return n.startAt = i, n.immediateRender = 0 != n.immediateRender && 0 != i.immediateRender, this.staggerTo(t, e, n, r, o, s, a, l)
-            }, f.call = function(t, e, i, n) {
+            }, 
+            // Method to call a function at a specific point in the timeline
+            f.call = function(t, e, i, n) {
                 return this.add(O.f.delayedCall(0, t, e, i), n)
-            }, f.set = function(t, e, i) {
+            },
+            // Method to set properties at a specific point in the timeline
+             f.set = function(t, e, i) {
                 return i = this._parseTimeOrLabel(i, 0, !0), null == e.immediateRender && (e.immediateRender = i === this._time && !this._paused), this.add(new O.f(t, 0, e), i)
-            }, t.exportRoot = function(e, i) {
+            }, 
+            // Export the root timeline
+            t.exportRoot = function(e, i) {
                 null == (e = e || {}).smoothChildTiming && (e.smoothChildTiming = !0);
                 var n, r, o, s, a = new t(e),
                     l = a._timeline;
                 for (null == i && (i = !0), l._remove(a, !0), a._startTime = 0, a._rawPrevTime = a._time = a._totalTime = l._time, o = l._first; o;) s = o._next, i && o instanceof O.f && o.target === o.vars.onComplete || ((r = o._startTime - o._delay) < 0 && (n = 1), a.add(o, r)), o = s;
                 return l.add(a, 0), n && a.totalDuration(), a
-            }, f.add = function(e, i, n, o) {
+            }, 
+            // Adding and removing methods
+            f.add = function(e, i, n, o) {
                 var s, a, l, u, c, h;
                 if ("number" != typeof i && (i = this._parseTimeOrLabel(i, 0, !0, e)), !(e instanceof O.a)) {
                     if (e instanceof Array || e && e.push && r(e)) {
@@ -7319,7 +7329,8 @@ function(t, e, i) {
                 if (O.c.prototype.add.call(this, e, i), e._time && (s = Math.max(0, Math.min(e.totalDuration(), (this.rawTime() - e._startTime) * e._timeScale)), Math.abs(s - e._totalTime) > 1e-5 && e.render(s, !1, !1)), (this._gc || this._time === this._duration) && !this._paused && this._duration < this.duration())
                     for (h = (c = this).rawTime() > e._startTime; c._timeline;) h && c._timeline.smoothChildTiming ? c.totalTime(c._totalTime, !0) : c._gc && c._enabled(!0, !1), c = c._timeline;
                 return this
-            }, f.remove = function(t) {
+            }, 
+            f.remove = function(t) {
                 if (t instanceof O.a) {
                     this._remove(t, !1);
                     var e = t._timeline = t.vars.useFrames ? O.a._rootFramesTimeline : O.a._rootTimeline;
@@ -7330,24 +7341,34 @@ function(t, e, i) {
                     return this
                 }
                 return "string" == typeof t ? this.removeLabel(t) : this.kill(null, t)
-            }, f._remove = function(t, e) {
+            }, 
+            f._remove = function(t, e) {
                 return O.c.prototype._remove.call(this, t, e), this._last ? this._time > this.duration() && (this._time = this._duration, this._totalTime = this._totalDuration) : this._time = this._totalTime = this._duration = this._totalDuration = 0, this
-            }, f.append = function(t, e) {
+            },
+            // Other utility methods for managing the timeline
+             f.append = function(t, e) {
                 return this.add(t, this._parseTimeOrLabel(null, e, !0, t))
-            }, f.insert = f.insertMultiple = function(t, e, i, n) {
+            }, 
+            f.insert = f.insertMultiple = function(t, e, i, n) {
                 return this.add(t, e || 0, i, n)
-            }, f.appendMultiple = function(t, e, i, n) {
+            },
+             f.appendMultiple = function(t, e, i, n) {
                 return this.add(t, this._parseTimeOrLabel(null, e, !0, t), i, n)
-            }, f.addLabel = function(t, e) {
+            },
+            f.addLabel = function(t, e) {
                 return this._labels[t] = this._parseTimeOrLabel(e), this
-            }, f.addPause = function(t, e, i, n) {
+            },
+             f.addPause = function(t, e, i, n) {
                 var r = O.f.delayedCall(0, c, i, n || this);
                 return r.vars.onComplete = r.vars.onReverseComplete = e, r.data = "isPause", this._hasPause = !0, this.add(r, t)
-            }, f.removeLabel = function(t) {
+            }, 
+            f.removeLabel = function(t) {
                 return delete this._labels[t], this
-            }, f.getLabelTime = function(t) {
+            },
+             f.getLabelTime = function(t) {
                 return null != this._labels[t] ? this._labels[t] : -1
-            }, f._parseTimeOrLabel = function(t, e, i, n) {
+            },
+             f._parseTimeOrLabel = function(t, e, i, n) {
                 var o, s;
                 if (n instanceof O.a && n.timeline === this) this.remove(n);
                 else if (n && (n instanceof Array || n.push && r(n)))
@@ -7359,15 +7380,21 @@ function(t, e, i) {
                     e = parseInt(t.charAt(s - 1) + "1", 10) * Number(t.substr(s + 1)), t = s > 1 ? this._parseTimeOrLabel(t.substr(0, s - 1), 0, i) : o
                 }
                 return Number(t) + e
-            }, f.seek = function(t, e) {
+            }, 
+            f.seek = function(t, e) {
                 return this.totalTime("number" == typeof t ? t : this._parseTimeOrLabel(t), !1 !== e)
-            }, f.stop = function() {
+            },
+             f.stop = function() {
                 return this.paused(!0)
-            }, f.gotoAndPlay = function(t, e) {
+            },
+             f.gotoAndPlay = function(t, e) {
                 return this.play(t, e)
-            }, f.gotoAndStop = function(t, e) {
+            },
+             f.gotoAndStop = function(t, e) {
                 return this.pause(t, e)
-            }, f.render = function(t, e, i) {
+            },
+            // Render function to handle playback and updates
+             f.render = function(t, e, i) {
                 this._gc && this._enabled(!0, !1);
                 var n, r, a, l, u, c, h, f = this._time,
                     d = this._dirty ? this.totalDuration() : this._totalDuration,
@@ -7408,7 +7435,9 @@ function(t, e, i) {
                         }
                     this._onUpdate && (e || (o.length && s(), this._callback("onUpdate"))), l && (this._gc || p !== this._startTime && m === this._timeScale || (0 === this._time || d >= this.totalDuration()) && (r && (o.length && s(), this._timeline.autoRemoveChildren && this._enabled(!1, !1), this._active = !1), !e && this.vars[l] && this._callback(l)))
                 }
-            }, f._hasPausedChild = function() {
+            },
+            // Other utility methods
+            f._hasPausedChild = function() {
                 for (var e = this._first; e;) {
                     if (e._paused || e instanceof t && e._hasPausedChild()) return !0;
                     e = e._next
@@ -7478,8 +7507,11 @@ function(t, e, i) {
                 return t === O.a._rootFramesTimeline
             }, f.rawTime = function(t) {
                 return t && (this._paused || this._repeat && this.time() > 0 && this.totalProgress() < 1) ? this._totalTime % (this._duration + this._repeatDelay) : this._paused ? this._totalTime : (this._timeline.rawTime(t) - this._startTime) * this._timeScale
-            }, t
+            },
+              // Return the constructor function
+            t
         }, !0);
+        // Define global references to the TimelineLite class
     var F = O.g.TimelineLite;
 
 
