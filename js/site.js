@@ -7550,7 +7550,11 @@ function(t, e, i) {
      *
      * @author: Jack Doyle, jack@greensock.com
      */
+
+    // Define the "TimelineMax" module as an extension of "TimelineLite"
     O.e._gsDefine("TimelineMax", ["TimelineLite", "TweenLite", "easing.Ease"], function() {
+       
+       // Constructor for TimelineMax, which extends TimelineLite
         var t = function(t) {
                 F.call(this, t), this._repeat = this.vars.repeat || 0, this._repeatDelay = this.vars.repeatDelay || 0, this._cycle = 0, this._yoyo = !0 === this.vars.yoyo, this._dirty = !0
             },
@@ -7560,19 +7564,31 @@ function(t, e, i) {
             r = O.e._gsDefine.globals,
             o = new O.b(null, null, 1, 0),
             s = t.prototype = new F;
-        return s.constructor = t, s.kill()._gc = !1, t.version = "2.0.2", s.invalidate = function() {
+
+            // Set the constructor property to reference the correct constructor
+        return s.constructor = t,
+        // Invalidate method to reset internal states and reconfigure the instance
+         s.kill()._gc = !1, t.version = "2.0.2", s.invalidate = function() {
             return this._yoyo = !0 === this.vars.yoyo, this._repeat = this.vars.repeat || 0, this._repeatDelay = this.vars.repeatDelay || 0, this._uncache(!0), F.prototype.invalidate.call(this)
-        }, s.addCallback = function(t, e, i, n) {
+        },
+        // Method to add a callback at a specific time
+         s.addCallback = function(t, e, i, n) {
             return this.add(O.f.delayedCall(0, t, i, n), e)
-        }, s.removeCallback = function(t, e) {
+        }, 
+        // Method to remove a callback
+        s.removeCallback = function(t, e) {
             if (t)
                 if (null == e) this._kill(null, t);
                 else
                     for (var i = this.getTweensOf(t, !1), n = i.length, r = this._parseTimeOrLabel(e); --n > -1;) i[n]._startTime === r && i[n]._enabled(!1, !1);
             return this
-        }, s.removePause = function(t) {
+        }, 
+         // Method to remove a pause from the timeline
+        s.removePause = function(t) {
             return this.removeCallback(F._internals.pauseCallback, t)
-        }, s.tweenTo = function(t, e) {
+        },
+        // Method to tween to a specific point in time
+        s.tweenTo = function(t, e) {
             e = e || {};
             var i, n, s, a = {
                     ease: o,
@@ -7585,7 +7601,9 @@ function(t, e, i) {
             return a.time = this._parseTimeOrLabel(t), i = Math.abs(Number(a.time) - this._time) / this._timeScale || .001, s = new l(this, i, a), a.onStart = function() {
                 s.target.paused(!0), s.vars.time === s.target.time() || i !== s.duration() || s.isFromTo || s.duration(Math.abs(s.vars.time - s.target.time()) / s.target._timeScale).render(s.time(), !0, !0), e.onStart && e.onStart.apply(e.onStartScope || e.callbackScope || s, e.onStartParams || [])
             }, s
-        }, s.tweenFromTo = function(t, e, i) {
+        },
+          // Method to tween from one point in time to another
+        s.tweenFromTo = function(t, e, i) {
             i = i || {}, t = this._parseTimeOrLabel(t), i.startAt = {
                 onComplete: this.seek,
                 onCompleteParams: [t],
@@ -7593,7 +7611,9 @@ function(t, e, i) {
             }, i.immediateRender = !1 !== i.immediateRender;
             var n = this.tweenTo(e, i);
             return n.isFromTo = 1, n.duration(Math.abs(n.vars.time - t) / this._timeScale || .001)
-        }, s.render = function(t, e, r) {
+        },
+        // Override render method to handle timeline updates
+        s.render = function(t, e, r) {
             this._gc && this._enabled(!0, !1);
             var o, s, a, l, u, c, h, f, d = this._time,
                 p = this._dirty ? this.totalDuration() : this._totalDuration,
@@ -7646,7 +7666,9 @@ function(t, e, i) {
                     }
                 this._onUpdate && (e || (i.length && n(), this._callback("onUpdate"))), l && (this._locked || this._gc || v !== this._startTime && _ === this._timeScale || (0 === this._time || p >= this.totalDuration()) && (s && (i.length && n(), this._timeline.autoRemoveChildren && this._enabled(!1, !1), this._active = !1), !e && this.vars[l] && this._callback(l)))
             } else g !== this._totalTime && this._onUpdate && (e || this._callback("onUpdate"))
-        }, s.getActive = function(t, e, i) {
+        },
+        // Method to get all active tweens
+        s.getActive = function(t, e, i) {
             null == t && (t = !0), null == e && (e = !0), null == i && (i = !1);
             var n, r, o = [],
                 s = this.getChildren(t, e, i),
@@ -7654,19 +7676,26 @@ function(t, e, i) {
                 l = s.length;
             for (n = 0; n < l; n++)(r = s[n]).isActive() && (o[a++] = r);
             return o
-        }, s.getLabelAfter = function(t) {
+        }, 
+        // Method to get the label after a specific time
+        s.getLabelAfter = function(t) {
             t || 0 !== t && (t = this._time);
             var e, i = this.getLabelsArray(),
                 n = i.length;
             for (e = 0; e < n; e++)
                 if (i[e].time > t) return i[e].name;
             return null
-        }, s.getLabelBefore = function(t) {
+        },
+        
+        // Method to get the label before a specific time
+        s.getLabelBefore = function(t) {
             null == t && (t = this._time);
             for (var e = this.getLabelsArray(), i = e.length; --i > -1;)
                 if (e[i].time < t) return e[i].name;
             return null
-        }, s.getLabelsArray = function() {
+        }, 
+        // Method to get an array of labels
+        s.getLabelsArray = function() {
             var t, e = [],
                 i = 0;
             for (t in this._labels) e[i++] = {
@@ -7676,7 +7705,9 @@ function(t, e, i) {
             return e.sort(function(t, e) {
                 return t.time - e.time
             }), e
-        }, s.invalidate = function() {
+        },
+        // Override invalidate method to reset internal states
+        s.invalidate = function() {
             return this._locked = !1, F.prototype.invalidate.call(this)
         }, s.progress = function(t, e) {
             return arguments.length ? this.totalTime(this.duration() * (this._yoyo && 0 != (1 & this._cycle) ? 1 - t : t) + this._cycle * (this._duration + this._repeatDelay), e) : this._time / this.duration() || 0
@@ -7761,6 +7792,21 @@ function(t, e, i) {
             for (s = m.length, u = i ? 4 : 1; --s > -1;) l = p[a = m[s]], K(l, e, i, n, X[a]), f && (l.splice(0, u), l.splice(l.length - u, u));
             return p
         },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         Z = function(t, e, i) {
             for (var n, r, o, s, a, l, u, c, h, f, d, p = 1 / i, m = t.length; --m > -1;)
                 for (o = (f = t[m]).a, s = f.d - o, a = f.c - o, l = f.b - o, n = r = 0, c = 1; c <= i; c++) n = r - (r = ((u = p * c) * u * s + 3 * (h = 1 - u) * (u * a + h * l)) * u), e[d = m * i + c - 1] = (e[d] || 0) + n * n
