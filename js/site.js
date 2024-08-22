@@ -7709,24 +7709,44 @@ function(t, e, i) {
         // Override invalidate method to reset internal states
         s.invalidate = function() {
             return this._locked = !1, F.prototype.invalidate.call(this)
-        }, s.progress = function(t, e) {
+        },
+         // Method to get/set the progress of the timeline
+        s.progress = function(t, e) {
             return arguments.length ? this.totalTime(this.duration() * (this._yoyo && 0 != (1 & this._cycle) ? 1 - t : t) + this._cycle * (this._duration + this._repeatDelay), e) : this._time / this.duration() || 0
-        }, s.totalProgress = function(t, e) {
+        },
+        // Method to get/set the total progress of the timeline
+        s.totalProgress = function(t, e) {
             return arguments.length ? this.totalTime(this.totalDuration() * t, e) : this._totalTime / this.totalDuration() || 0
-        }, s.totalDuration = function(t) {
+        },
+         // Override totalDuration method to account for repeats
+         s.totalDuration = function(t) {
             return arguments.length ? -1 !== this._repeat && t ? this.timeScale(this.totalDuration() / t) : this : (this._dirty && (F.prototype.totalDuration.call(this), this._totalDuration = -1 === this._repeat ? 999999999999 : this._duration * (this._repeat + 1) + this._repeatDelay * this._repeat), this._totalDuration)
-        }, s.time = function(t, e) {
+        },
+         // Override time method to handle yoyo effect and cycles
+        s.time = function(t, e) {
             return arguments.length ? (this._dirty && this.totalDuration(), t > this._duration && (t = this._duration), this._yoyo && 0 != (1 & this._cycle) ? t = this._duration - t + this._cycle * (this._duration + this._repeatDelay) : 0 !== this._repeat && (t += this._cycle * (this._duration + this._repeatDelay)), this.totalTime(t, e)) : this._time
-        }, s.repeat = function(t) {
+        },
+        // Method to get/set the repeat count
+        s.repeat = function(t) {
             return arguments.length ? (this._repeat = t, this._uncache(!0)) : this._repeat
-        }, s.repeatDelay = function(t) {
+        },
+        // Method to get/set the repeat delay
+        s.repeatDelay = function(t) {
             return arguments.length ? (this._repeatDelay = t, this._uncache(!0)) : this._repeatDelay
-        }, s.yoyo = function(t) {
+        }, 
+        // Method to get/set the yoyo behavior
+        s.yoyo = function(t) {
             return arguments.length ? (this._yoyo = t, this) : this._yoyo
-        }, s.currentLabel = function(t) {
+        },
+        // Method to get/set the current label
+        s.currentLabel = function(t) {
             return arguments.length ? this.seek(t, !0) : this.getLabelBefore(this._time + 1e-8)
-        }, t
+        },
+        // Return the constructor function
+        t
     }, !0);
+
+    // Define global references to the TimelineMax class
     var B = O.g.TimelineMax,
         z = 180 / Math.PI,
         H = [],
@@ -7735,9 +7755,17 @@ function(t, e, i) {
         X = {},
         Y = O.e._gsDefine.globals,
         U = function(t, e, i, n) {
-            i === n && (i = n - (n - e) / 1e6), t === e && (e = t + (i - t) / 1e6), this.a = t, this.b = e, this.c = i, this.d = n, this.da = n - t, this.ca = i - t, this.ba = e - t
+            // Constructor for a cubic Bezier curve segment
+            i === n && (i = n - (n - e) / 1e6),
+            t === e && (e = t + (i - t) / 1e6), 
+            this.a = t, this.b = e,
+            this.c = i, this.d = n, 
+            this.da = n - t, 
+            this.ca = i - t, 
+            this.ba = e - t
         },
         V = function(t, e, i, n) {
+             // Function to split a cubic Bezier curve into segments
             var r = {
                     a: t
                 },
@@ -7755,6 +7783,7 @@ function(t, e, i) {
             return r.b = l + (t - l) / 4, o.b = h + d, r.c = o.a = (r.b + o.b) / 2, o.c = s.a = (h + f) / 2, s.b = f - d, a.b = c + (n - c) / 4, s.c = a.a = (s.b + a.b) / 2, [r, o, s, a]
         },
         K = function(t, e, i, n, r) {
+            // Function to adjust control points for a series of cubic Bezier segments
             var o, s, a, l, u, c, h, f, d, p, m, g, v, _ = t.length - 1,
                 y = 0,
                 b = t[0].a;
@@ -7762,6 +7791,7 @@ function(t, e, i) {
             (u = t[y]).b = b, u.c = b + .4 * (u.d - b), u.da = u.d - u.a, u.ca = u.c - u.a, u.ba = b - u.a, i && (p = V(u.a, b, u.c, u.d), t.splice(y, 1, p[0], p[1], p[2], p[3]))
         },
         G = function(t, e, i, n) {
+             // Function to generate cubic Bezier curves for an array of points
             var r, o, s, a, l, u, c = [];
             if (n)
                 for (o = (t = [n].concat(t)).length; --o > -1;) "string" == typeof(u = t[o][e]) && "=" === u.charAt(1) && (t[o][e] = n[e] + Number(u.charAt(0) + u.substr(2)));
@@ -7770,6 +7800,7 @@ function(t, e, i) {
             return c[o] = new U(t[o][e], 0, 0, t[o + 1][e]), c
         },
         Q = function(t, e, i, n, r, o) {
+            // Function to generate a sequence of cubic Bezier segments
             var s, a, l, u, c, h, f, d, p = {},
                 m = [],
                 g = o || t[0];
