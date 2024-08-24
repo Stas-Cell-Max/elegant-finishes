@@ -7830,21 +7830,35 @@ function(t, e, i) {
                 for (n in this._autoRotate = h ? h instanceof Array ? h : [
                         ["x", "y", "rotation", !0 === h ? 0 : Number(h) || 0]
                     ] : null, c) this._props.push(n);
-                for (o = this._props.length; --o > -1;) n = this._props[o], this._overwriteProps.push(n), r = this._func[n] = "function" == typeof t[n], u[n] = r ? t[n.indexOf("set") || "function" != typeof t["get" + n.substr(3)] ? n : "get" + n.substr(3)]() : parseFloat(t[n]), a || u[n] !== l[0][n] && (a = u);
+                for (o = this._props.length; --o > -1;) n = this._props[o], 
+                this._overwriteProps.push(n), 
+                r = this._func[n] = "function" == typeof t[n], u[n] = r ? t[n.indexOf("set") || "function" != typeof t["get" + n.substr(3)] ? n : "get" + n.substr(3)]() : parseFloat(t[n]), a || u[n] !== l[0][n] && (a = u);
+               // Generate the Bezier curves based on the type specified (cubic, quadratic, etc.)
                 if (this._beziers = "cubic" !== e.type && "quadratic" !== e.type && "soft" !== e.type ? Q(l, isNaN(e.curviness) ? 1 : e.curviness, !1, "thruBasic" === e.type, e.correlate, a) : function(t, e, i) {
                         var n, r, o, s, a, l, u, c, h, f, d, p = {},
                             m = "cubic" === (e = e || "soft") ? 3 : 2,
                             g = "soft" === e,
                             v = [];
+
+                            // Handle soft Bezier curves if necessary
                         if (g && i && (t = [i].concat(t)), null == t || t.length < m + 1) throw "invalid Bezier data";
+                        
+                        // Process each property for the Bezier curve
                         for (h in t[0]) v.push(h);
                         for (l = v.length; --l > -1;) {
                             for (p[h = v[l]] = a = [], f = 0, c = t.length, u = 0; u < c; u++) n = null == i ? t[u][h] : "string" == typeof(d = t[u][h]) && "=" === d.charAt(1) ? i[h] + Number(d.charAt(0) + d.substr(2)) : Number(d), g && u > 1 && u < c - 1 && (a[f++] = (n + a[f - 2]) / 2), a[f++] = n;
+                           
+                           // Generate control points for the Bezier curve
                             for (c = f - m + 1, f = 0, u = 0; u < c; u += m) n = a[u], r = a[u + 1], o = a[u + 2], s = 2 === m ? 0 : a[u + 3], a[f++] = d = 3 === m ? new U(n, r, o, s) : new U(n, (2 * r + n) / 3, (2 * r + o) / 3, o);
                             a.length = f
                         }
                         return p
-                    }(l, e.type, u), this._segCount = this._beziers[n].length, this._timeRes) {
+                    }(l, e.type, u), 
+                    // Calculate the number of segments in the Bezier curve
+                    this._segCount = this._beziers[n].length,
+                    // If time resolution is specified, calculate lengths and segments
+                    this._timeRes) {
+
                     var f = function(t, e) {
                         var i, n, r, o, s = [],
                             a = [],
@@ -7853,6 +7867,7 @@ function(t, e, i) {
                             c = (e = e >> 0 || 6) - 1,
                             h = [],
                             f = [];
+                            // Calculate the length of each segment
                         for (i in t) Z(t[i], s, e);
                         for (r = s.length, n = 0; n < r; n++) l += Math.sqrt(s[n]), f[o = n % e] = l, o === c && (u += l, h[o = n / e >> 0] = f, a[o] = u, l = 0, f = []);
                         return {
@@ -7861,8 +7876,12 @@ function(t, e, i) {
                             segments: h
                         }
                     }(this._beziers, this._timeRes);
+
+                     // Store the calculated lengths and segments
                     this._length = f.length, this._lengths = f.lengths, this._segments = f.segments, this._l1 = this._li = this._s1 = this._si = 0, this._l2 = this._lengths[0], this._curSeg = this._segments[0], this._s2 = this._curSeg[0], this._prec = 1 / this._curSeg.length
                 }
+
+                // Initialize auto-rotation if specified
                 if (h = this._autoRotate)
                     for (this._initialRotations = [], h[0] instanceof Array || (this._autoRotate = h = [h]), o = h.length; --o > -1;) {
                         for (s = 0; s < 3; s++) n = h[o][s], this._func[n] = "function" == typeof t[n] && t[n.indexOf("set") || "function" != typeof t["get" + n.substr(3)] ? n : "get" + n.substr(3)];
