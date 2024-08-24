@@ -7515,42 +7515,6 @@ function(t, e, i) {
     var F = O.g.TimelineLite;
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /*!
-     * VERSION: 2.0.2
-     * DATE: 2018-08-27
-     * UPDATES AND DOCS AT: http://greensock.com
-     *
-     * @license Copyright (c) 2008-2018, GreenSock. All rights reserved.
-     * This work is subject to the terms at http://greensock.com/standard-license or for
-     * Club GreenSock members, the software agreement that was issued with your membership.
-     *
-     * @author: Jack Doyle, jack@greensock.com
-     */
-
     // Define the "TimelineMax" module as an extension of "TimelineLite"
     O.e._gsDefine("TimelineMax", ["TimelineLite", "TweenLite", "easing.Ease"], function() {
        
@@ -7835,27 +7799,34 @@ function(t, e, i) {
 
 
 
-
-
-
+         // Function to generate Bezier curve points
         Z = function(t, e, i) {
             for (var n, r, o, s, a, l, u, c, h, f, d, p = 1 / i, m = t.length; --m > -1;)
                 for (o = (f = t[m]).a, s = f.d - o, a = f.c - o, l = f.b - o, n = r = 0, c = 1; c <= i; c++) n = r - (r = ((u = p * c) * u * s + 3 * (h = 1 - u) * (u * a + h * l)) * u), e[d = m * i + c - 1] = (e[d] || 0) + n * n
         },
+
+        // Define the Bezier plugin for GSAP (GreenSock Animation Platform)
         J = O.e._gsDefine.plugin({
             propName: "bezier",
             priority: -1,
             version: "1.3.8",
             API: 2,
             global: !0,
+             // Initialization function
             init: function(t, e, i) {
                 this._target = t, e instanceof Array && (e = {
                     values: e
-                }), this._func = {}, this._mod = {}, this._props = [], this._timeRes = null == e.timeResolution ? 6 : parseInt(e.timeResolution, 10);
+                }), this._func = {}, 
+                this._mod = {}, 
+                this._props = [], 
+                this._timeRes = null == e.timeResolution ? 6 : parseInt(e.timeResolution, 10);
+                // Initialize properties and Bezier data
                 var n, r, o, s, a, l = e.values || [],
                     u = {},
                     c = l[0],
                     h = e.autoRotate || i.vars.orientToBezier;
+
+                    // Handle auto-rotation along the Bezier path
                 for (n in this._autoRotate = h ? h instanceof Array ? h : [
                         ["x", "y", "rotation", !0 === h ? 0 : Number(h) || 0]
                     ] : null, c) this._props.push(n);
@@ -8115,6 +8086,26 @@ function(t, e, i) {
                 }
             }, !0), c(r.SlowMo, "SlowMo", "ease,"), c(i, "RoughEase", "ease,"), c(t, "SteppedEase", "ease,"), p
         }, !0);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     var et = O.g.Back,
         it = O.g.Elastic,
         nt = O.g.Bounce,
