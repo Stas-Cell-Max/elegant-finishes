@@ -8019,6 +8019,7 @@ function(t, e, i) {
                         n = i.prototype = new O.b;
                     return n.constructor = i, n.getRatio = e, i
                 },
+                // Register the ease types (In, Out, InOut)
                 c = O.b.register || function() {},
                 h = function(t, e, i, n, r) {
                     var o = l("easing." + t, {
@@ -8031,6 +8032,7 @@ function(t, e, i) {
                 f = function(t, e, i) {
                     this.t = t, this.v = e, i && (this.next = i, i.prev = this, this.c = i.v - e, this.gap = i.t - t)
                 },
+                // Define a custom easing function for the 'Back' easing type
                 d = function(t, e) {
                     var i = l("easing." + t, function(t) {
                             this._p1 = t || 0 === t ? t : 1.70158, this._p2 = 1.525 * this._p1
@@ -8040,6 +8042,7 @@ function(t, e, i) {
                         return new i(t)
                     }, i
                 },
+                 // Create the Back easing types (Out, In, InOut)
                 p = h("Back", d("BackOut", function(t) {
                     return (t -= 1) * t * ((this._p1 + 1) * t + this._p1) + 1
                 }), d("BackIn", function(t) {
@@ -8047,28 +8050,42 @@ function(t, e, i) {
                 }), d("BackInOut", function(t) {
                     return (t *= 2) < 1 ? .5 * t * t * ((this._p2 + 1) * t - this._p2) : .5 * ((t -= 2) * t * ((this._p2 + 1) * t + this._p2) + 2)
                 })),
-                m = l("easing.SlowMo", function(t, e, i) {
+ 
+                // Define other custom easing functions
+                m = l("easing.SlowMo",
+                     function(t, e, i) {
                     e = e || 0 === e ? e : .7, null == t ? t = .7 : t > 1 && (t = 1), this._p = 1 !== t ? e : 0, this._p1 = (1 - t) / 2, this._p2 = t, this._p3 = this._p1 + this._p2, this._calcEnd = !0 === i
                 }, !0),
                 g = m.prototype = new O.b;
+                // Define the getRatio method for SlowMo easing
             return g.constructor = m, g.getRatio = function(t) {
                 var e = t + (.5 - t) * this._p;
                 return t < this._p1 ? this._calcEnd ? 1 - (t = 1 - t / this._p1) * t : e - (t = 1 - t / this._p1) * t * t * t * e : t > this._p3 ? this._calcEnd ? 1 === t ? 0 : 1 - (t = (t - this._p3) / this._p1) * t : e + (t - e) * (t = (t - this._p3) / this._p1) * t * t * t : this._calcEnd ? 1 : e
-            }, m.ease = new m(.7, .7), g.config = m.config = function(t, e, i) {
+            }, 
+            // Register various easing types
+            m.ease = new m(.7, .7), g.config = m.config = function(t, e, i) {
                 return new m(t, e, i)
-            }, (g = (t = l("easing.SteppedEase", function(t, e) {
+            }, 
+            // Additional easing types (SteppedEase, ExpoScaleEase, RoughEase)
+            (g = (t = l("easing.SteppedEase", function(t, e) {
                 t = t || 1, this._p1 = 1 / t, this._p2 = t + (e ? 0 : 1), this._p3 = e ? 1 : 0
             }, !0)).prototype = new O.b).constructor = t, g.getRatio = function(t) {
                 return t < 0 ? t = 0 : t >= 1 && (t = .999999999), ((this._p2 * t | 0) + this._p3) * this._p1
             }, g.config = t.config = function(e, i) {
                 return new t(e, i)
-            }, (g = (e = l("easing.ExpoScaleEase", function(t, e, i) {
+            }, 
+            // Register RoughEase and other custom easing types
+            (g = (e = l("easing.ExpoScaleEase", function(t, e, i) {
                 this._p1 = Math.log(e / t), this._p2 = e - t, this._p3 = t, this._ease = i
-            }, !0)).prototype = new O.b).constructor = e, g.getRatio = function(t) {
+            }, 
+            !0)).prototype = new O.b).constructor = e, g.getRatio = function(t) {
                 return this._ease && (t = this._ease.getRatio(t)), (this._p3 * Math.exp(this._p1 * t) - this._p3) / this._p2
-            }, g.config = e.config = function(t, i, n) {
+            },
+             g.config = e.config = function(t, i, n) {
                 return new e(t, i, n)
-            }, (g = (i = l("easing.RoughEase", function(t) {
+            }, 
+            // RoughEase setup for random/tapered easing
+            (g = (i = l("easing.RoughEase", function(t) {
                 for (var e, i, n, r, o, s, a = (t = t || {}).taper || "none", l = [], u = 0, c = 0 | (t.points || 20), h = c, d = !1 !== t.randomize, p = !0 === t.clamp, m = t.template instanceof O.b ? t.template : null, g = "number" == typeof t.strength ? .4 * t.strength : .4; --h > -1;) e = d ? Math.random() : 1 / c * h, i = m ? m.getRatio(e) : e, n = "none" === a ? g : "out" === a ? (r = 1 - e) * r * g : "in" === a ? e * e * g : e < .5 ? (r = 2 * e) * r * .5 * g : (r = 2 * (1 - e)) * r * .5 * g, d ? i += Math.random() * n - .5 * n : h % 2 ? i += .5 * n : i -= .5 * n, p && (i > 1 ? i = 1 : i < 0 && (i = 0)), l[u++] = {
                     x: e,
                     y: i
@@ -8077,7 +8094,8 @@ function(t, e, i) {
                         return t.x - e.x
                     }), s = new f(1, 1, null), h = c; --h > -1;) o = l[h], s = new f(o.x, o.y, s);
                 this._prev = new f(0, 0, 0 !== s.t ? s : s.next)
-            }, !0)).prototype = new O.b).constructor = i, g.getRatio = function(t) {
+            }, 
+            !0)).prototype = new O.b).constructor = i, g.getRatio = function(t) {
                 var e = this._prev;
                 if (t > e.t) {
                     for (; e.next && t >= e.t;) e = e.next;
@@ -8087,7 +8105,9 @@ function(t, e, i) {
                 return this._prev = e, e.v + (t - e.t) / e.gap * e.c
             }, g.config = function(t) {
                 return new i(t)
-            }, i.ease = new i, h("Bounce", u("BounceOut", function(t) {
+            }, i.ease = new i,
+            // Register additional easing types: Bounce, Circ, Elastic, Expo, Sine
+            h("Bounce", u("BounceOut", function(t) {
                 return t < 1 / 2.75 ? 7.5625 * t * t : t < 2 / 2.75 ? 7.5625 * (t -= 1.5 / 2.75) * t + .75 : t < 2.5 / 2.75 ? 7.5625 * (t -= 2.25 / 2.75) * t + .9375 : 7.5625 * (t -= 2.625 / 2.75) * t + .984375
             }), u("BounceIn", function(t) {
                 return (t = 1 - t) < 1 / 2.75 ? 1 - 7.5625 * t * t : t < 2 / 2.75 ? 1 - (7.5625 * (t -= 1.5 / 2.75) * t + .75) : t < 2.5 / 2.75 ? 1 - (7.5625 * (t -= 2.25 / 2.75) * t + .9375) : 1 - (7.5625 * (t -= 2.625 / 2.75) * t + .984375)
@@ -8130,7 +8150,12 @@ function(t, e, i) {
                 find: function(t) {
                     return O.b.map[t]
                 }
-            }, !0), c(r.SlowMo, "SlowMo", "ease,"), c(i, "RoughEase", "ease,"), c(t, "SteppedEase", "ease,"), p
+            }, !0), 
+            
+             // Register SlowMo, RoughEase, SteppedEase as easing functions
+            c(r.SlowMo, "SlowMo", "ease,"),
+             c(i, "RoughEase", "ease,"), 
+             c(t, "SteppedEase", "ease,"), p
         }, !0);
 
 
