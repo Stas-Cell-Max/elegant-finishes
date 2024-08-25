@@ -7889,11 +7889,14 @@ function(t, e, i) {
                     }
                 return this._startRatio = i.vars.runBackwards ? 1 : 0, !0
             },
+            // Function to update the properties based on the Bezier curve
             set: function(t) {
                 var e, i, n, r, o, s, a, l, u, c, h = this._segCount,
                     f = this._func,
                     d = this._target,
                     p = t !== this._startRatio;
+
+                    // If time resolution is set, adjust the segment points
                 if (this._timeRes) {
                     if (u = this._lengths, c = this._curSeg, t *= this._length, n = this._li, t > this._l2 && n < h - 1) {
                         for (l = h - 1; n < l && (this._l2 = u[++n]) <= t;);
@@ -7911,7 +7914,11 @@ function(t, e, i) {
                     }
                     s = (n + (t - this._s1) / (this._s2 - this._s1)) * this._prec || 0
                 } else s = (t - (e = t < 0 ? 0 : t >= 1 ? h - 1 : h * t >> 0) * (1 / h)) * h;
+                
+                 // Update each property based on the Bezier curve
                 for (i = 1 - s, n = this._props.length; --n > -1;) r = this._props[n], a = (s * s * (o = this._beziers[r][e]).da + 3 * i * (s * o.ca + i * o.ba)) * s + o.a, this._mod[r] && (a = this._mod[r](a, d)), f[r] ? d[r](a) : d[r] = a;
+                
+                // Handle auto-rotation if applicable
                 if (this._autoRotate) {
                     var m, g, v, _, y, b, x, w = this._autoRotate;
                     for (n = w.length; --n > -1;) r = w[n][2], b = w[n][3] || 0, x = !0 === w[n][4] ? 1 : z, o = this._beziers[w[n][0]], m = this._beziers[w[n][1]], o && m && (o = o[e], m = m[e], g = o.a + (o.b - o.a) * s, g += ((_ = o.b + (o.c - o.b) * s) - g) * s, _ += (o.c + (o.d - o.c) * s - _) * s, v = m.a + (m.b - m.a) * s, v += ((y = m.b + (m.c - m.b) * s) - v) * s, y += (m.c + (m.d - m.c) * s - y) * s, a = p ? Math.atan2(y - v, _ - g) * x + b : this._initialRotations[n], this._mod[r] && (a = this._mod[r](a, d)), f[r] ? d[r](a) : d[r] = a)
@@ -7919,26 +7926,41 @@ function(t, e, i) {
             }
         }),
         tt = J.prototype;
-    /*!
-     * VERSION: 1.3.8
-     * DATE: 2018-05-30
-     * UPDATES AND DOCS AT: http://greensock.com
-     *
-     * @license Copyright (c) 2008-2018, GreenSock. All rights reserved.
-     * This work is subject to the terms at http://greensock.com/standard-license or for
-     * Club GreenSock members, the software agreement that was issued with your membership.
-     *
-     * @author: Jack Doyle, jack@greensock.com
-     **/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ // Attach utility functions to the plugin prototype
     J.bezierThrough = Q, J.cubicToQuadratic = V, J._autoCSS = !0, J.quadraticToCubic = function(t, e, i) {
             return new U(t, (2 * e + t) / 3, (2 * e + i) / 3, i)
-        }, J._cssRegister = function() {
+        }, 
+        // Function to register the bezier plugin with CSSPlugin for complex property tweening
+        J._cssRegister = function() {
             var t = Y.CSSPlugin;
             if (t) {
                 var e = t._internals,
                     i = e._parseToProxy,
                     n = e._setPluginRatio,
                     r = e.CSSPropTween;
+
+                    // Register 'bezier' as a complex special property in CSSPlugin
                 e._registerComplexSpecialProp("bezier", {
                     parser: function(t, e, o, s, a, l) {
                         e instanceof Array && (e = {
@@ -7949,44 +7971,49 @@ function(t, e, i) {
                             p = [],
                             m = {};
                         if (d < 0) return a;
+                        // Parse each bezier value
                         for (u = 0; u <= d; u++) h = i(t, f[u], s, a, l, d !== u), p[u] = h.end;
                         for (c in e) m[c] = e[c];
-                        return m.values = p, (a = new r(t, "bezier", 0, 0, h.pt, 2)).data = h, a.plugin = l, a.setRatio = n, 0 === m.autoRotate && (m.autoRotate = !0), !m.autoRotate || m.autoRotate instanceof Array || (u = !0 === m.autoRotate ? 0 : Number(m.autoRotate), m.autoRotate = null != h.end.left ? [
+                        return m.values = p,
+                        // Create a new CSS property tween for 'bezier'
+                         (a = new r(t, "bezier", 0, 0, h.pt, 2)).data = h,
+                          a.plugin = l, a.setRatio = n, 
+                          0 === m.autoRotate && (m.autoRotate = !0),
+                         !m.autoRotate || m.autoRotate instanceof Array || (u = !0 === m.autoRotate ? 0 : Number(m.autoRotate), m.autoRotate = null != h.end.left ? [
                             ["left", "top", "rotation", u, !1]
                         ] : null != h.end.x && [
                             ["x", "y", "rotation", u, !1]
-                        ]), m.autoRotate && (s._transform || s._enableTransforms(!1), h.autoRotate = s._target._gsTransform, h.proxy.rotation = h.autoRotate.rotation || 0, s._overwriteProps.push("rotation")), l._onInitTween(h.proxy, m, s._tween), a
+                        ]),
+                        // Configure autoRotate if specified
+                         m.autoRotate && (s._transform || s._enableTransforms(!1), h.autoRotate = s._target._gsTransform, h.proxy.rotation = h.autoRotate.rotation || 0, s._overwriteProps.push("rotation")), l._onInitTween(h.proxy, m, s._tween), a
                     }
                 })
             }
-        }, tt._mod = function(t) {
+        },
+        // Function to modify tween properties
+        tt._mod = function(t) {
             for (var e, i = this._overwriteProps, n = i.length; --n > -1;)(e = t[i[n]]) && "function" == typeof e && (this._mod[i[n]] = e)
-        }, tt._kill = function(t) {
+        }, 
+        // Function to kill specific properties in the tween
+        tt._kill = function(t) {
             var e, i, n = this._props;
             for (e in this._beziers)
                 if (e in t)
                     for (delete this._beziers[e], delete this._func[e], i = n.length; --i > -1;) n[i] === e && n.splice(i, 1);
+           
+           // Handle autoRotate properties
             if (n = this._autoRotate)
                 for (i = n.length; --i > -1;) t[n[i][2]] && n.splice(i, 1);
             return this._super._kill.call(this, t)
         },
-        /*!
-         * VERSION: 1.16.1
-         * DATE: 2018-08-27
-         * UPDATES AND DOCS AT: http://greensock.com
-         *
-         * @license Copyright (c) 2008-2018, GreenSock. All rights reserved.
-         * This work is subject to the terms at http://greensock.com/standard-license or for
-         * Club GreenSock members, the software agreement that was issued with your membership.
-         *
-         * @author: Jack Doyle, jack@greensock.com
-         **/
+         // Define custom easing functions for animations
         O.e._gsDefine("easing.Back", ["easing.Ease"], function() {
             var t, e, i, n, r = O.e.GreenSockGlobals || O.e,
                 o = r.com.greensock,
                 s = 2 * Math.PI,
                 a = Math.PI / 2,
                 l = o._class,
+                // Helper function to define an easing class
                 u = function(t, e) {
                     var i = l("easing." + t, function() {}, !0),
                         n = i.prototype = new O.b;
