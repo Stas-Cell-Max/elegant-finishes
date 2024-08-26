@@ -8327,15 +8327,22 @@ function(t, e, i) {
                     window.clearTimeout(pt.autoSlideTimeout);
                     var e = t.pageX || t.originalEvent.touches[0].pageX,
                         i = $(window).width();
-                    pt.diff = 0, $(document).on("mousemove touchmove", function(t) {
+                    pt.diff = 0, 
+                    // Handle touch move event
+                    $(document).on("mousemove touchmove", function(t) {
                         var n = t.pageX || t.originalEvent.touches[0].pageX;
                         pt.diff = (e - n) / i * 70, (!pt.curSlide && pt.diff < 0 || pt.curSlide === pt.numOfSlides && pt.diff > 0) && (pt.diff /= 2), pt.$slider.css("transform", "translate3d(" + (100 * -pt.curSlide - pt.diff) + "%,0,0)"), pt.$slideBGs.css("transform", "translate3d(" + (50 * pt.curSlide + pt.diff / 2) + "%,0,0)")
                     })
                 }
-            }), $(document).on("touchend", function(t) {
+            }),
+            // End the touch event and determine slide change
+            $(document).on("touchend", function(t) {
+
+              
                 $(document).off("mousemove touchmove"), pt.animating || (pt.diff ? pt.diff > -8 && pt.diff < 8 ? pt.changeSlides() : (pt.diff <= -8 && pt.navigateLeft(), pt.diff >= 8 && pt.navigateRight()) : pt.changeSlides(!0))
             }))
         },
+         // Bind click events to slider controls
         bindEvents() {
             $(".slider__control").click(function() {
                 $(this).hasClass("slider__control--left") ? pt.navigateLeft() : pt.navigateRight()
