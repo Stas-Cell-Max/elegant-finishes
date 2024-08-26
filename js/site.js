@@ -7788,17 +7788,6 @@ function(t, e, i) {
             return p
         },
 
-
-
-
-
-
-
-
-
-
-
-
          // Function to generate Bezier curve points
         Z = function(t, e, i) {
             for (var n, r, o, s, a, l, u, c, h, f, d, p = 1 / i, m = t.length; --m > -1;)
@@ -7926,25 +7915,6 @@ function(t, e, i) {
             }
         }),
         tt = J.prototype;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
  // Attach utility functions to the plugin prototype
@@ -8176,7 +8146,7 @@ function(t, e, i) {
 
 
 
-
+    // Define common easing functions to be used in animations
     var et = O.g.Back,
         it = O.g.Elastic,
         nt = O.g.Bounce,
@@ -8188,7 +8158,10 @@ function(t, e, i) {
         ut = O.g.Sine,
         ct = O.g.ExpoScaleEase,
         ht = A;
+
+        // Auto-activate these plugins and easing functions
     ht._autoActivated = [F, B, M, D, J, R, j, et, it, nt, rt, ot, st, at, lt, ut, ct];
+    // Utility object for custom cursor and parallax effects
     const ft = {
         $cursor: null,
         $follower: null,
@@ -8196,13 +8169,18 @@ function(t, e, i) {
         posY: 0,
         mouseX: 0,
         mouseY: 0,
+        // Initialize the custom cursor, link bindings, and parallax elements
         initFirstReady() {
-            this.initCustomCursor(), this.bindLinks(), this.initParallaxElements()
+            this.initCustomCursor(), 
+            this.bindLinks(), 
+            this.initParallaxElements()
         },
+        // Initialize the custom cursor behavior
         initCustomCursor() {
             if (f.is_touch_device()) return !1;
             ft.$cursor = $(".cursor"),
              ft.$follower = $(".cursor-follower"), 
+             // Continuously update the cursor and follower positions
              ht.to({}, .016, {
                 repeat: -1,
                 onRepeat: function() {
@@ -8220,11 +8198,14 @@ function(t, e, i) {
                         }
                     })
                 }
-            }), $(document).on("mousemove", function(t) {
+            }), 
+            // Update the mouse coordinates on mouse move
+            $(document).on("mousemove", function(t) {
                 ft.mouseX = t.clientX,
                  ft.mouseY = t.clientY
             })
         },
+        // Bind hover effects to links
         bindLinks() {
             f.is_touch_device() || $(".circleCursor, a:not(.noCircle), .linkTo").hover(() => {
                 ft.$cursor.addClass("active"), ft.$follower.addClass("active")
@@ -8232,15 +8213,21 @@ function(t, e, i) {
                 ft.$cursor.removeClass("active"), ft.$follower.removeClass("active")
             })
         },
+         // Initialize parallax effects on elements
         initParallaxElements() {
             f.is_touch_device() || $(".pelement").each(function(t) {
+               
+               // Add hover effects to parallax elements
                 $(this).hover(function() {
                     $(this).addClass("hovered")
-                }, function() {
+                }, 
+                function() {
                     $(this).removeClass("hovered"), $(this).css({
                         transform: "translate3d(0px, 0px, 0px)"
                     })
-                }), $(this).mousemove(function(t) {
+                }),
+                // Apply parallax effect based on mouse movement
+                $(this).mousemove(function(t) {
                     var e = $(this).data("power") || .5;
                     const i = this.getBoundingClientRect(),
                         n = i.left + i.width / 2,
@@ -8255,7 +8242,9 @@ function(t, e, i) {
             })
         }
     };
+    // Alias for ft object
     var dt = ft;
+    // Utility object for slider functionality
     const pt = {
         $slider: null,
         $slideBGs: null,
@@ -8267,30 +8256,42 @@ function(t, e, i) {
         autoSlideTimeout: null,
         autoSlideDelay: 6e3,
         $pagination: null,
+        // Initialize slider on document ready
         initReady() {
             this.prepareSlider(), this.initTouchEvents()
         },
+        // Initialize slider on window load
         initLoad() {
             this.initParallaxSlider()
         },
+        // Prepare the slider by setting up initial positions and controls
         prepareSlider() {
-            if (pt.$slider = $(".slider"), pt.$slideBGs = $(".slide__bg"), pt.numOfSlides = $(".slide").length - 1, pt.$pagination = $(".slider-pagi"), 0 == pt.$slider.length) return !1;
+            if (pt.$slider = $(".slider"), 
+            pt.$slideBGs = $(".slide__bg"), 
+            pt.numOfSlides = $(".slide").length - 1, 
+            pt.$pagination = $(".slider-pagi"), 
+            0 == pt.$slider.length) return !1;
+             // Remove controls if only one slide
             $(".slide").length <= 1 && $(".slider__control").remove(), $(".slide:first-child").addClass("active"), $(".slide").each(function(t, e) {
                 $(e).css("left", 100 * t + "%"), $(e).find(".slide__bg").css("left", -50 * t + "%")
             })
         },
+        // Initialize parallax effects on slider
         initParallaxSlider() {
             if (pt.$slider.length < 1) return !1;
             this.autoSlide(), this.bindEvents()
         },
+         // Enable or disable slider controls based on the current state
         manageControls() {
             $(".slider__control").removeClass("inactive")
         },
+        // Automatically slide to the next slide after a delay
         autoSlide() {
             pt.autoSlideTimeout = setTimeout(function() {
                 pt.curSlide++, pt.curSlide > pt.numOfSlides && (pt.curSlide = 0), pt.changeSlides()
             }, pt.autoSlideDelay)
         },
+        // Change slides with animation
         changeSlides(t) {
             t || (pt.animating = !0, pt.manageControls(), pt.$slider.addClass("animating"), pt.$slider.css("top"), setTimeout(() => {
                 $(".slide").removeClass("active"), $(".slide:nth-child(" + parseInt(pt.curSlide + 1) + ")").addClass("active")
@@ -8325,6 +8326,13 @@ function(t, e, i) {
             })
         }
     };
+
+
+
+
+
+
+
     var mt = pt;
     var gt = {
             initReady() {
