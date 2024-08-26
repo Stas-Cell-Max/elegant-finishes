@@ -8293,18 +8293,34 @@ function(t, e, i) {
         },
         // Change slides with animation
         changeSlides(t) {
-            t || (pt.animating = !0, pt.manageControls(), pt.$slider.addClass("animating"), pt.$slider.css("top"), setTimeout(() => {
+            t || (pt.animating = !0, 
+                pt.manageControls(), 
+                pt.$slider.addClass("animating"), 
+                pt.$slider.css("top"), 
+                
+                // Wait for animation to finish
+                setTimeout(() => {
                 $(".slide").removeClass("active"), $(".slide:nth-child(" + parseInt(pt.curSlide + 1) + ")").addClass("active")
-            }, 400), setTimeout(() => {
-                pt.$slider.removeClass("animating"), pt.animating = !1
-            }, pt.animTime)), window.clearTimeout(pt.autoSlideTimeout), pt.$slider.css("transform", "translate3d(" + 100 * -pt.curSlide + "%,0,0)"), pt.$slideBGs.css("transform", "translate3d(" + 50 * pt.curSlide + "%,0,0)"), pt.diff = 0, pt.autoSlide()
+            }, 400), 
+            // End the animation
+            setTimeout(() => {
+                pt.$slider.removeClass("animating"),
+                 pt.animating = !1 }, 
+            pt.animTime)), 
+            // Reset the auto slide timeout
+            window.clearTimeout(pt.autoSlideTimeout),
+            // Apply the slide transition
+            pt.$slider.css("transform", "translate3d(" + 100 * -pt.curSlide + "%,0,0)"), pt.$slideBGs.css("transform", "translate3d(" + 50 * pt.curSlide + "%,0,0)"), pt.diff = 0, pt.autoSlide()
         },
+        // Navigate to the previous slide
         navigateLeft() {
             pt.animating || (pt.curSlide > 0 ? pt.curSlide-- : pt.curSlide = pt.numOfSlides, pt.changeSlides())
         },
+        // Navigate to the next slide
         navigateRight() {
             pt.animating || (pt.curSlide < pt.numOfSlides ? pt.curSlide++ : pt.curSlide = 0, pt.changeSlides())
         },
+        // Initialize touch events for swipe functionality
         initTouchEvents() {
             $(window <= 768) && ($(document).on("touchstart", ".slider", function(t) {
                 if (!pt.animating) {
