@@ -8355,18 +8355,24 @@ function(t, e, i) {
 
 
 
-
+// Define a variable 'mt' and assign it the value of 'pt'
     var mt = pt;
+
+    // Define an object 'gt' with several methods to initialize and manage UI components
     var gt = {
+         // Method to initialize the ready state of the UI, setting up the burger menu and sticky menu behavior
             initReady() {
                 this.burgerMenu(), this.manageStickyMenu()
             },
+            // Method to initialize the load state, particularly setting the active menu link
             initLoad() {
                 this.setActiveMenuLink()
             },
+            // Method to handle scroll events, particularly managing the sticky menu
             initScroll() {
                 this.manageStickyMenu()
             },
+            // Method to initialize the burger menu, toggling its open/close state
             burgerMenu() {
                 const t = $("#menu-toggle");
                 if (0 == t.length) return !1;
@@ -8374,10 +8380,12 @@ function(t, e, i) {
                     $(this).toggleClass("open"), $(".header__menu").is(":visible") ? $(".header__menu").fadeOut(500, () => $("body").toggleClass("openMenu")) : $(".header__menu").fadeIn(500, () => $("body").toggleClass("openMenu"))
                 })
             },
+            // Method to set the active state on the correct menu link based on the current path
             setActiveMenuLink() {
                 const t = location.pathname.split("/")[1];
                 $(".header__menu__left a").removeClass("active"), void 0 !== t && "" !== t && $('.header__menu__left a[href^="/' + t + '"]').addClass("active")
             },
+            // Method to manage the sticky menu, adding or removing the 'sticky' class based on scroll position
             manageStickyMenu() {
                 document.body.scrollTop > 60 || document.documentElement.scrollTop > 60 ? $(".header").addClass("sticky") : $(".header").removeClass("sticky")
             }
@@ -8526,6 +8534,28 @@ function(t, e, i) {
     var Kt = !!Ut && {
         passive: !0
     };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     function Gt(t, e) {
         for (var i in e) {
