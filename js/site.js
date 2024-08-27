@@ -8390,6 +8390,7 @@ function(t, e, i) {
                 document.body.scrollTop > 60 || document.documentElement.scrollTop > 60 ? $(".header").addClass("sticky") : $(".header").removeClass("sticky")
             }
         },
+        // Define variables for requestAnimationFrame and cancelAnimationFrame with fallbacks
         vt = window,
         _t = vt.requestAnimationFrame || vt.webkitRequestAnimationFrame || vt.mozRequestAnimationFrame || vt.msRequestAnimationFrame || function(t) {
             return setTimeout(t, 16)
@@ -8398,46 +8399,47 @@ function(t, e, i) {
         bt = yt.cancelAnimationFrame || yt.mozCancelAnimationFrame || function(t) {
             clearTimeout(t)
         };
-
+      // Function to merge properties from multiple objects into the first object
     function xt() {
         for (var t, e, i, n = arguments[0] || {}, r = 1, o = arguments.length; r < o; r++)
             if (null !== (t = arguments[r]))
                 for (e in t) n !== (i = t[e]) && void 0 !== i && (n[e] = i);
         return n
     }
-
+    // Function to parse a string as boolean if it matches "true" or "false"
     function wt(t) {
         return ["true", "false"].indexOf(t) >= 0 ? JSON.parse(t) : t
     }
-
+    // Function to store a value in localStorage if the 'n' flag is true, then return the value
     function Tt(t, e, i, n) {
         return n && t.setItem(e, i), i
     }
-
+    // Function to create or get the document body, creating a fake one if it doesn't exist
     function Ct() {
         var t = document,
             e = t.body;
         return e || ((e = t.createElement("body")).fake = !0), e
     }
     var kt = document.documentElement;
-
+    // Function to manipulate the overflow of the document during certain operations
     function Et(t) {
         var e = "";
         return t.fake && (e = kt.style.overflow, t.style.background = "", t.style.overflow = kt.style.overflow = "hidden", kt.appendChild(t)), e
     }
-
+    // Function to remove the fake element and restore the original overflow
     function Pt(t, e) {
         t.fake && (t.remove(), kt.style.overflow = e, kt.offsetHeight)
     }
-
+      
+    // Function to insert a CSS rule into a stylesheet
     function St(t, e, i, n) {
         "insertRule" in t ? t.insertRule(e + "{" + i + "}", n) : t.addRule(e, i, n)
     }
-
+     // Function to get the number of CSS rules in a stylesheet
     function Ot(t) {
         return ("insertRule" in t ? t.cssRules : t.rules).length
     }
-
+    // Function to iterate over a collection of elements and apply a callback function to each
     function At(t, e, i) {
         for (var n = 0, r = t.length; n < r; n++) e.call(i, t[n], n)
     }
@@ -8457,25 +8459,26 @@ function(t, e, i) {
         } : function(t, e) {
             Dt(t, e) && (t.className = t.className.replace(e, ""))
         };
-
+    // Function to check if an element has a specific attribute
     function It(t, e) {
         return t.hasAttribute(e)
     }
-
+    // Function to get the value of a specific attribute from an element
     function Nt(t, e) {
         return t.getAttribute(e)
     }
-
+    // Function to check if an object is an array or a collection (like NodeList)
     function jt(t) {
         return void 0 !== t.item
     }
-
+    // Function to set attributes on one or more elements
     function Ft(t, e) {
         if (t = jt(t) || t instanceof Array ? t : [t], "[object Object]" === Object.prototype.toString.call(e))
             for (var i = t.length; i--;)
                 for (var n in e) t[i].setAttribute(n, e[n])
     }
-
+    
+    // Function to remove attributes from one or more elements
     function Bt(t, e) {
         t = jt(t) || t instanceof Array ? t : [t];
         for (var i = (e = e instanceof Array ? e : [e]).length, n = t.length; n--;)
